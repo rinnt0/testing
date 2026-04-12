@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://dsl48a34hqk1a"]
+
+[ext_resource type="Shader" uid="uid://rkf1bc5h07km" path="res://crt.gdshader" id="1_un1n0"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8wk6j"]
+shader = ExtResource("1_un1n0")
+shader_parameter/scanline_intensity = 0.532
+shader_parameter/scanline_density = 480.0
+shader_parameter/scanline_speed = 0.2
+
+[node name="Printlines" type="TextureRect"]
+z_index = 50
+texture_filter = 1
+material = SubResource("ShaderMaterial_8wk6j")
+offset_left = -165.0
+offset_right = 365.0
+offset_bottom = 118.0

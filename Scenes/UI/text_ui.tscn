@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://dbagotwgbb0d8"]
+
+[node name="text_ui" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -1440.0
+offset_bottom = -760.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 0
+offset_left = 160.0
+offset_top = 220.0
+offset_right = 311.0
+offset_bottom = 266.0
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_left = 163.0
+offset_top = 219.0
+offset_right = 307.0
+offset_bottom = 264.0
+theme_override_font_sizes/font_size = 9
+text = "T............................................................................................................................................................................"
+autowrap_mode = 3

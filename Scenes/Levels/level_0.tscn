@@ -1,0 +1,203 @@
+[gd_scene format=4 uid="uid://yn4qqmdt3o4g"]
+
+[ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://Scenes/Levels/level_scripts/level.gd" id="1_kj5ij"]
+[ext_resource type="PackedScene" uid="uid://d2rsvgwv3qqoa" path="res://Scenes/Levels/test_tile_map_layer.tscn" id="1_um5o3"]
+[ext_resource type="Texture2D" uid="uid://b60phi7r7nxay" path="res://Assets/Levels/Level 1/fullart1.png" id="4_1ih7c"]
+[ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://Scenes/UI/interact_prompt.tscn" id="4_6kmi7"]
+[ext_resource type="PackedScene" uid="uid://3aqfed86hvwr" path="res://Scenes/Levels/player_spawner.tscn" id="4_r74qd"]
+[ext_resource type="Script" uid="uid://dmdkq6sxjeoys" path="res://Scenes/Levels/fullart.gd" id="5_6kmi7"]
+[ext_resource type="PackedScene" uid="uid://ct4yl6h1iak3s" path="res://glitch_fx.tscn" id="5_i4wmn"]
+[ext_resource type="PackedScene" uid="uid://cm1csi84rdy43" path="res://fade_player.tscn" id="6_456kb"]
+[ext_resource type="PackedScene" uid="uid://3lpjvhvnw8h5" path="res://Scenes/Levels/level_transition.tscn" id="6_kj5ij"]
+[ext_resource type="PackedScene" uid="uid://gr83mbq341i4" path="res://Scenes/Levels/dialog_ui.tscn" id="7_456kb"]
+[ext_resource type="Script" uid="uid://dy61y8se2bt2b" path="res://Scenes/Levels/dialog_only.gd" id="8_fywi0"]
+[ext_resource type="Script" uid="uid://cc4whowxjm8fy" path="res://Scenes/Levels/dialog_only_base.gd" id="11_35opv"]
+[ext_resource type="Texture2D" uid="uid://c7u4k85bjoqnw" path="res://Assets/Sprites/pills.png" id="12_hvs5j"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ce5c8"]
+size = Vector2(44, 14)
+
+[sub_resource type="Gradient" id="Gradient_osokm"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0.560023, 0.0754424, 0.176681, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_o86a8"]
+gradient = SubResource("Gradient_osokm")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvs5j"]
+resource_local_to_scene = true
+size = Vector2(16, 16)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_456kb"]
+size = Vector2(6.5, 13)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fywi0"]
+size = Vector2(42, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_35opv"]
+size = Vector2(24, 11)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x6eyg"]
+size = Vector2(30.5, 11)
+
+[sub_resource type="Gradient" id="Gradient_35opv"]
+offsets = PackedFloat32Array(0.125, 0.53125)
+colors = PackedColorArray(1, 1, 0.247059, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hvs5j"]
+gradient = SubResource("Gradient_35opv")
+fill = 1
+fill_from = Vector2(0.470085, 0.564103)
+
+[node name="Game" type="Node2D" unique_id=1339658638]
+script = ExtResource("1_kj5ij")
+
+[node name="Tilemaps" type="Node" parent="." unique_id=71320125]
+
+[node name="Ground" parent="Tilemaps" unique_id=1539011659 instance=ExtResource("1_um5o3")]
+z_index = -1
+position = Vector2(-1, 1)
+tile_map_data = PackedByteArray("AAACABEABgAaAAEAAAADABEABgAaAAEAAAAEABEABgAaAAEAAAAFABEABgAAAAkAAAAGABEABgABAAkAAAAHABEABgACAAkAAAAIABEABgADAAkAAAAJABEABgAEAAkAAAAKABEABgAFAAkAAAALABEABgAGAAkAAAAMABEABgAHAAkAAAANABEABgAIAAkAAAAOABEABgAJAAkAAAAPABEABgAKAAkAAAAQABEABgALAAkAAAARABEABgAMAAkAAAASABEABgANAAkAAAATABEABgAOAAkAAAAUABEABgAPAAkAAAAVABEABgAQAAkAAAAWABEABgARAAkAAAAXABEABgASAAkAAAAYABEABgATAAkAAAAZABEABgAUAAkAAAAaABEABgAVAAkAAAAbABEABgAWAAkAAAAcABEABgAXAAkAAAAdABEABgAYAAkAAAAeABEABgAZAAkAAAAfABEABgAaAAkAAAAgABEABgAbAAkAAAAhABEABgAcAAkAAAAiABEABgAdAAkAAAAjABEAAAAdAAYAAAAkABEAAAAdAAYAAAAlABEAAAAdAAYAAAAPABIABgAKAAoAAAAPABMABgAKAAsAAAAQABIABgALAAoAAAAQABMABgALAAsAAAAVABQABgAaAAEAAAAVABUABgAaAAEAAAAWABQABgAaAAEAAAAWABUABgAaAAEAAAAcABIABgAXAAoAAAAcABMABgAXAAsAAAAdABIABgAYAAoAAAAdABMABgAYAAsAAAAeABIABgAZAAoAAAAeABMABgAZAAsAAAAfABIABgAaAAoAAAAfABMABgAaAAsAAAARABIABgAMAAoAAAASABIABgANAAoAAAAXABQABgAaAAEAAAAYABQABgAaAAEAAAAXABUABgAaAAEAAAAYABUABgAaAAEAAAAZABQABgAaAAEAAAAaABQABgAaAAEAAAAaABMABgAVAAsAAAAbABMABgAWAAsAAAAaABIABgAVAAoAAAAbABIABgAWAAoAAAAbABQABgAaAAEAAAAZABMABgAUAAsAAAAZABIABgAUAAoAAAAYABIABgATAAoAAAAXABIABgASAAoAAAAUABIABgAPAAoAAAATABIABgAOAAoAAAAVABIABgAQAAoAAAAWABIABgARAAoAAAAWABMABgARAAsAAAAXABMABgASAAsAAAAYABMABgATAAsAAAAVABMABgAQAAsAAAAUABMABgAPAAsAAAATABMABgAOAAsAAAASABMABgANAAsAAAARABMABgAMAAsAAAARABQABgAaAAEAAAARABUABgAaAAEAAAASABUABgAaAAEAAAATABUABgAaAAEAAAAUABUABgAaAAEAAAAUABQABgAaAAEAAAATABQABgAaAAEAAAASABQABgAaAAEAAAAQABQABgAaAAEAAAAPABQABgAaAAEAAAAPABUABgAaAAEAAAAOABUABgAaAAEAAAANABUABgAaAAEAAAAOABQABgAaAAEAAAAQABUABgAaAAEAAAAMABUABgAaAAEAAAALABUABgAaAAEAAAAKABUABgAaAAEAAAAJABQABgAaAAEAAAAIABQABgAaAAEAAAAHABQABgAaAAEAAAAGABQABgAaAAEAAAAFABQABgAaAAEAAAAEABQABgAaAAEAAAADABQABgAaAAEAAAACABQABgAaAAEAAAACABMABgAaAAEAAAACABIABgAaAAEAAAACABUABgAaAAEAAAADABUABgAaAAEAAAAEABUABgAaAAEAAAAFABUABgAaAAEAAAAGABUABgAaAAEAAAAKABQABgAaAAEAAAALABQABgAaAAEAAAAMABQABgAaAAEAAAAJABUABgAaAAEAAAAIABUABgAaAAEAAAAHABUABgAaAAEAAAANABQABgAaAAEAAAANABMABgAIAAsAAAAOABMABgAJAAsAAAAOABIABgAJAAoAAAANABIABgAIAAoAAAAMABIABgAHAAoAAAALABIABgAGAAoAAAAKABIABgAFAAoAAAAJABIABgAEAAoAAAAIABIABgADAAoAAAAHABIABgACAAoAAAAGABIABgABAAoAAAAFABIABgAAAAoAAAAEABIABgAaAAEAAAAEABMABgAaAAEAAAADABMABgAaAAEAAAADABIABgAaAAEAAAAFABMABgAAAAsAAAAGABMABgABAAsAAAAHABMABgACAAsAAAAIABMABgADAAsAAAAJABMABgAEAAsAAAAKABMABgAFAAsAAAALABMABgAGAAsAAAAMABMABgAHAAsAAAAZABUABgAaAAEAAAAaABUABgAaAAEAAAAbABUABgAaAAEAAAAcABUABgAaAAEAAAAdABUABgAaAAEAAAAeABUABgAaAAEAAAAfABUABgAaAAEAAAAgABUABgAaAAEAAAAhABUABgAaAAEAAAAiABUABgAaAAEAAAAjABUAAAAdAAoAAAAkABUAAAAdAAoAAAAlABQAAAAdAAkAAAAlABMAAAAdAAgAAAAlABIAAAAdAAcAAAAkABIAAAAdAAcAAAAjABIAAAAdAAcAAAAiABIABgAdAAoAAAAhABIABgAcAAoAAAAgABIABgAbAAoAAAAgABMABgAbAAsAAAAhABMABgAcAAsAAAAiABMABgAdAAsAAAAjABMAAAAdAAgAAAAkABMAAAAdAAgAAAAkABQAAAAdAAkAAAAjABQAAAAdAAkAAAAiABQABgAaAAEAAAAhABQABgAaAAEAAAAgABQABgAaAAEAAAAfABQABgAaAAEAAAAeABQABgAaAAEAAAAdABQABgAaAAEAAAAcABQABgAaAAEAAAAFAAkABgAAAAEAAAAFAAoABgAAAAIAAAAFAAsABgAAAAMAAAAFAAwABgAAAAQAAAAFAA0ABgAAAAUAAAAFAA4ABgAAAAYAAAAFAA8ABgAAAAcAAAAFABAABgAAAAgAAAAGAAkABgABAAEAAAAGAAoABgABAAIAAAAGAAsABgABAAMAAAAGAAwABgABAAQAAAAGAA0ABgABAAUAAAAGAA4ABgABAAYAAAAGAA8ABgABAAcAAAAGABAABgABAAgAAAAHAAkABgACAAEAAAAHAAoABgACAAIAAAAHAAsABgACAAMAAAAHAAwABgACAAQAAAAHAA0ABgACAAUAAAAHAA4ABgACAAYAAAAHAA8ABgACAAcAAAAHABAABgACAAgAAAAIAAkABgADAAEAAAAIAAoABgADAAIAAAAIAAsABgADAAMAAAAIAAwABgADAAQAAAAIAA0ABgADAAUAAAAIAA4ABgADAAYAAAAIAA8ABgADAAcAAAAIABAABgADAAgAAAAJAAkABgAEAAEAAAAJAAoABgAEAAIAAAAJAAsABgAEAAMAAAAJAAwABgAEAAQAAAAJAA0ABgAEAAUAAAAJAA4ABgAEAAYAAAAJAA8ABgAEAAcAAAAJABAABgAEAAgAAAAKAAgABgAFAAAAAAAKAAoABgAFAAIAAAAKAAsABgAFAAMAAAAKAAwABgAFAAQAAAAKAA0ABgAFAAUAAAAKAA4ABgAFAAYAAAAKAA8ABgAFAAcAAAAKABAABgAFAAgAAAALAAgABgAGAAAAAAALAAoABgAGAAIAAAALAAsABgAGAAMAAAALAAwABgAGAAQAAAALAA0ABgAGAAUAAAALAA4ABgAGAAYAAAALAA8ABgAGAAcAAAALABAABgAGAAgAAAAMAAgABgAHAAAAAAAMAAkABgAHAAEAAAAMAAoABgAHAAIAAAAMAAsABgAHAAMAAAAMAAwABgAHAAQAAAAMAA0ABgAHAAUAAAAMAA4ABgAHAAYAAAAMAA8ABgAHAAcAAAAMABAABgAHAAgAAAANAAgABgAIAAAAAAANAAkABgAIAAEAAAANAAoABgAIAAIAAAANAAsABgAIAAMAAAANAAwABgAIAAQAAAANAA0ABgAIAAUAAAANAA4ABgAIAAYAAAANAA8ABgAIAAcAAAANABAABgAIAAgAAAAOAAgABgAJAAAAAAAOAAkABgAJAAEAAAAOAAoABgAJAAIAAAAOAAsABgAJAAMAAAAOAAwABgAJAAQAAAAOAA0ABgAJAAUAAAAOAA4ABgAJAAYAAAAOAA8ABgAJAAcAAAAOABAABgAJAAgAAAAPAAgABgAKAAAAAAAPAAkABgAKAAEAAAAPAAoABgAKAAIAAAAPAAsABgAKAAMAAAAPAAwABgAKAAQAAAAPAA0ABgAKAAUAAAAPAA4ABgAKAAYAAAAPAA8ABgAKAAcAAAAPABAABgAKAAgAAAAQAAgABgALAAAAAAAQAAkABgALAAEAAAAQAAoABgALAAIAAAAQAAsABgALAAMAAAAQAAwABgALAAQAAAAQAA0ABgALAAUAAAAQAA4ABgALAAYAAAAQAA8ABgALAAcAAAAQABAABgALAAgAAAARAAgABgAMAAAAAAARAAkABgAMAAEAAAARAAoABgAMAAIAAAARAAsABgAMAAMAAAARAAwABgAMAAQAAAARAA0ABgAMAAUAAAARAA4ABgAMAAYAAAARAA8ABgAMAAcAAAARABAABgAMAAgAAAASAAgABgANAAAAAAASAAkABgANAAEAAAASAAoABgANAAIAAAASAAsABgANAAMAAAASAAwABgANAAQAAAASAA0ABgANAAUAAAASAA4ABgANAAYAAAASAA8ABgANAAcAAAASABAABgANAAgAAAATAAgABgAOAAAAAAATAAkABgAOAAEAAAATAAoABgAOAAIAAAATAAsABgAOAAMAAAATAAwABgAOAAQAAAATAA0ABgAOAAUAAAATAA4ABgAOAAYAAAATAA8ABgAOAAcAAAATABAABgAOAAgAAAAUAAgABgAPAAAAAAAUAAkABgAPAAEAAAAUAAoABgAPAAIAAAAUAAsABgAPAAMAAAAUAAwABgAPAAQAAAAUAA0ABgAPAAUAAAAUAA4ABgAPAAYAAAAUAA8ABgAPAAcAAAAUABAABgAPAAgAAAAVAAgABgAQAAAAAAAVAAkABgAQAAEAAAAVAAoABgAQAAIAAAAVAAsABgAQAAMAAAAVAAwABgAQAAQAAAAVAA0ABgAQAAUAAAAVAA8ABgAQAAcAAAAVABAABgAQAAgAAAAWAAgABgARAAAAAAAWAAkABgARAAEAAAAWAAoABgARAAIAAAAWAAsABgARAAMAAAAWAAwABgARAAQAAAAWAA0ABgARAAUAAAAWAA4ABgARAAYAAAAWAA8ABgARAAcAAAAWABAABgARAAgAAAAXAAgABgASAAAAAAAXAAkABgASAAEAAAAXAAoABgASAAIAAAAXAAsABgASAAMAAAAXAAwABgASAAQAAAAXAA0ABgASAAUAAAAXAA4ABgASAAYAAAAXAA8ABgASAAcAAAAXABAABgASAAgAAAAYAAoABgATAAIAAAAYAAsABgATAAMAAAAYAAwABgATAAQAAAAYAA0ABgATAAUAAAAYAA4ABgATAAYAAAAYAA8ABgATAAcAAAAYABAABgATAAgAAAAZAAoABgAUAAIAAAAZAAsABgAUAAMAAAAZAAwABgAUAAQAAAAZAA0ABgAUAAUAAAAZAA4ABgAUAAYAAAAZAA8ABgAUAAcAAAAZABAABgAUAAgAAAAaAAgABgAVAAAAAAAaAAkABgAVAAEAAAAaAAoABgAVAAIAAAAaAAsABgAVAAMAAAAaAAwABgAVAAQAAAAaAA0ABgAVAAUAAAAaAA4ABgAVAAYAAAAaAA8ABgAVAAcAAAAaABAABgAVAAgAAAAbAAgABgAWAAAAAAAbAAkABgAWAAEAAAAbAAoABgAWAAIAAAAbAAsABgAWAAMAAAAbAAwABgAWAAQAAAAbAA0ABgAWAAUAAAAbAA4ABgAWAAYAAAAbAA8ABgAWAAcAAAAbABAABgAWAAgAAAAcAAgABgAXAAAAAAAcAAkABgAXAAEAAAAcAAoABgAXAAIAAAAcAAsABgAXAAMAAAAcAAwABgAXAAQAAAAcAA0ABgAXAAUAAAAcAA4ABgAXAAYAAAAcAA8ABgAXAAcAAAAcABAABgAXAAgAAAAdAAgABgAYAAAAAAAdAAkABgAYAAEAAAAdAAoABgAYAAIAAAAdAAsABgAYAAMAAAAdAAwABgAYAAQAAAAdAA0ABgAYAAUAAAAdAA4ABgAYAAYAAAAdAA8ABgAYAAcAAAAdABAABgAYAAgAAAAeAAgABgAZAAAAAAAeAAkABgAZAAEAAAAeAAoABgAZAAIAAAAeAAsABgAZAAMAAAAeAAwABgAZAAQAAAAeAA0ABgAZAAUAAAAeAA4ABgAZAAYAAAAeAA8ABgAZAAcAAAAeABAABgAZAAgAAAAfAAgABgAaAAAAAAAfAAkABgAaAAEAAAAfAAoABgAaAAIAAAAfAAsABgAaAAMAAAAfAAwABgAaAAQAAAAfAA0ABgAaAAUAAAAfAA4ABgAaAAYAAAAfAA8ABgAaAAcAAAAfABAABgAaAAgAAAAgAAgABgAbAAAAAAAgAAkABgAbAAEAAAAgAAoABgAbAAIAAAAgAAsABgAbAAMAAAAgAAwABgAbAAQAAAAgAA0ABgAbAAUAAAAgAA4ABgAbAAYAAAAgAA8ABgAbAAcAAAAgABAABgAbAAgAAAAhAAgABgAcAAAAAAAhAAkABgAcAAEAAAAhAAoABgAcAAIAAAAhAAsABgAcAAMAAAAhAAwABgAcAAQAAAAhAA0ABgAcAAUAAAAhAA4ABgAcAAYAAAAhABAABgAcAAgAAAAiAAgABgAdAAAAAAAiAAkABgAdAAEAAAAiAAoABgAdAAIAAAAiAAsABgAdAAMAAAAiAAwABgAdAAQAAAAiAA0ABgAdAAUAAAAiAA4ABgAdAAYAAAAjAAgAAAAdAAAAAAAjAAkAAAAdAAEAAAAjAAoAAAAdAAIAAAAjAAsAAAAdAAAAAAAjAAwAAAAdAAEAAAAjAA0AAAAdAAIAAAAjAA4AAAAdAAMAAAAjAA8AAAAdAAQAAAAjABAAAAAdAAUAAAAkAAgAAAAdAAAAAAAkAAkAAAAdAAEAAAAkAAoAAAAdAAIAAAAkAAsAAAAdAAAAAAAkAAwAAAAdAAEAAAAkAA0AAAAdAAIAAAAkAA4AAAAdAAMAAAAkAA8AAAAdAAQAAAAkABAAAAAdAAUAAAAlAAgAAAAdAAAAAAAlAAkAAAAdAAEAAAAlAAoAAAAdAAIAAAAlAAsAAAAdAAAAAAAlAAwAAAAdAAEAAAAlAA0AAAAdAAIAAAAlAA4AAAAdAAMAAAAlAA8AAAAdAAQAAAAlABAAAAAdAAUAAAACAAkABgAaAAEAAAACAAoABgAaAAEAAAACAAsABgAaAAEAAAACAAwABgAaAAEAAAACAA0ABgAaAAEAAAACAA4ABgAaAAEAAAACAA8ABgAaAAEAAAACABAABgAaAAEAAAADAAkABgAaAAEAAAADAAoABgAaAAEAAAADAAsABgAaAAEAAAADAAwABgAaAAEAAAADAA0ABgAaAAEAAAADAA4ABgAaAAEAAAADAA8ABgAaAAEAAAADABAABgAaAAEAAAAEAAkABgAaAAEAAAAEAAoABgAaAAEAAAAEAAsABgAaAAEAAAAEAAwABgAaAAEAAAAEAA0ABgAaAAEAAAAEAA4ABgAaAAEAAAAEAA8ABgAaAAEAAAAEABAABgAaAAEAAAAZAAgABgAUAAAAAAAZAAkABgAUAAEAAAAYAAkABgATAAEAAAAYAAgABgATAAAAAAAmAAgAAAAdAAAAAAAmAAkAAAAdAAEAAAAmAAoAAAAdAAIAAAAmAAsAAAAdAAAAAAAmAAwAAAAdAAEAAAAmAA0AAAAdAAIAAAAmAA4AAAAdAAMAAAAmAA8AAAAdAAQAAAAmABAAAAAdAAUAAAAmABEAAAAdAAYAAAAmABIAAAAdAAcAAAAmABMAAAAdAAgAAAAmABUAAAAdAAoAAAAmABQAAAAdAAkAAAAhAA8ABgAcAAcAAAAiABAABgAdAAgAAAAiAA8ABgAdAAcAAAAlABUAAAAdAAoAAAAVAA4ABgAQAAYAAAALAAkABgAcAAYAAAAKAAkABgAcAAYAAAAJAAgABgAcAAYAAAAIAAgABgAcAAYAAAAHAAgABgAcAAYAAAAGAAgABgAcAAYAAAAFAAgABgAcAAYAAAAEAAgABgAcAAYAAAADAAgABgAcAAYAAAACAAgABgAcAAYAAAA=")
+
+[node name="Lights" type="Node" parent="." unique_id=1662487952]
+
+[node name="plant" parent="." unique_id=1306424076 instance=ExtResource("4_6kmi7")]
+position = Vector2(157, 256)
+collision_layer = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="plant" unique_id=1133533240]
+position = Vector2(12, 11)
+shape = SubResource("RectangleShape2D_ce5c8")
+
+[node name="Sprite2D" type="Sprite2D" parent="plant" unique_id=624846928]
+process_mode = 3
+visible = false
+z_index = 50
+position = Vector2(-3, 6.99999)
+scale = Vector2(0.529167, 0.529167)
+script = ExtResource("5_6kmi7")
+full_art_texture = ExtResource("4_1ih7c")
+trigger_transition = true
+transition_text = "I'm sure of it..."
+transition_target = "Marker2D"
+next_scene_path = "uid://ctu4pxm1s0vn0"
+dialogue_lines = Array[String](["I haven't slept well in weeks.", "This will help."])
+lamp_light_path = NodePath("../../PointLight2D")
+warn_text = "I should take my meds first."
+requires_condition = true
+
+[node name="AnimationPlayer" parent="plant" unique_id=901105697 instance=ExtResource("6_456kb")]
+
+[node name="DialogUI" parent="plant" unique_id=1731933822 instance=ExtResource("7_456kb")]
+
+[node name="Label" parent="plant/DialogUI" index="0"]
+text = ""
+
+[node name="TextureRect" parent="." unique_id=863840181 instance=ExtResource("5_i4wmn")]
+z_index = -1
+offset_left = 194.0
+offset_top = 206.0
+offset_right = 258.0
+offset_bottom = 270.0
+metadata/_edit_use_anchors_ = true
+
+[node name="TextureRect" type="TextureRect" parent="TextureRect" unique_id=1391768483]
+z_index = -2
+layout_mode = 0
+offset_right = 67.0
+offset_bottom = 56.0
+texture = SubResource("GradientTexture2D_o86a8")
+
+[node name="PlayerSpawn" parent="." unique_id=881866481 instance=ExtResource("4_r74qd")]
+position = Vector2(492, 274)
+
+[node name="level_transition_0" parent="." unique_id=1600467933 instance=ExtResource("6_kj5ij")]
+position = Vector2(500, 265)
+level = "uid://fa5gjh35qea5"
+target_transition_area = "level_transition_prolog"
+side = 3
+
+[node name="CollisionShape2D" parent="level_transition_0" index="0"]
+position = Vector2(16, 0)
+shape = SubResource("RectangleShape2D_hvs5j")
+
+[node name="Pills" type="Node2D" parent="." unique_id=1929502058]
+process_mode = 3
+position = Vector2(-8, 1)
+script = ExtResource("11_35opv")
+set_flag_on_complete = true
+
+[node name="InteractPrompt" parent="Pills" unique_id=1871281854 instance=ExtResource("4_6kmi7")]
+position = Vector2(271, 249)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pills/InteractPrompt" unique_id=865559267]
+position = Vector2(-10.25, 16)
+shape = SubResource("RectangleShape2D_456kb")
+
+[node name="DialogUI" parent="Pills/InteractPrompt" unique_id=216647890 instance=ExtResource("7_456kb")]
+
+[node name="Label" parent="Pills/InteractPrompt/DialogUI" index="0"]
+metadata/_edit_use_anchors_ = true
+
+[node name="Pills" type="Sprite2D" parent="Pills" unique_id=1330244322]
+position = Vector2(271, 247)
+texture = ExtResource("12_hvs5j")
+
+[node name="Closet" type="Node2D" parent="." unique_id=813238078]
+process_mode = 3
+position = Vector2(74, 0)
+script = ExtResource("8_fywi0")
+dialogue_lines = Array[String](["I keep meaning to clean this mess..."])
+
+[node name="InteractPrompt" parent="Closet" unique_id=2065979740 instance=ExtResource("4_6kmi7")]
+position = Vector2(258, 243)
+
+[node name="DialogUI" parent="Closet/InteractPrompt" unique_id=581876618 instance=ExtResource("7_456kb")]
+
+[node name="Label" parent="Closet/InteractPrompt/DialogUI" index="0"]
+metadata/_edit_use_anchors_ = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Closet/InteractPrompt" unique_id=135449633]
+position = Vector2(6, 24)
+shape = SubResource("RectangleShape2D_fywi0")
+
+[node name="Door" type="Node2D" parent="." unique_id=386501961]
+position = Vector2(438, 247)
+script = ExtResource("8_fywi0")
+dialogue_lines = Array[String](["I don't need to go right now."])
+
+[node name="InteractPrompt" parent="Door" unique_id=4402495 instance=ExtResource("4_6kmi7")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Door/InteractPrompt" unique_id=1926832632]
+position = Vector2(-8, 21)
+shape = SubResource("RectangleShape2D_35opv")
+
+[node name="DialogUI" parent="Door/InteractPrompt" unique_id=70022612 instance=ExtResource("7_456kb")]
+
+[node name="Desk" type="Node2D" parent="." unique_id=1959122057]
+position = Vector2(280, 238)
+script = ExtResource("8_fywi0")
+dialogue_lines = Array[String](["There are papers scattered all across the desk.", "I should really organize this."])
+
+[node name="InteractPrompt" parent="Desk" unique_id=1434522945 instance=ExtResource("4_6kmi7")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Desk/InteractPrompt" unique_id=618907043]
+position = Vector2(-0.75, 28)
+shape = SubResource("RectangleShape2D_x6eyg")
+
+[node name="DialogUI" parent="Desk/InteractPrompt" unique_id=30581048 instance=ExtResource("7_456kb")]
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=1048199510]
+position = Vector2(137, 253)
+scale = Vector2(0.710937, 0.765625)
+energy = 0.35
+texture = SubResource("GradientTexture2D_hvs5j")
+
+[node name="Marker2D" type="Marker2D" parent="." unique_id=605417302]
+position = Vector2(492, 273)
+
+[editable path="plant/DialogUI"]
+[editable path="level_transition_0"]
+[editable path="Pills/InteractPrompt/DialogUI"]
+[editable path="Closet/InteractPrompt/DialogUI"]
+[editable path="Door/InteractPrompt/DialogUI"]

@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://rda7fh3qv6da"]
+
+[ext_resource type="Texture2D" uid="uid://cquxi1dodos8w" path="res://object.png" id="1_bw4sc"]
+[ext_resource type="Script" uid="uid://bsp4q2sn2vgc4" path="res://test_object.gd" id="1_erc8u"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_erc8u"]
+atlas = ExtResource("1_bw4sc")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hi3mf"]
+size = Vector2(12, 12)
+
+[sub_resource type="Gradient" id="Gradient_erc8u"]
+offsets = PackedFloat32Array(0, 0.337662, 0.38961, 0.428571)
+colors = PackedColorArray(1, 1, 1, 0, 0.658824, 0.658824, 0.658824, 0, 0.351563, 0.351563, 0.351563, 1, 0.878431, 0.878431, 0.878431, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hi3mf"]
+gradient = SubResource("Gradient_erc8u")
+fill = 1
+fill_from = Vector2(0.513761, 0.522936)
+fill_to = Vector2(0.353211, 0.0688073)
+
+[node name="TestObject" type="Area2D"]
+script = ExtResource("1_erc8u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(0, -6)
+scale = Vector2(0.375, 0.375)
+texture = SubResource("AtlasTexture_erc8u")
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -6)
+shape = SubResource("RectangleShape2D_hi3mf")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+z_index = 2
+offset_left = -32.785
+offset_top = -40.0
+offset_right = 31.215
+offset_bottom = 24.0
+texture = SubResource("GradientTexture2D_hi3mf")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

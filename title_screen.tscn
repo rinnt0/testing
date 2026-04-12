@@ -1,0 +1,76 @@
+[gd_scene format=3 uid="uid://cw4gwycbfphrr"]
+
+[ext_resource type="Script" uid="uid://s68yi2hcoydf" path="res://title_screen.gd" id="1_ak2if"]
+[ext_resource type="Texture2D" uid="uid://daacyuy2avbst" path="res://Scenes/UI/titlescreen_test.png" id="1_v6p8y"]
+[ext_resource type="PackedScene" uid="uid://fagrj3iki7ta" path="res://Scenes/UI/world_blur.tscn" id="3_05l2w"]
+[ext_resource type="PackedScene" uid="uid://dsl48a34hqk1a" path="res://crt_fx.tscn" id="4_hafda"]
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_05l2w"]
+viewport_path = NodePath("world_blur_viewport")
+
+[sub_resource type="Gradient" id="Gradient_gk6dx"]
+offsets = PackedFloat32Array(0.545455)
+colors = PackedColorArray(1, 1, 1, 0.0313726)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jqemp"]
+gradient = SubResource("Gradient_gk6dx")
+fill_from = Vector2(1, 1)
+
+[node name="TitleScreen" type="Control" unique_id=946554269]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ak2if")
+start_scene = "uid://yn4qqmdt3o4g"
+
+[node name="Background" type="TextureRect" parent="." unique_id=1302356482]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_v6p8y")
+expand_mode = 1
+
+[node name="MenuLayout" type="VBoxContainer" parent="Background" unique_id=1016973088]
+z_index = 394
+layout_mode = 0
+offset_left = 1691.0
+offset_top = 760.0
+offset_right = 1821.0
+offset_bottom = 924.0
+
+[node name="StartButton" type="Button" parent="Background/MenuLayout" unique_id=502102828]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "Start"
+
+[node name="QuitButton" type="Button" parent="Background/MenuLayout" unique_id=1187041207]
+layout_mode = 2
+theme_override_font_sizes/font_size = 52
+text = "Quit"
+
+[node name="world_blur" parent="." unique_id=2041228873 instance=ExtResource("3_05l2w")]
+layout_mode = 1
+offset_left = -28.0
+offset_top = -39.0
+offset_right = 15.0
+offset_bottom = 8.0
+mouse_filter = 2
+texture = SubResource("ViewportTexture_05l2w")
+
+[node name="TextureRect" parent="." unique_id=1458636956 instance=ExtResource("4_hafda")]
+layout_mode = 0
+offset_left = -8.0
+offset_top = -34.0
+offset_right = 1922.0
+offset_bottom = 1121.0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_jqemp")
+
+[connection signal="pressed" from="Background/MenuLayout/StartButton" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="Background/MenuLayout/QuitButton" to="." method="_on_quit_pressed"]

@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://71ckskus41ak"]
+
+[ext_resource type="Script" uid="uid://d3n476bd8tvch" path="res://Scripts/UI/pause_menu.gd" id="1_rrvs5"]
+
+[sub_resource type="Gradient" id="Gradient_wyi4u"]
+colors = PackedColorArray(0, 0, 0, 0.588235, 0, 0, 0, 0.588235)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_hdmo1"]
+gradient = SubResource("Gradient_wyi4u")
+
+[node name="PauseMenu" type="Control" unique_id=1160203686]
+z_index = 15
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -214.0
+offset_top = -211.0
+offset_right = -214.0
+offset_bottom = -211.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("1_rrvs5")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1144030706]
+layout_mode = 0
+offset_left = 165.0
+offset_top = 163.0
+offset_right = 1165.0
+offset_bottom = 863.0
+texture = SubResource("GradientTexture1D_hdmo1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=431964149]
+
+[node name="ContinueButton" type="Button" parent="CanvasLayer" unique_id=515758642]
+process_mode = 3
+z_index = 20
+offset_left = 111.0
+offset_top = 112.0
+offset_right = 355.0
+offset_bottom = 188.0
+theme_override_font_sizes/font_size = 40
+text = "Continue."
+
+[connection signal="pressed" from="CanvasLayer/ContinueButton" to="." method="_on_continue_button_pressed"]

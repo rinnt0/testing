@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://ct4yl6h1iak3s"]
+
+[ext_resource type="Shader" uid="uid://bwmsmukhjtm5" path="res://glitch.gdshader" id="1_8wk6j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8wk6j"]
+shader = ExtResource("1_8wk6j")
+shader_parameter/glitch_intensity = 0.727
+shader_parameter/glitch_speed = 2.0
+shader_parameter/block_size = 30.0
+shader_parameter/base_color = Color(1, 1, 1, 1)
+
+[sub_resource type="Gradient" id="Gradient_tyemt"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_hmqsn"]
+gradient = SubResource("Gradient_tyemt")
+
+[node name="TextureRect" type="TextureRect"]
+material = SubResource("ShaderMaterial_8wk6j")
+offset_left = -49.0
+offset_top = -44.0
+offset_right = 57.0
+offset_bottom = 56.0
+texture = SubResource("GradientTexture2D_hmqsn")

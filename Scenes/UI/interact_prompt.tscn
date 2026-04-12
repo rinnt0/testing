@@ -1,0 +1,184 @@
+[gd_scene load_steps=15 format=3 uid="uid://rbkdjakxwqqe"]
+
+[ext_resource type="Script" uid="uid://dibfd6qpvsr0o" path="res://Scripts/UI/interact_prompt.gd" id="1_uts8w"]
+[ext_resource type="Texture2D" uid="uid://bq4qhql1pkn3u" path="res://Assets/Sprites/interact_prompt_star.png" id="2_iotcb"]
+[ext_resource type="Texture2D" uid="uid://dkicr1s23frtj" path="res://Assets/Sprites/interact_prompt_circle.png" id="3_6m637"]
+[ext_resource type="Texture2D" uid="uid://db6o3ouaolhgd" path="res://Assets/Sprites/interact_prompt_button.png" id="4_k22l2"]
+
+[sub_resource type="Animation" id="Animation_k22l2"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.4)]
+}
+
+[sub_resource type="Animation" id="Animation_x22jv"]
+resource_name = "active"
+length = 0.8
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.611765), Color(1, 1, 1, 0.380392)]
+}
+
+[sub_resource type="Animation" id="Animation_6m637"]
+resource_name = "idle"
+length = 0.8
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.4), Color(1, 1, 1, 0.25098)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_ktkrh"]
+_data = {
+&"RESET": SubResource("Animation_k22l2"),
+&"active": SubResource("Animation_x22jv"),
+&"idle": SubResource("Animation_6m637")
+}
+
+[sub_resource type="Animation" id="Animation_iotcb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("interact_prompt_circle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1, 3)]
+}
+
+[sub_resource type="Animation" id="Animation_uts8w"]
+resource_name = "idle"
+loop_mode = 2
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("interact_prompt_circle:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(-1, 4.5), Vector2(-1, 3), Vector2(-1, 1.5)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6m637"]
+_data = {
+&"RESET": SubResource("Animation_iotcb"),
+&"idle": SubResource("Animation_uts8w")
+}
+
+[sub_resource type="Animation" id="Animation_dkdoh"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.364706)]
+}
+
+[sub_resource type="Animation" id="Animation_ktkrh"]
+resource_name = "idle"
+length = 1.3
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.364706), Color(1, 1, 1, 0.25098)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_lds7k"]
+_data = {
+&"RESET": SubResource("Animation_dkdoh"),
+&"idle": SubResource("Animation_ktkrh")
+}
+
+[node name="InteractPrompt" type="Area2D"]
+collision_layer = 2
+collision_mask = 2
+script = ExtResource("1_uts8w")
+
+[node name="interact_prompt_star" type="Sprite2D" parent="."]
+modulate = Color(1, 1, 1, 0.4)
+texture = ExtResource("2_iotcb")
+
+[node name="StarAnimationPlayer" type="AnimationPlayer" parent="interact_prompt_star"]
+libraries = {
+&"": SubResource("AnimationLibrary_ktkrh")
+}
+autoplay = "idle"
+
+[node name="interact_prompt_circle" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.364706)
+z_index = 20
+position = Vector2(-1, 3)
+texture = ExtResource("3_6m637")
+
+[node name="CircleAnimationPlayer" type="AnimationPlayer" parent="interact_prompt_circle"]
+root_node = NodePath("../..")
+libraries = {
+&"": SubResource("AnimationLibrary_6m637")
+}
+autoplay = "idle"
+
+[node name="CicleAnimationPlayer2" type="AnimationPlayer" parent="interact_prompt_circle"]
+libraries = {
+&"": SubResource("AnimationLibrary_lds7k")
+}
+autoplay = "idle"
+
+[node name="interact_prompt_button" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.6)
+z_index = 20
+position = Vector2(11, -12)
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("4_k22l2")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]

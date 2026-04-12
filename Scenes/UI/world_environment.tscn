@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://cq1nx4srh328e"]
+
+[sub_resource type="Environment" id="Environment_pofnv"]
+background_mode = 3
+tonemap_mode = 3
+tonemap_exposure = 0.8
+tonemap_white = 1.67
+sdfgi_enabled = true
+sdfgi_use_occlusion = true
+glow_enabled = true
+glow_normalized = true
+glow_intensity = 0.81
+glow_bloom = 0.5
+fog_enabled = true
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_m62b2"]
+dof_blur_far_enabled = true
+dof_blur_near_enabled = true
+dof_blur_amount = 1.0
+
+[node name="WorldEnvironment" type="WorldEnvironment"]
+environment = SubResource("Environment_pofnv")
+camera_attributes = SubResource("CameraAttributesPractical_m62b2")

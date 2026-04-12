@@ -1,0 +1,158 @@
+[gd_scene format=3 uid="uid://d2k1y6qkhpuol"]
+
+[ext_resource type="Script" uid="uid://m3oq3vu0ghl1" path="res://Scripts/Player/player.gd" id="1_onrkg"]
+[ext_resource type="Texture2D" uid="uid://bdihefj2b4g7c" path="res://Scenes/Player/MC_base.png" id="2_gk6dx"]
+[ext_resource type="PackedScene" uid="uid://sxpps0plcwgd" path="res://Scenes/UI/player_camera.tscn" id="3_i3pqv"]
+[ext_resource type="PackedScene" uid="uid://fagrj3iki7ta" path="res://Scenes/UI/world_blur.tscn" id="4_hqtel"]
+[ext_resource type="Script" uid="uid://bk5u7p3e07ucs" path="res://Scripts/Player/player_camera.gd" id="4_sweqy"]
+[ext_resource type="Script" uid="uid://bge43u8hhekv4" path="res://Scripts/Player/player_state_machine.gd" id="6_dd0ac"]
+[ext_resource type="PackedScene" uid="uid://dsl48a34hqk1a" path="res://crt_fx.tscn" id="6_gk6dx"]
+[ext_resource type="Script" uid="uid://bqh87o7pn634a" path="res://Scripts/Player/state_idle.gd" id="7_0u5uq"]
+[ext_resource type="Script" uid="uid://dxlsic7njtxnh" path="res://Scripts/Player/state_walk.gd" id="8_jlvik"]
+[ext_resource type="PackedScene" uid="uid://71ckskus41ak" path="res://Scenes/UI/pause_menu.tscn" id="10_jhyir"]
+
+[sub_resource type="Gradient" id="Gradient_hqtel"]
+offsets = PackedFloat32Array(0, 0.701299, 1)
+colors = PackedColorArray(1, 1, 1, 0.568627, 0.823529, 0.823529, 0.823529, 0.568627, 0, 0, 0, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sweqy"]
+gradient = SubResource("Gradient_hqtel")
+fill = 1
+fill_from = Vector2(0.495413, 0.513761)
+fill_to = Vector2(0.825688, 0.146789)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_onrkg"]
+size = Vector2(8, 35)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_i3pqv"]
+atlas = ExtResource("2_gk6dx")
+
+[sub_resource type="ViewportTexture" id="ViewportTexture_jhyir"]
+viewport_path = NodePath("world_blur_viewport")
+
+[sub_resource type="Gradient" id="Gradient_gk6dx"]
+offsets = PackedFloat32Array(0.545455)
+colors = PackedColorArray(1, 1, 1, 0.0313726)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jhyir"]
+gradient = SubResource("Gradient_gk6dx")
+fill_from = Vector2(1, 1)
+
+[sub_resource type="Animation" id="Animation_hqtel"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_i3pqv"]
+resource_name = "idle"
+length = 2.0
+loop_mode = 1
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.4, 0.8, 1.2, 1.6, 2),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5]
+}
+
+[sub_resource type="Animation" id="Animation_jhyir"]
+resource_name = "walk"
+length = 0.8
+loop_mode = 1
+step = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [6, 7, 8, 9]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_sweqy"]
+_data = {
+&"RESET": SubResource("Animation_hqtel"),
+&"idle": SubResource("Animation_i3pqv"),
+&"walk": SubResource("Animation_jhyir")
+}
+
+[node name="player" type="CharacterBody2D" unique_id=1899552316]
+z_index = 1
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_onrkg")
+
+[node name="PointLight2D" type="PointLight2D" parent="." unique_id=302630530]
+visible = false
+position = Vector2(0, -18)
+scale = Vector2(1.5, 1.8125)
+energy = 0.1
+texture = SubResource("GradientTexture2D_sweqy")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=212754943]
+position = Vector2(0, -17)
+shape = SubResource("RectangleShape2D_onrkg")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1725751434]
+position = Vector2(-1, -17)
+texture = SubResource("AtlasTexture_i3pqv")
+hframes = 6
+vframes = 2
+
+[node name="Camera2D" parent="." unique_id=1387555309 instance=ExtResource("3_i3pqv")]
+position = Vector2(0, -17)
+zoom = Vector2(6, 6)
+position_smoothing_speed = 5.0
+script = ExtResource("4_sweqy")
+
+[node name="world_blur" parent="Camera2D" unique_id=1086916798 instance=ExtResource("4_hqtel")]
+offset_left = -381.0
+offset_top = -244.0
+offset_right = 365.0
+offset_bottom = 189.0
+texture = SubResource("ViewportTexture_jhyir")
+
+[node name="TextureRect" parent="Camera2D" unique_id=1555203791 instance=ExtResource("6_gk6dx")]
+offset_left = -578.0
+offset_top = -219.0
+offset_right = 578.0
+offset_bottom = 168.0
+texture = SubResource("GradientTexture2D_jhyir")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1898701069]
+libraries/ = SubResource("AnimationLibrary_sweqy")
+
+[node name="StateMachine" type="Node" parent="." unique_id=987203201]
+script = ExtResource("6_dd0ac")
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=406308388]
+script = ExtResource("7_0u5uq")
+
+[node name="Walk" type="Node" parent="StateMachine" unique_id=242002187]
+script = ExtResource("8_jlvik")
+
+[node name="PauseMenu" parent="." unique_id=503717766 instance=ExtResource("10_jhyir")]
+offset_left = -675.0
+offset_top = -535.0
+offset_right = -675.0
+offset_bottom = -535.0
