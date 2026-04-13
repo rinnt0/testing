@@ -71,11 +71,11 @@ script = ExtResource("1_xmd2t")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=1651113227]
 process_mode = 3
-visible = false
 modulate = Color(1, 1, 1, 0)
-z_index = 3765
-offset_left = -1.0
-offset_top = 117.0
-offset_right = 617.0
-offset_bottom = 360.0
+z_index = 2
+offset_left = -111.0
+offset_top = -54.0
+offset_right = 2079.0
+offset_bottom = 1167.0
+mouse_filter = 2
 texture = SubResource("GradientTexture2D_447f6")

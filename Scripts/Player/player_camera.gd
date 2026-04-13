@@ -15,13 +15,12 @@ func _process(delta: float) -> void:
 		
 		
 func look_up():
+	if not PlayerManager.player.can_look_up:
+		return
 	if Input.is_action_pressed("up"):
 		camera.position = Vector2(0, -50)
-		
 	else:
 		camera.position = Vector2(0, -17)
-	
-	pass
 
 func update_limits( bounds : Array[ Vector2 ] ):
 	if bounds == []:

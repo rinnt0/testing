@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://hbmmv6ave85g"]
+
+[ext_resource type="Script" uid="uid://bo6bbscten06p" path="res://full_art_content.gd" id="1_34me3"]
+
+[node name="FullArtContent" type="Node" unique_id=1903622026]
+script = ExtResource("1_34me3")

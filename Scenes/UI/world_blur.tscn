@@ -1,16 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://fagrj3iki7ta"]
+[gd_scene format=3 uid="uid://fagrj3iki7ta"]
 
 [ext_resource type="Shader" uid="uid://ynossiyl51gf" path="res://Assets/Shaders/01.gdshader" id="1_tql0t"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_56fmg"]
 shader = ExtResource("1_tql0t")
-shader_parameter/blur_strength = 0.03
-shader_parameter/blur_radius = 1.0
+shader_parameter/blur_strength = 2.930000139175
+shader_parameter/blur_radius = 0.106000005035
+shader_parameter/glitch_intensity = 0.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_n0fv1"]
 viewport_path = NodePath("world_blur_viewport")
 
-[node name="world_blur" type="TextureRect"]
+[node name="world_blur" type="TextureRect" unique_id=1700707788]
 z_index = 100
 material = SubResource("ShaderMaterial_56fmg")
 anchors_preset = 15
@@ -24,7 +25,7 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("ViewportTexture_n0fv1")
 
-[node name="world_blur_viewport" type="SubViewport" parent="."]
+[node name="world_blur_viewport" type="SubViewport" parent="." unique_id=969775657]
 gui_disable_input = true
 size = Vector2i(320, 180)
 size_2d_override_stretch = true

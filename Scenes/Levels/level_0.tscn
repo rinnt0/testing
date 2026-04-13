@@ -11,8 +11,11 @@
 [ext_resource type="PackedScene" uid="uid://3lpjvhvnw8h5" path="res://Scenes/Levels/level_transition.tscn" id="6_kj5ij"]
 [ext_resource type="PackedScene" uid="uid://gr83mbq341i4" path="res://Scenes/Levels/dialog_ui.tscn" id="7_456kb"]
 [ext_resource type="Script" uid="uid://dy61y8se2bt2b" path="res://Scenes/Levels/dialog_only.gd" id="8_fywi0"]
-[ext_resource type="Script" uid="uid://cc4whowxjm8fy" path="res://Scenes/Levels/dialog_only_base.gd" id="11_35opv"]
 [ext_resource type="Texture2D" uid="uid://c7u4k85bjoqnw" path="res://Assets/Sprites/pills.png" id="12_hvs5j"]
+[ext_resource type="PackedScene" uid="uid://dvy64rhwe26ok" path="res://choice_bridge.tscn" id="12_sahnr"]
+[ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://ChoiceMaker.tscn" id="13_13gea"]
+[ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://dialog_content.tscn" id="14_bowc5"]
+[ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://dialog_flag.tscn" id="15_okijc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ce5c8"]
 size = Vector2(44, 14)
@@ -24,21 +27,15 @@ colors = PackedColorArray(0.560023, 0.0754424, 0.176681, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_o86a8"]
 gradient = SubResource("Gradient_osokm")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_hvs5j"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lqbkx"]
 resource_local_to_scene = true
 size = Vector2(16, 16)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_456kb"]
-size = Vector2(6.5, 13)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fywi0"]
 size = Vector2(42, 11)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_35opv"]
 size = Vector2(24, 11)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_x6eyg"]
-size = Vector2(30.5, 11)
 
 [sub_resource type="Gradient" id="Gradient_35opv"]
 offsets = PackedFloat32Array(0.125, 0.53125)
@@ -48,6 +45,9 @@ colors = PackedColorArray(1, 1, 0.247059, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_35opv")
 fill = 1
 fill_from = Vector2(0.470085, 0.564103)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_sahnr"]
+size = Vector2(23, 13)
 
 [node name="Game" type="Node2D" unique_id=1339658638]
 script = ExtResource("1_kj5ij")
@@ -119,29 +119,7 @@ side = 3
 
 [node name="CollisionShape2D" parent="level_transition_0" index="0"]
 position = Vector2(16, 0)
-shape = SubResource("RectangleShape2D_hvs5j")
-
-[node name="Pills" type="Node2D" parent="." unique_id=1929502058]
-process_mode = 3
-position = Vector2(-8, 1)
-script = ExtResource("11_35opv")
-set_flag_on_complete = true
-
-[node name="InteractPrompt" parent="Pills" unique_id=1871281854 instance=ExtResource("4_6kmi7")]
-position = Vector2(271, 249)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pills/InteractPrompt" unique_id=865559267]
-position = Vector2(-10.25, 16)
-shape = SubResource("RectangleShape2D_456kb")
-
-[node name="DialogUI" parent="Pills/InteractPrompt" unique_id=216647890 instance=ExtResource("7_456kb")]
-
-[node name="Label" parent="Pills/InteractPrompt/DialogUI" index="0"]
-metadata/_edit_use_anchors_ = true
-
-[node name="Pills" type="Sprite2D" parent="Pills" unique_id=1330244322]
-position = Vector2(271, 247)
-texture = ExtResource("12_hvs5j")
+shape = SubResource("RectangleShape2D_lqbkx")
 
 [node name="Closet" type="Node2D" parent="." unique_id=813238078]
 process_mode = 3
@@ -162,30 +140,18 @@ position = Vector2(6, 24)
 shape = SubResource("RectangleShape2D_fywi0")
 
 [node name="Door" type="Node2D" parent="." unique_id=386501961]
-position = Vector2(438, 247)
+position = Vector2(411, 180)
 script = ExtResource("8_fywi0")
 dialogue_lines = Array[String](["I don't need to go right now."])
 
 [node name="InteractPrompt" parent="Door" unique_id=4402495 instance=ExtResource("4_6kmi7")]
+position = Vector2(27, 66)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door/InteractPrompt" unique_id=1926832632]
 position = Vector2(-8, 21)
 shape = SubResource("RectangleShape2D_35opv")
 
 [node name="DialogUI" parent="Door/InteractPrompt" unique_id=70022612 instance=ExtResource("7_456kb")]
-
-[node name="Desk" type="Node2D" parent="." unique_id=1959122057]
-position = Vector2(280, 238)
-script = ExtResource("8_fywi0")
-dialogue_lines = Array[String](["There are papers scattered all across the desk.", "I should really organize this."])
-
-[node name="InteractPrompt" parent="Desk" unique_id=1434522945 instance=ExtResource("4_6kmi7")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Desk/InteractPrompt" unique_id=618907043]
-position = Vector2(-0.75, 28)
-shape = SubResource("RectangleShape2D_x6eyg")
-
-[node name="DialogUI" parent="Desk/InteractPrompt" unique_id=30581048 instance=ExtResource("7_456kb")]
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=1048199510]
 position = Vector2(137, 253)
@@ -196,8 +162,35 @@ texture = SubResource("GradientTexture2D_hvs5j")
 [node name="Marker2D" type="Marker2D" parent="." unique_id=605417302]
 position = Vector2(492, 273)
 
+[node name="Pills" type="Node" parent="." unique_id=706232871]
+
+[node name="ChoiceBridge" parent="Pills" unique_id=761932374 instance=ExtResource("12_sahnr")]
+position = Vector2(254, 256)
+
+[node name="ChoiceMaker" parent="Pills/ChoiceBridge" unique_id=701856808 instance=ExtResource("13_13gea")]
+label = "Examine"
+
+[node name="DialogContent" parent="Pills/ChoiceBridge/ChoiceMaker" unique_id=326983792 instance=ExtResource("14_bowc5")]
+lines = Array[String](["I should probably take these..."])
+portraits = Array[Texture2D]([null])
+
+[node name="ChoiceMaker2" parent="Pills/ChoiceBridge" unique_id=512242180 instance=ExtResource("13_13gea")]
+label = "Take"
+
+[node name="DialogFlag" parent="Pills/ChoiceBridge/ChoiceMaker2" unique_id=971773713 instance=ExtResource("15_okijc")]
+
+[node name="Pills2" type="Sprite2D" parent="Pills/ChoiceBridge" unique_id=1330244322]
+position = Vector2(12, -8)
+texture = ExtResource("12_hvs5j")
+
+[node name="InteractPrompt" parent="Pills/ChoiceBridge" unique_id=2122420552 instance=ExtResource("4_6kmi7")]
+position = Vector2(11, -5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pills/ChoiceBridge/InteractPrompt" unique_id=1523982914]
+position = Vector2(-6, 16)
+shape = SubResource("RectangleShape2D_sahnr")
+
 [editable path="plant/DialogUI"]
 [editable path="level_transition_0"]
-[editable path="Pills/InteractPrompt/DialogUI"]
 [editable path="Closet/InteractPrompt/DialogUI"]
 [editable path="Door/InteractPrompt/DialogUI"]

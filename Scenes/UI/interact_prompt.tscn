@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://rbkdjakxwqqe"]
+[gd_scene format=3 uid="uid://rbkdjakxwqqe"]
 
 [ext_resource type="Script" uid="uid://dibfd6qpvsr0o" path="res://Scripts/UI/interact_prompt.gd" id="1_uts8w"]
 [ext_resource type="Texture2D" uid="uid://bq4qhql1pkn3u" path="res://Assets/Sprites/interact_prompt_star.png" id="2_iotcb"]
@@ -137,42 +137,37 @@ _data = {
 &"idle": SubResource("Animation_ktkrh")
 }
 
-[node name="InteractPrompt" type="Area2D"]
+[node name="InteractPrompt" type="Area2D" unique_id=2122420552]
+z_index = 1
 collision_layer = 2
 collision_mask = 2
 script = ExtResource("1_uts8w")
 
-[node name="interact_prompt_star" type="Sprite2D" parent="."]
+[node name="interact_prompt_star" type="Sprite2D" parent="." unique_id=1053195216]
 modulate = Color(1, 1, 1, 0.4)
 texture = ExtResource("2_iotcb")
 
-[node name="StarAnimationPlayer" type="AnimationPlayer" parent="interact_prompt_star"]
-libraries = {
-&"": SubResource("AnimationLibrary_ktkrh")
-}
-autoplay = "idle"
+[node name="StarAnimationPlayer" type="AnimationPlayer" parent="interact_prompt_star" unique_id=475963449]
+libraries/ = SubResource("AnimationLibrary_ktkrh")
+autoplay = &"idle"
 
-[node name="interact_prompt_circle" type="Sprite2D" parent="."]
+[node name="interact_prompt_circle" type="Sprite2D" parent="." unique_id=1496206399]
 visible = false
 modulate = Color(1, 1, 1, 0.364706)
 z_index = 20
 position = Vector2(-1, 3)
 texture = ExtResource("3_6m637")
 
-[node name="CircleAnimationPlayer" type="AnimationPlayer" parent="interact_prompt_circle"]
+[node name="CircleAnimationPlayer" type="AnimationPlayer" parent="interact_prompt_circle" unique_id=678589181]
 root_node = NodePath("../..")
-libraries = {
-&"": SubResource("AnimationLibrary_6m637")
-}
-autoplay = "idle"
+libraries/ = SubResource("AnimationLibrary_6m637")
+autoplay = &"idle"
 
-[node name="CicleAnimationPlayer2" type="AnimationPlayer" parent="interact_prompt_circle"]
-libraries = {
-&"": SubResource("AnimationLibrary_lds7k")
-}
-autoplay = "idle"
+[node name="CicleAnimationPlayer2" type="AnimationPlayer" parent="interact_prompt_circle" unique_id=1017483116]
+libraries/ = SubResource("AnimationLibrary_lds7k")
+autoplay = &"idle"
 
-[node name="interact_prompt_button" type="Sprite2D" parent="."]
+[node name="interact_prompt_button" type="Sprite2D" parent="." unique_id=70731318]
 visible = false
 modulate = Color(1, 1, 1, 0.6)
 z_index = 20

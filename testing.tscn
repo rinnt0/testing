@@ -2,6 +2,19 @@
 
 [ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://Scenes/Levels/level_scripts/level.gd" id="1_co24e"]
 [ext_resource type="PackedScene" uid="uid://b7b324rd1o72l" path="res://grasslands_tilemaps.tscn" id="2_co24e"]
+[ext_resource type="PackedScene" uid="uid://dvy64rhwe26ok" path="res://choice_bridge.tscn" id="3_11ixh"]
+[ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://Scenes/UI/interact_prompt.tscn" id="3_feb8i"]
+[ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://ChoiceMaker.tscn" id="4_lc7k4"]
+[ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://dialog_content.tscn" id="5_w078t"]
+[ext_resource type="Texture2D" uid="uid://b6cok4fdyp6cp" path="res://icon.svg" id="6_ybq6y"]
+[ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://dialog_flag.tscn" id="7_20t1u"]
+[ext_resource type="PackedScene" uid="uid://hbmmv6ave85g" path="res://full_art_content.tscn" id="9_w078t"]
+[ext_resource type="Texture2D" uid="uid://daacyuy2avbst" path="res://Scenes/UI/titlescreen_test.png" id="10_20t1u"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fd6ls"]
+size = Vector2(45, 7)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_11ixh"]
 
 [node name="Node2D" type="Node2D" unique_id=1924986355]
 script = ExtResource("1_co24e")
@@ -38,3 +51,58 @@ script = null
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=1797795216]
 position = Vector2(292, 145)
+
+[node name="ChoiceBridge" parent="." unique_id=761932374 instance=ExtResource("3_11ixh")]
+position = Vector2(317, 128)
+
+[node name="ChoiceMaker" parent="ChoiceBridge" unique_id=701856808 instance=ExtResource("4_lc7k4")]
+
+[node name="DialogContent" parent="ChoiceBridge/ChoiceMaker" unique_id=326983792 instance=ExtResource("5_w078t")]
+lines = Array[String](["pills", "22"])
+portraits = Array[Texture2D]([ExtResource("6_ybq6y"), ExtResource("6_ybq6y")])
+
+[node name="DialogFlag" parent="ChoiceBridge/ChoiceMaker" unique_id=971773713 instance=ExtResource("7_20t1u")]
+
+[node name="ChoiceMaker2" parent="ChoiceBridge" unique_id=67391893 instance=ExtResource("4_lc7k4")]
+label = "Option 2"
+
+[node name="InteractPrompt" parent="ChoiceBridge" unique_id=2122420552 instance=ExtResource("3_feb8i")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChoiceBridge/InteractPrompt" unique_id=1499221850]
+position = Vector2(-3, 10)
+shape = SubResource("RectangleShape2D_fd6ls")
+
+[node name="ChoiceBridge2" parent="." unique_id=537917903 instance=ExtResource("3_11ixh")]
+position = Vector2(173, 133)
+
+[node name="ChoiceMaker2" parent="ChoiceBridge2" unique_id=1604927633 instance=ExtResource("4_lc7k4")]
+label = "Examine"
+flag_name = "pills"
+flag_value = false
+
+[node name="DialogContent" parent="ChoiceBridge2/ChoiceMaker2" unique_id=406461756 instance=ExtResource("5_w078t")]
+lines = Array[String](["no puu"])
+portraits = Array[Texture2D]([ExtResource("6_ybq6y")])
+
+[node name="ChoiceMaker" parent="ChoiceBridge2" unique_id=390400241 instance=ExtResource("4_lc7k4")]
+label = "Examine"
+requires_flag = true
+flag_name = "pills"
+
+[node name="DialogContent" parent="ChoiceBridge2/ChoiceMaker" unique_id=1660294247 instance=ExtResource("5_w078t")]
+lines = Array[String](["puuu"])
+portraits = Array[Texture2D]([ExtResource("6_ybq6y")])
+
+[node name="DialogFlag" parent="ChoiceBridge2/ChoiceMaker" unique_id=2036688552 instance=ExtResource("7_20t1u")]
+set_flag_on_complete = false
+flag_name = ""
+delete_after_interaction = false
+
+[node name="FullArtContent" parent="ChoiceBridge2/ChoiceMaker" unique_id=1903622026 instance=ExtResource("9_w078t")]
+texture = ExtResource("10_20t1u")
+lines = Array[String](["testing"])
+
+[node name="InteractPrompt" parent="ChoiceBridge2" unique_id=228877391 instance=ExtResource("3_feb8i")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChoiceBridge2/InteractPrompt" unique_id=890213741]
+shape = SubResource("RectangleShape2D_11ixh")

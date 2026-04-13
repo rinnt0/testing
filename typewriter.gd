@@ -14,7 +14,8 @@ func _ready() -> void:
 	
 func _on_timer_timeout():
 	if current_index < type.length():
-		labelz.text += type[ current_index ]
+		labelz.text += type[current_index]
 		current_index += 1
 	else:
-		timer.stop
+		timer.stop()
+		DialogBox.on_typing_finished()

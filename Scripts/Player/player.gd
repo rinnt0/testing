@@ -2,6 +2,7 @@ class_name Player extends CharacterBody2D
 
 var current_direction = Vector2.DOWN
 var direction = Vector2.ZERO
+var can_look_up = true
 
 @onready var sprite: Sprite2D = $Sprite2D
 @onready var state_machine: PlayerStateMachine = $StateMachine
@@ -51,7 +52,9 @@ func set_direction():
 	sprite.scale.x = -1 if current_direction == Vector2.LEFT else 1 # flip the sprite when moving left
 	return true
 
-func is_looking_up(): # smooth looking up mechanic for hidden stuff
+func is_looking_up():
+	if not can_look_up:
+		return
 	if Input.is_action_pressed("up"):
 		collision_shape.scale.y = 1.5
 		collision_shape.position = Vector2( 0.0, -26.3 )
