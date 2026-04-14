@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://ba5q8oc8pghfd"]
+[gd_scene format=3 uid="uid://ba5q8oc8pghfd"]
 
-[ext_resource type="Script" uid="uid://bj70c7v5tl0df" path="res://cutscene_text.gd" id="1_bbiby"]
+[ext_resource type="Script" uid="uid://bj70c7v5tl0df" path="res://Scenes/UI/cutscene_text.gd" id="1_bbiby"]
 
 [node name="cutscene_intro" type="CanvasLayer"]
 script = ExtResource("1_bbiby")

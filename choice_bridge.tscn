@@ -1,6 +1,0 @@
-[gd_scene format=3 uid="uid://dvy64rhwe26ok"]
-
-[ext_resource type="Script" uid="uid://c7r4kt7co4eev" path="res://choice_bridge.gd" id="1_1wx1j"]
-
-[node name="ChoiceBridge" type="Node2D" unique_id=761932374]
-script = ExtResource("1_1wx1j")

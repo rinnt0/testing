@@ -1,9 +1,0 @@
-[gd_scene format=3 uid="uid://hrxgt28o1fkj"]
-
-[ext_resource type="Script" uid="uid://ci0ejq5ilaara" path="res://dialog_flag.gd" id="1_st3ge"]
-
-[node name="DialogFlag" type="Node" unique_id=971773713]
-script = ExtResource("1_st3ge")
-set_flag_on_complete = true
-flag_name = "pills"
-delete_after_interaction = true

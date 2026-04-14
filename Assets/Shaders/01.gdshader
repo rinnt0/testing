@@ -36,10 +36,6 @@ void fragment() {
     float b = texture(SCREEN_TEXTURE, glitch_uv - (dir * shift)).b;
 
     vec4 color = vec4(r, g, b, 1.0);
-    
-    // Optional: Add very subtle scanlines at the edges
-    float scanline = sin(uv.y * 800.0) * 0.04 * edge_factor;
-    color.rgb -= scanline;
-
+   
     COLOR = color;
 }

@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://cw4gwycbfphrr"]
+
+[ext_resource type="Script" uid="uid://s68yi2hcoydf" path="res://Scenes/UI/title_screen.gd" id="1_ak2if"]
+[ext_resource type="Texture2D" uid="uid://daacyuy2avbst" path="res://Assets/titlescreen_test.png" id="1_v6p8y"]
+[ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/LowresPixel-Regular.otf" id="3_2br5b"]
+[ext_resource type="AudioStream" uid="uid://brsvmrye7robu" path="res://Assets/Music/paulyudin-piano-piano-music-508963 (edited with Audjust).mp3" id="4_bnqst"]
+
+[node name="TitleScreen" type="Control" unique_id=946554269]
+z_index = 4
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ak2if")
+start_scene = "uid://yn4qqmdt3o4g"
+
+[node name="Background" type="TextureRect" parent="." unique_id=1302356482]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_v6p8y")
+expand_mode = 1
+
+[node name="MenuLayout" type="VBoxContainer" parent="Background" unique_id=1016973088]
+z_index = 394
+layout_mode = 0
+offset_left = 1580.0
+offset_top = 739.0
+offset_right = 1829.0
+offset_bottom = 913.0
+
+[node name="StartButton" type="Button" parent="Background/MenuLayout" unique_id=502102828]
+layout_mode = 2
+size_flags_horizontal = 4
+theme_override_fonts/font = ExtResource("3_2br5b")
+theme_override_font_sizes/font_size = 81
+text = "Start"
+alignment = 0
+
+[node name="QuitButton" type="Button" parent="." unique_id=1187041207]
+layout_mode = 0
+offset_left = 1580.0
+offset_top = 955.0
+offset_right = 1829.0
+offset_bottom = 1016.0
+theme_override_fonts/font = ExtResource("3_2br5b")
+theme_override_font_sizes/font_size = 70
+text = "Quit"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=298894134]
+stream = ExtResource("4_bnqst")
+autoplay = true
+bus = &"Music"
+
+[connection signal="pressed" from="Background/MenuLayout/StartButton" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="QuitButton" to="." method="_on_quit_pressed"]

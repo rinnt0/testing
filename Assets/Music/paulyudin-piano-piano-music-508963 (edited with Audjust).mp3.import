@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://brsvmrye7robu"
+path="res://.godot/imported/paulyudin-piano-piano-music-508963 (edited with Audjust).mp3-afd896e9a9cd4105e0410a2183da1d23.mp3str"
+
+[deps]
+
+source_file="res://Assets/Music/paulyudin-piano-piano-music-508963 (edited with Audjust).mp3"
+dest_files=["res://.godot/imported/paulyudin-piano-piano-music-508963 (edited with Audjust).mp3-afd896e9a9cd4105e0410a2183da1d23.mp3str"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4

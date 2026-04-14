@@ -1,0 +1,22 @@
+[gd_scene format=3 uid="uid://dskbaorg3v56p"]
+
+[ext_resource type="Script" uid="uid://d3hbegd35ov7q" path="res://transition_box.gd" id="1_s8jou"]
+
+[node name="TransitionBox" type="CanvasLayer" unique_id=1267278031]
+script = ExtResource("1_s8jou")
+
+[node name="ColorRect" type="ColorRect" parent="." unique_id=1764990238]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="." unique_id=326209072]
+offset_right = 1917.0
+offset_bottom = 1077.0
+text = "fdsfdsfds
+gbdf"
+horizontal_alignment = 1
+vertical_alignment = 1

@@ -18,7 +18,7 @@ extends Sprite2D
 #####
 # add flags here to add them to the dropdown!!
 ####
-@export_enum("pills_taken", "other_flag") var required_flag: String = "pills_taken"
+@export var required_flag: String = "pills_taken"
 
 @onready var collision_shape_2d: CollisionShape2D = $"../CollisionShape2D"
 @onready var plant: InteractPrompt = $".."

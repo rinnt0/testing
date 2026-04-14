@@ -30,6 +30,8 @@ PersistentData="*res://global_persistent_data.gd"
 ChoiceMenu="*uid://b04j2ddrfepjq"
 DialogBox="*uid://crprox1djmhpp"
 FullArtBox="*uid://crm1rjgiu7ewn"
+TransitionBox="*uid://dskbaorg3v56p"
+ScreenFx="*uid://c85sf8dy2bk5v"
 
 [display]
 

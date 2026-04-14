@@ -4,28 +4,32 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_56fmg"]
 shader = ExtResource("1_tql0t")
-shader_parameter/blur_strength = 2.930000139175
-shader_parameter/blur_radius = 0.106000005035
+shader_parameter/blur_strength = 1.0450000496375
+shader_parameter/blur_radius = 0.0
 shader_parameter/glitch_intensity = 0.0
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_n0fv1"]
 viewport_path = NodePath("world_blur_viewport")
 
-[node name="world_blur" type="TextureRect" unique_id=1700707788]
+[node name="CanvasLayer" type="CanvasLayer" unique_id=433670432]
+layer = 70
+
+[node name="world_blur" type="TextureRect" parent="." unique_id=1700707788]
 z_index = 100
 material = SubResource("ShaderMaterial_56fmg")
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -2022.0
+offset_left = -97.0
 offset_top = -32.0
-offset_right = 2572.0
+offset_right = 647.0
 offset_bottom = 164.0
 grow_horizontal = 2
 grow_vertical = 2
+mouse_filter = 2
 texture = SubResource("ViewportTexture_n0fv1")
 
-[node name="world_blur_viewport" type="SubViewport" parent="." unique_id=969775657]
+[node name="world_blur_viewport" type="SubViewport" parent="world_blur" unique_id=969775657]
 gui_disable_input = true
 size = Vector2i(320, 180)
 size_2d_override_stretch = true

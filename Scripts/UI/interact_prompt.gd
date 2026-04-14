@@ -9,7 +9,6 @@ var player : Player
 @onready var star_animation_player: AnimationPlayer = $interact_prompt_star/StarAnimationPlayer
 
 func _on_body_entered(body: Player) -> void:
-		print("lool")
 		star_animation_player.play("active")
 		circle.visible = true
 		button.visible = true

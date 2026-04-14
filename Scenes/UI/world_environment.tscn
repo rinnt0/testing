@@ -1,4 +1,4 @@
-[gd_scene load_steps=3 format=3 uid="uid://cq1nx4srh328e"]
+[gd_scene format=3 uid="uid://cq1nx4srh328e"]
 
 [sub_resource type="Environment" id="Environment_pofnv"]
 background_mode = 3
@@ -18,6 +18,7 @@ dof_blur_far_enabled = true
 dof_blur_near_enabled = true
 dof_blur_amount = 1.0
 
-[node name="WorldEnvironment" type="WorldEnvironment"]
+[node name="WorldEnvironment" type="WorldEnvironment" unique_id=1128091188]
+process_mode = 3
 environment = SubResource("Environment_pofnv")
 camera_attributes = SubResource("CameraAttributesPractical_m62b2")

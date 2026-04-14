@@ -1,0 +1,39 @@
+[gd_scene format=3 uid="uid://bj5u6p2251xvb"]
+
+[ext_resource type="Texture2D" uid="uid://cragxegywglh6" path="res://Scenes/Levels/dust_particles.png" id="1_w576m"]
+
+[sub_resource type="CanvasItemMaterial" id="CanvasItemMaterial_d4kaf"]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = true
+
+[sub_resource type="Gradient" id="Gradient_henlr"]
+colors = PackedColorArray(1, 1, 1, 1, 1, 1, 1, 0)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_w576m"]
+gradient = SubResource("Gradient_henlr")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_d4kaf"]
+lifetime_randomness = 1.0
+particle_flag_disable_z = true
+emission_shape_scale = Vector3(400, 200, 1)
+emission_shape = 3
+emission_box_extents = Vector3(1, 1, 1)
+angle_min = -720.0
+angle_max = 720.0
+spread = 180.0
+initial_velocity_min = 2.0
+initial_velocity_max = 10.0
+gravity = Vector3(0, -2, 0)
+color_ramp = SubResource("GradientTexture1D_w576m")
+anim_offset_max = 1.0
+
+[node name="DustFX" type="GPUParticles2D" unique_id=1835810399]
+modulate = Color(1, 1, 1, 0.42745098)
+material = SubResource("CanvasItemMaterial_d4kaf")
+amount = 30
+texture = ExtResource("1_w576m")
+lifetime = 4.0
+randomness = 1.0
+process_material = SubResource("ParticleProcessMaterial_d4kaf")

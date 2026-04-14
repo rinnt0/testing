@@ -1,6 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://ct4yl6h1iak3s"]
+[gd_scene format=3 uid="uid://ct4yl6h1iak3s"]
 
-[ext_resource type="Shader" uid="uid://bwmsmukhjtm5" path="res://glitch.gdshader" id="1_8wk6j"]
+[ext_resource type="Shader" uid="uid://bwmsmukhjtm5" path="res://Assets/Shaders/glitch.gdshader" id="1_8wk6j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8wk6j"]
 shader = ExtResource("1_8wk6j")

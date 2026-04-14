@@ -12,10 +12,16 @@
 [ext_resource type="PackedScene" uid="uid://gr83mbq341i4" path="res://Scenes/Levels/dialog_ui.tscn" id="7_456kb"]
 [ext_resource type="Script" uid="uid://dy61y8se2bt2b" path="res://Scenes/Levels/dialog_only.gd" id="8_fywi0"]
 [ext_resource type="Texture2D" uid="uid://c7u4k85bjoqnw" path="res://Assets/Sprites/pills.png" id="12_hvs5j"]
-[ext_resource type="PackedScene" uid="uid://dvy64rhwe26ok" path="res://choice_bridge.tscn" id="12_sahnr"]
-[ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://ChoiceMaker.tscn" id="13_13gea"]
-[ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://dialog_content.tscn" id="14_bowc5"]
-[ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://dialog_flag.tscn" id="15_okijc"]
+[ext_resource type="PackedScene" uid="uid://dvy64rhwe26ok" path="res://Scenes/UI/ChoiceSystem/choice_bridge.tscn" id="12_sahnr"]
+[ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://Scenes/UI/ChoiceSystem/ChoiceMaker.tscn" id="13_13gea"]
+[ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://Scenes/UI/ChoiceSystem/dialog_content.tscn" id="14_bowc5"]
+[ext_resource type="Texture2D" uid="uid://bnswuhuglfvkw" path="res://Scenes/UI/ChoiceSystem/icon_examine.png" id="14_okijc"]
+[ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://Scenes/UI/ChoiceSystem/dialog_flag.tscn" id="15_okijc"]
+[ext_resource type="Texture2D" uid="uid://1f4vy0pa4egy" path="res://Scenes/UI/ChoiceSystem/speaker_test.png" id="16_gx6f8"]
+[ext_resource type="Texture2D" uid="uid://oq5bhpgqjpfy" path="res://Scenes/UI/ChoiceSystem/icon_questionmark.png" id="16_okijc"]
+[ext_resource type="PackedScene" uid="uid://bj5u6p2251xvb" path="res://Scenes/UI/dust_fx.tscn" id="17_13gea"]
+[ext_resource type="Texture2D" uid="uid://dt6xb8panfct2" path="res://Scenes/UI/ChoiceSystem/icon_take.png" id="17_lqbkx"]
+[ext_resource type="Texture2D" uid="uid://bq0f4jbpqm62n" path="res://Scenes/UI/ChoiceSystem/icon_talk.png" id="20_fqxiv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ce5c8"]
 size = Vector2(44, 14)
@@ -85,6 +91,7 @@ dialogue_lines = Array[String](["I haven't slept well in weeks.", "This will hel
 lamp_light_path = NodePath("../../PointLight2D")
 warn_text = "I should take my meds first."
 requires_condition = true
+required_flag = "pills"
 
 [node name="AnimationPlayer" parent="plant" unique_id=901105697 instance=ExtResource("6_456kb")]
 
@@ -169,13 +176,18 @@ position = Vector2(254, 256)
 
 [node name="ChoiceMaker" parent="Pills/ChoiceBridge" unique_id=701856808 instance=ExtResource("13_13gea")]
 label = "Examine"
+icon = ExtResource("14_okijc")
 
 [node name="DialogContent" parent="Pills/ChoiceBridge/ChoiceMaker" unique_id=326983792 instance=ExtResource("14_bowc5")]
 lines = Array[String](["I should probably take these..."])
-portraits = Array[Texture2D]([null])
+portraits = Array[Texture2D]([ExtResource("16_gx6f8")])
+
+[node name="ChoiceMaker3" parent="Pills/ChoiceBridge" unique_id=1554264409 instance=ExtResource("13_13gea")]
+icon = ExtResource("16_okijc")
 
 [node name="ChoiceMaker2" parent="Pills/ChoiceBridge" unique_id=512242180 instance=ExtResource("13_13gea")]
 label = "Take"
+icon = ExtResource("17_lqbkx")
 
 [node name="DialogFlag" parent="Pills/ChoiceBridge/ChoiceMaker2" unique_id=971773713 instance=ExtResource("15_okijc")]
 
@@ -189,6 +201,13 @@ position = Vector2(11, -5)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pills/ChoiceBridge/InteractPrompt" unique_id=1523982914]
 position = Vector2(-6, 16)
 shape = SubResource("RectangleShape2D_sahnr")
+
+[node name="ChoiceMaker4" parent="Pills/ChoiceBridge" unique_id=620298902 instance=ExtResource("13_13gea")]
+label = "talk"
+icon = ExtResource("20_fqxiv")
+
+[node name="DustFX" parent="." unique_id=1835810399 instance=ExtResource("17_13gea")]
+position = Vector2(327, 167)
 
 [editable path="plant/DialogUI"]
 [editable path="level_transition_0"]

@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://c85sf8dy2bk5v"]
+
+[ext_resource type="PackedScene" uid="uid://fagrj3iki7ta" path="res://Scenes/UI/world_blur.tscn" id="1_jwe6y"]
+[ext_resource type="PackedScene" uid="uid://dsl48a34hqk1a" path="res://Scenes/UI/crt_fx.tscn" id="2_u7a4j"]
+
+[sub_resource type="Gradient" id="Gradient_gk6dx"]
+offsets = PackedFloat32Array(0.545455)
+colors = PackedColorArray(1, 1, 1, 0.0313726)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_jqemp"]
+gradient = SubResource("Gradient_gk6dx")
+fill_from = Vector2(1, 1)
+
+[node name="ScreenFX" type="CanvasLayer" unique_id=1022917238]
+layer = 130
+
+[node name="world_blur" parent="." unique_id=433670432 instance=ExtResource("1_jwe6y")]
+
+[node name="TextureRect" parent="." unique_id=141781502 instance=ExtResource("2_u7a4j")]
+offset_left = -8.0
+offset_top = -34.0
+offset_right = 1922.0
+offset_bottom = 1121.0
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_jqemp")

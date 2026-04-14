@@ -1,0 +1,59 @@
+[gd_scene format=3 uid="uid://2773h4vmi8g5"]
+
+[ext_resource type="Script" uid="uid://0u3lnprdid3o" path="res://Scenes/UI/ChoiceSystem/choice_slot.gd" id="1_aa88b"]
+[ext_resource type="Texture2D" uid="uid://dvslppvbn1kv5" path="res://Scenes/UI/ChoiceSystem/select_bar.png" id="1_bsm6e"]
+[ext_resource type="Texture2D" uid="uid://db6o3ouaolhgd" path="res://Assets/Sprites/interact_prompt_button.png" id="2_aa88b"]
+[ext_resource type="Texture2D" uid="uid://bnswuhuglfvkw" path="res://Scenes/UI/ChoiceSystem/icon_examine.png" id="2_gh3og"]
+[ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/LowresPixel-Regular.otf" id="3_gh3og"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mldav"]
+texture = ExtResource("1_bsm6e")
+texture_margin_left = 144.0
+texture_margin_top = 38.0
+texture_margin_right = 50.0
+texture_margin_bottom = 33.0
+expand_margin_top = 1.0
+expand_margin_bottom = 1.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bsm6e"]
+bg_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 37
+corner_radius_bottom_left = 37
+corner_detail = 1
+expand_margin_left = 65.0
+expand_margin_top = 1.0
+expand_margin_right = 114.0
+
+[node name="PanelContainer" type="PanelContainer" unique_id=1793850275]
+custom_minimum_size = Vector2(1200, 63.935)
+theme_override_styles/panel = SubResource("StyleBoxTexture_mldav")
+script = ExtResource("1_aa88b")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=953917803]
+visible = false
+modulate = Color(1, 1, 1, 0.34509805)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_bsm6e")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=258041179]
+layout_mode = 2
+theme_override_constants/separation = 25
+
+[node name="Icon" type="TextureRect" parent="HBoxContainer" unique_id=1442349321]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+texture = ExtResource("2_gh3og")
+expand_mode = 3
+stretch_mode = 6
+
+[node name="Label" type="Label" parent="HBoxContainer" unique_id=369035852]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_gh3og")
+theme_override_font_sizes/font_size = 45
+text = "Examine"
+
+[node name="e_button_visual" type="TextureRect" parent="HBoxContainer" unique_id=618377776]
+layout_mode = 2
+texture = ExtResource("2_aa88b")
+expand_mode = 3
