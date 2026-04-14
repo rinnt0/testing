@@ -80,6 +80,7 @@ theme_override_font_sizes/font_size = 64
 text = "xczc"
 autowrap_mode = 3
 script = ExtResource("3_tmmap")
+timer_time = 0.05
 
 [node name="Timer" type="Timer" parent="NinePatchRect/Label" unique_id=210550202]
 

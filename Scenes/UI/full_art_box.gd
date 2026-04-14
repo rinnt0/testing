@@ -26,7 +26,7 @@ func show_art(content: FullArtContent, leave_black: bool = false):
 	await animation_player.animation_finished
 	
 	if content.lines.size() > 0:
-		DialogBox.show_lines(content.lines, content.portraits)
+		DialogBox.show_lines(content.lines, content.portraits, content.voice_profiles)  # ← add voice_profiles
 		await DialogBox.dialog_finished
 	else:
 		await wait_for_interact()

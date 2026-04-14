@@ -16,7 +16,6 @@ func do_transition(content: TransitionContent, already_black: bool = false):
 	PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_DISABLED
 	PlayerManager.player.can_look_up = false
 
-	# Fade to black (skip if already black from full art)
 	if not already_black:
 		color_rect.color.a = 0.0
 		var tween = create_tween()
@@ -25,33 +24,54 @@ func do_transition(content: TransitionContent, already_black: bool = false):
 	else:
 		color_rect.color.a = 1.0
 
-	# Typewrite the transition text
-	if content.transition_text != "":
+	# Loop through each transition text line
+	for i in content.transition_texts.size():
+		var text = content.transition_texts[i]
+		if text == "":
+			continue
+
+		var profile = null
+		if content.voice_profiles.size() > i:
+			profile = content.voice_profiles[i]
+
 		transition_label.modulate.a = 1.0
-		await _typewrite(transition_label, content.transition_text)
+		await _typewrite(transition_label, text, profile)
 		await _wait_for_interact()
+
 		var tween = create_tween()
 		tween.tween_property(transition_label, "modulate:a", 0.0, 0.5)
 		await tween.finished
 
-	# Load the next level
 	LevelManager.load_new_level(content.next_scene_path, content.transition_target, Vector2.ZERO)
-
 	visible = false
 	await FullArtBox.play_fade_in()
-
 	PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
 	PlayerManager.player.can_look_up = true
 	transition_finished.emit()
 
-func _typewrite(label_node: Label, text: String):
+func _typewrite(label_node: Label, text: String, profile: VoiceProfile = null):
 	label_node.text = text
 	label_node.visible_characters = 0
 	var typing_speed = 10
 	var typing_time = 0.0
+	var last_visible = 0
+	var blip_counter = 0
+
 	while label_node.visible_characters < label_node.get_total_character_count():
 		typing_time += get_process_delta_time()
 		label_node.visible_characters = int(typing_speed * typing_time)
+
+		if label_node.visible_characters > last_visible:
+			for i in range(last_visible, label_node.visible_characters):
+				var c = text[i]
+				if not AudioManager.is_silent_char(c):
+					blip_counter += 1
+					var every_n = profile.blip_every_n_chars if profile else 1
+					if blip_counter >= every_n:
+						blip_counter = 0
+						AudioManager.play_voice_blip(profile.blip_sound if profile else null, profile)
+			last_visible = label_node.visible_characters
+
 		await get_tree().process_frame
 
 func _wait_for_interact():

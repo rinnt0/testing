@@ -20,8 +20,13 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 run/max_fps=60
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://doeotxymw54lm"
+
 [autoload]
 
+AudioManager="*uid://c3brltvgc5a8q"
 LevelManager="*res://00_globals/global_level_manager.gd"
 PlayerManager="*res://00_globals/global_player_manager.gd"
 GlobalWorldEnvironment="*res://Scenes/UI/world_environment.tscn"

@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="VoiceProfile" format=3 uid="uid://b8hxdd4wcrx4j"]
+
+[ext_resource type="Script" uid="uid://buevi6v0ikoyi" path="res://VoiceProfiles/voice_profiles.gd" id="1_535bn"]
+
+[resource]
+script = ExtResource("1_535bn")
+base_pitch = 1.2229999999999999
+pitch_variance = 0.115
+base_volume_db = -8.344
+volume_variance_db = 1.903
+char_speed = 0.11199999999999999

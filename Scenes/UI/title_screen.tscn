@@ -15,6 +15,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ak2if")
 start_scene = "uid://yn4qqmdt3o4g"
+music = ExtResource("4_bnqst")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1302356482]
 layout_mode = 1
@@ -52,10 +53,7 @@ theme_override_fonts/font = ExtResource("3_2br5b")
 theme_override_font_sizes/font_size = 70
 text = "Quit"
 
-[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="." unique_id=298894134]
-stream = ExtResource("4_bnqst")
-autoplay = true
-bus = &"Music"
+[node name="Node" type="Node" parent="." unique_id=1948884261]
 
 [connection signal="pressed" from="Background/MenuLayout/StartButton" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_quit_pressed"]

@@ -60,7 +60,7 @@ func _unhandled_input(event: InputEvent):
 			if full_art:
 				await FullArtBox.show_art(full_art, transition != null)
 			elif dialog:
-				DialogBox.show_lines(dialog.lines, dialog.portraits)
+				DialogBox.show_lines(dialog.lines, dialog.portraits, dialog.voice_profiles)  # ← pass profiles
 				await DialogBox.dialog_finished
 			else:
 				PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT

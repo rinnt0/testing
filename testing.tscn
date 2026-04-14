@@ -10,7 +10,10 @@
 [ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://Scenes/UI/ChoiceSystem/dialog_flag.tscn" id="7_20t1u"]
 [ext_resource type="PackedScene" uid="uid://hbmmv6ave85g" path="res://Scenes/UI/full_art_content.tscn" id="9_w078t"]
 [ext_resource type="Texture2D" uid="uid://daacyuy2avbst" path="res://Assets/titlescreen_test.png" id="10_20t1u"]
+[ext_resource type="Texture2D" uid="uid://1f4vy0pa4egy" path="res://Scenes/UI/ChoiceSystem/speaker_test.png" id="11_2yngh"]
 [ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://transition_content.tscn" id="11_fd6ls"]
+[ext_resource type="Script" uid="uid://buevi6v0ikoyi" path="res://VoiceProfiles/voice_profiles.gd" id="12_qqc7k"]
+[ext_resource type="Resource" uid="uid://ddfjyl7doihlw" path="res://VoiceProfiles/main_character_fast.tres" id="13_egoch"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fd6ls"]
 size = Vector2(45, 7)
@@ -102,8 +105,12 @@ delete_after_interaction = false
 [node name="FullArtContent" parent="ChoiceBridge2/ChoiceMaker" unique_id=1903622026 instance=ExtResource("9_w078t")]
 texture = ExtResource("10_20t1u")
 lines = Array[String](["testing"])
+portraits = Array[Texture2D]([ExtResource("11_2yngh")])
+voice_profiles = Array[ExtResource("12_qqc7k")]([ExtResource("13_egoch")])
 
 [node name="TransitionContent" parent="ChoiceBridge2/ChoiceMaker" unique_id=2021110483 instance=ExtResource("11_fd6ls")]
+transition_texts = Array[String](["trab", "yab"])
+voice_profiles = Array[ExtResource("12_qqc7k")]([ExtResource("13_egoch"), ExtResource("13_egoch")])
 
 [node name="InteractPrompt" parent="ChoiceBridge2" unique_id=228877391 instance=ExtResource("3_feb8i")]
 

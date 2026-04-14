@@ -1,8 +1,10 @@
 extends Control
 
 @export_file("*.tscn") var start_scene: String = ""
+@export var music : AudioStream
 
 func _ready() -> void:
+	AudioManager.play_music( music )
 	if PlayerManager.player:
 		PlayerManager.player.visible = false
 		var camera = PlayerManager.player.get_node_or_null("Camera2D")
