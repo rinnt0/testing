@@ -1,10 +1,10 @@
 [gd_scene format=4 uid="uid://fa5gjh35qea5"]
 
-[ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://Scenes/Levels/level_scripts/level.gd" id="1_81pjl"]
+[ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://00_workflow/level.gd" id="1_81pjl"]
 [ext_resource type="PackedScene" uid="uid://d2rsvgwv3qqoa" path="res://Scenes/Levels/test_tile_map_layer.tscn" id="2_376jq"]
 [ext_resource type="PackedScene" uid="uid://3aqfed86hvwr" path="res://Scenes/Levels/player_spawner.tscn" id="3_376jq"]
 [ext_resource type="Script" uid="uid://dil70n5ju6xe4" path="res://Scenes/Levels/interaction_door.gd" id="4_k0ayy"]
-[ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://Scenes/UI/interact_prompt.tscn" id="5_vp617"]
+[ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://00_workflow/interact_prompt.tscn" id="5_vp617"]
 [ext_resource type="Script" uid="uid://dy61y8se2bt2b" path="res://Scenes/Levels/dialog_only.gd" id="6_e6f4t"]
 [ext_resource type="PackedScene" uid="uid://3lpjvhvnw8h5" path="res://Scenes/Levels/level_transition.tscn" id="6_vp617"]
 [ext_resource type="PackedScene" uid="uid://gr83mbq341i4" path="res://Scenes/Levels/dialog_ui.tscn" id="7_3sors"]

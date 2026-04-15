@@ -1,6 +1,6 @@
 [gd_scene format=4 uid="uid://3cgavn1qseq6"]
 
-[ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://Scenes/Levels/level_scripts/level.gd" id="1_3mqfk"]
+[ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://00_workflow/level.gd" id="1_3mqfk"]
 [ext_resource type="PackedScene" uid="uid://d2rsvgwv3qqoa" path="res://Scenes/Levels/test_tile_map_layer.tscn" id="1_4dpyx"]
 [ext_resource type="PackedScene" uid="uid://3aqfed86hvwr" path="res://Scenes/Levels/player_spawner.tscn" id="2_4dpyx"]
 [ext_resource type="PackedScene" uid="uid://3lpjvhvnw8h5" path="res://Scenes/Levels/level_transition.tscn" id="3_iixi8"]

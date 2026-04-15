@@ -2,16 +2,16 @@
 
 [ext_resource type="Script" uid="uid://bj70c7v5tl0df" path="res://Scenes/UI/cutscene_text.gd" id="1_bbiby"]
 
-[node name="cutscene_intro" type="CanvasLayer"]
+[node name="cutscene_intro" type="CanvasLayer" unique_id=1111439512]
 script = ExtResource("1_bbiby")
 cutscene_lines = Array[String](["I'm so tired.", "Tomorrow will be better."])
 next_scene = "uid://fa5gjh35qea5"
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="ColorRect" type="ColorRect" parent="." unique_id=339019680]
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Label" type="Label" parent="."]
+[node name="Label" type="Label" parent="." unique_id=929800070]
 offset_right = 40.0
 offset_bottom = 23.0
 theme_override_font_sizes/font_size = 61

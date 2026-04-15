@@ -123,7 +123,6 @@ script = ExtResource("7_0u5uq")
 
 [node name="Walk" type="Node" parent="StateMachine" unique_id=242002187]
 script = ExtResource("8_jlvik")
-move_speed = 160.0
 
 [node name="PauseMenu" parent="." unique_id=503717766 instance=ExtResource("10_jhyir")]
 offset_left = -675.0

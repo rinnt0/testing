@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://c0ken1f5ko0je" path="res://Assets/Levels/Level 1/level_6.png" id="5_02uke"]
 [ext_resource type="Texture2D" uid="uid://cugafhmlypodl" path="res://Assets/Levels/Level 1/grass_test.png" id="6_6xvx2"]
 [ext_resource type="Texture2D" uid="uid://cnvdyuonbgmno" path="res://Assets/Levels/Level1.png" id="6_fm2a8"]
-[ext_resource type="Script" uid="uid://dm1ey3gxh7q40" path="res://Scenes/Levels/level_tilemap.gd" id="6_lrwof"]
+[ext_resource type="Script" uid="uid://dm1ey3gxh7q40" path="res://00_workflow/level_tilemap.gd" id="6_lrwof"]
 [ext_resource type="Texture2D" uid="uid://bwymmn6lwb2fh" path="res://Assets/Levels/Level 1/hub_1.png" id="7_5a8gy"]
 [ext_resource type="Texture2D" uid="uid://v74adh1nciy3" path="res://Assets/Levels/Level 1/Level_0.png" id="7_ga85c"]
 

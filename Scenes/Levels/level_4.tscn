@@ -1,11 +1,11 @@
 [gd_scene format=4 uid="uid://5w2lwelal2nu"]
 
-[ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://Scenes/Levels/level_scripts/level.gd" id="1_6grq2"]
+[ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://00_workflow/level.gd" id="1_6grq2"]
 [ext_resource type="PackedScene" uid="uid://d2rsvgwv3qqoa" path="res://Scenes/Levels/test_tile_map_layer.tscn" id="2_vwhew"]
 [ext_resource type="PackedScene" uid="uid://3aqfed86hvwr" path="res://Scenes/Levels/player_spawner.tscn" id="3_jqrsn"]
 [ext_resource type="PackedScene" uid="uid://3lpjvhvnw8h5" path="res://Scenes/Levels/level_transition.tscn" id="4_vwhew"]
 [ext_resource type="Script" uid="uid://dgrx0hd05a38x" path="res://npc_dialog.gd" id="5_gsxik"]
-[ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://Scenes/UI/interact_prompt.tscn" id="5_t74h0"]
+[ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://00_workflow/interact_prompt.tscn" id="5_t74h0"]
 [ext_resource type="Texture2D" uid="uid://cieygcc1fxmqp" path="res://Assets/Sprites/player.png" id="6_3asqb"]
 [ext_resource type="PackedScene" uid="uid://gr83mbq341i4" path="res://Scenes/Levels/dialog_ui.tscn" id="6_i4hbv"]
 [ext_resource type="Script" uid="uid://bf32wfde7pp7q" path="res://Scenes/UI/flag_dialog.gd" id="6_i5g5g"]

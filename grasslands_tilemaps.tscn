@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://d0cefyu4n7juf" path="res://Assets/Levels/Grasslands/grass_baset.png" id="1_xo20c"]
 [ext_resource type="Texture2D" uid="uid://p4hcpl6l273i" path="res://Assets/Levels/Grasslands/grass_middle.png" id="2_df8c6"]
-[ext_resource type="Script" uid="uid://dm1ey3gxh7q40" path="res://Scenes/Levels/level_tilemap.gd" id="2_lwv0b"]
+[ext_resource type="Script" uid="uid://dm1ey3gxh7q40" path="res://00_workflow/level_tilemap.gd" id="2_lwv0b"]
 [ext_resource type="Texture2D" uid="uid://qugpy8cr602t" path="res://Assets/Levels/Grasslands/grass_front.png" id="3_df8c6"]
 [ext_resource type="Texture2D" uid="uid://dqv3tvn0g43a2" path="res://Assets/Levels/Grasslands/grass_Background_1.png" id="4_xxijt"]
 

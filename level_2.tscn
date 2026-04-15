@@ -1,11 +1,11 @@
 [gd_scene format=4 uid="uid://ddgusyjrewcd1"]
 
 [ext_resource type="PackedScene" uid="uid://d2rsvgwv3qqoa" path="res://Scenes/Levels/test_tile_map_layer.tscn" id="1_jg0dc"]
-[ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://Scenes/Levels/level_scripts/level.gd" id="1_xdadj"]
+[ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://00_workflow/level.gd" id="1_xdadj"]
 [ext_resource type="PackedScene" uid="uid://3aqfed86hvwr" path="res://Scenes/Levels/player_spawner.tscn" id="3_1y8me"]
 [ext_resource type="Texture2D" uid="uid://bdihefj2b4g7c" path="res://Scenes/Player/MC_base.png" id="4_n7ypv"]
 [ext_resource type="Script" uid="uid://s5vi3ds11c8d" path="res://mirror_reflection.gd" id="5_0s5r2"]
-[ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://Scenes/UI/interact_prompt.tscn" id="6_0s5r2"]
+[ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://00_workflow/interact_prompt.tscn" id="6_0s5r2"]
 [ext_resource type="Script" uid="uid://dilbedvddiajy" path="res://falling_cutscene.gd" id="7_7dov7"]
 [ext_resource type="Texture2D" uid="uid://b2favje21pb3v" path="res://Assets/Levels/Level 1/lol.png" id="8_ehv2h"]
 [ext_resource type="PackedScene" uid="uid://3lpjvhvnw8h5" path="res://Scenes/Levels/level_transition.tscn" id="9_ehv2h"]

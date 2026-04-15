@@ -1,8 +1,8 @@
-[gd_scene load_steps=8 format=3 uid="uid://ckvq254jns04t"]
+[gd_scene format=3 uid="uid://ckvq254jns04t"]
 
 [ext_resource type="Script" uid="uid://djg0pvdq38qru" path="res://Scenes/Levels/elevator.gd" id="1_a1q2r"]
 [ext_resource type="Texture2D" uid="uid://42yir1hthxgf" path="res://Assets/Levels/Level 1/elevator.png" id="2_77yi3"]
-[ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://Scenes/UI/interact_prompt.tscn" id="3_hr1cl"]
+[ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://00_workflow/interact_prompt.tscn" id="3_hr1cl"]
 
 [sub_resource type="Animation" id="Animation_usk54"]
 length = 0.001

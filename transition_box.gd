@@ -13,8 +13,11 @@ func do_transition(content: TransitionContent, already_black: bool = false):
 	visible = true
 	transition_label.modulate.a = 0.0
 	transition_label.text = ""
-	PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_DISABLED
-	PlayerManager.player.can_look_up = false
+	
+	# ADD SAFETY CHECK: The player might not exist on the title screen
+	if PlayerManager.player:
+		PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_DISABLED
+		PlayerManager.player.can_look_up = false
 
 	if not already_black:
 		color_rect.color.a = 0.0
@@ -42,11 +45,27 @@ func do_transition(content: TransitionContent, already_black: bool = false):
 		tween.tween_property(transition_label, "modulate:a", 0.0, 0.5)
 		await tween.finished
 
+	# 1. Trigger the level load
 	LevelManager.load_new_level(content.next_scene_path, content.transition_target, Vector2.ZERO)
-	visible = false
+	
+	# 2. WAIT for the engine to actually swap the scenes
+	await get_tree().process_frame
+	
+	# 3. Play the intro fade-in BEFORE hiding the TransitionBox
+	# This ensures there is no gap where the Title Screen is visible.
 	await FullArtBox.play_fade_in()
-	PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
-	PlayerManager.player.can_look_up = true
+
+	if PlayerManager.player:
+		# 1. Restore the state machine 
+		PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
+		PlayerManager.player.can_look_up = true
+		
+		# 2. FIX: Manually restore what the Title Screen hid 
+		PlayerManager.player.visible = true
+		var camera = PlayerManager.player.get_node_or_null("Camera2D")
+		if camera:
+			camera.enabled = true
+
 	transition_finished.emit()
 
 func _typewrite(label_node: Label, text: String, profile: VoiceProfile = null):

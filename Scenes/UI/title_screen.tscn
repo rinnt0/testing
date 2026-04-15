@@ -4,6 +4,9 @@
 [ext_resource type="Texture2D" uid="uid://daacyuy2avbst" path="res://Assets/titlescreen_test.png" id="1_v6p8y"]
 [ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/LowresPixel-Regular.otf" id="3_2br5b"]
 [ext_resource type="AudioStream" uid="uid://brsvmrye7robu" path="res://Assets/Music/paulyudin-piano-piano-music-508963 (edited with Audjust).mp3" id="4_bnqst"]
+[ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://00_workflow/transition_content.tscn" id="5_dsf7a"]
+[ext_resource type="Script" uid="uid://buevi6v0ikoyi" path="res://VoiceProfiles/voice_profiles.gd" id="6_824g0"]
+[ext_resource type="Resource" uid="uid://ddfjyl7doihlw" path="res://VoiceProfiles/main_character_fast.tres" id="7_tjte5"]
 
 [node name="TitleScreen" type="Control" unique_id=946554269]
 z_index = 4
@@ -14,7 +17,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ak2if")
-start_scene = "uid://yn4qqmdt3o4g"
 music = ExtResource("4_bnqst")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1302356482]
@@ -53,7 +55,11 @@ theme_override_fonts/font = ExtResource("3_2br5b")
 theme_override_font_sizes/font_size = 70
 text = "Quit"
 
-[node name="Node" type="Node" parent="." unique_id=1948884261]
+[node name="TransitionContent" parent="." unique_id=2021110483 instance=ExtResource("5_dsf7a")]
+transition_texts = Array[String](["Another day..."])
+transition_target = "PlayerSpawn"
+next_scene_path = "uid://wuvkws2qcocr"
+voice_profiles = Array[ExtResource("6_824g0")]([ExtResource("7_tjte5")])
 
 [connection signal="pressed" from="Background/MenuLayout/StartButton" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_quit_pressed"]
