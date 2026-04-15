@@ -2,7 +2,7 @@ class_name StateIdle extends State
 
 @onready var walk: StateWalk = $"../Walk"
 
-func enter_state(): # when you enter this state. do this! :
+func enter_state():
 	player.update_animation("idle")
 	pass
 	

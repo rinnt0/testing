@@ -14,11 +14,15 @@
 [ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://transition_content.tscn" id="11_fd6ls"]
 [ext_resource type="Script" uid="uid://buevi6v0ikoyi" path="res://VoiceProfiles/voice_profiles.gd" id="12_qqc7k"]
 [ext_resource type="Resource" uid="uid://ddfjyl7doihlw" path="res://VoiceProfiles/main_character_fast.tres" id="13_egoch"]
+[ext_resource type="PackedScene" uid="uid://bjw7yyj5egq35" path="res://auto_trigger.tscn" id="15_qqc7k"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fd6ls"]
 size = Vector2(45, 7)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_11ixh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_egoch"]
+size = Vector2(20, 45)
 
 [node name="Node2D" type="Node2D" unique_id=1924986355]
 script = ExtResource("1_co24e")
@@ -57,6 +61,7 @@ script = null
 position = Vector2(292, 145)
 
 [node name="ChoiceBridge" parent="." unique_id=761932374 instance=ExtResource("3_11ixh")]
+visible = false
 position = Vector2(317, 128)
 
 [node name="ChoiceMaker" parent="ChoiceBridge" unique_id=701856808 instance=ExtResource("4_lc7k4")]
@@ -116,3 +121,25 @@ voice_profiles = Array[ExtResource("12_qqc7k")]([ExtResource("13_egoch"), ExtRes
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ChoiceBridge2/InteractPrompt" unique_id=890213741]
 shape = SubResource("RectangleShape2D_11ixh")
+
+[node name="AutoTrigger" parent="." unique_id=904244366 instance=ExtResource("15_qqc7k")]
+position = Vector2(363, 125)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AutoTrigger" unique_id=116308624]
+position = Vector2(3, 12.5)
+shape = SubResource("RectangleShape2D_egoch")
+
+[node name="ChoiceMaker" parent="AutoTrigger" unique_id=333968866 instance=ExtResource("4_lc7k4")]
+
+[node name="DialogContent" parent="AutoTrigger/ChoiceMaker" unique_id=1211920510 instance=ExtResource("5_w078t")]
+lines = Array[String](["this is a ", "cutscene"])
+portraits = Array[Texture2D]([ExtResource("11_2yngh"), ExtResource("11_2yngh")])
+voice_profiles = Array[ExtResource("12_qqc7k")]([ExtResource("13_egoch"), ExtResource("13_egoch")])
+camera_targets = Array[String](["", "Marker2D2"])
+camera_zoom = Array[float]([0.0, 5.0])
+
+[node name="Marker2D" type="Marker2D" parent="AutoTrigger/ChoiceMaker/DialogContent" unique_id=2043410620]
+position = Vector2(332, 91)
+
+[node name="Marker2D2" type="Marker2D" parent="AutoTrigger/ChoiceMaker/DialogContent" unique_id=1410897069]
+position = Vector2(244, 89)

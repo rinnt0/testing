@@ -37,7 +37,7 @@ colors = PackedColorArray(0.560023, 0.0754424, 0.176681, 1)
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_o86a8"]
 gradient = SubResource("Gradient_osokm")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_smcvq"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7r763"]
 resource_local_to_scene = true
 size = Vector2(16, 16)
 
@@ -59,11 +59,11 @@ fill_from = Vector2(0.470085, 0.564103)
 [sub_resource type="Resource" id="Resource_r8mod"]
 script = ExtResource("18_kl3re")
 blip_sound = ExtResource("20_7r763")
-base_pitch = 1.2229999999999999
+base_pitch = 1.223
 pitch_variance = 0.115
 base_volume_db = -8.344
 volume_variance_db = 1.903
-char_speed = 0.09699999999999999
+char_speed = 0.097
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_sahnr"]
 size = Vector2(23, 13)
@@ -140,7 +140,7 @@ side = 3
 
 [node name="CollisionShape2D" parent="level_transition_0" index="0"]
 position = Vector2(16, 0)
-shape = SubResource("RectangleShape2D_smcvq")
+shape = SubResource("RectangleShape2D_7r763")
 
 [node name="Closet" type="Node2D" parent="." unique_id=813238078]
 process_mode = 3
@@ -196,6 +196,10 @@ icon = ExtResource("14_okijc")
 lines = Array[String](["oh... my pills...", "I should probably take these..."])
 portraits = Array[Texture2D]([ExtResource("16_gx6f8"), ExtResource("16_gx6f8")])
 voice_profiles = Array[ExtResource("18_kl3re")]([ExtResource("19_smcvq"), SubResource("Resource_r8mod")])
+camera_targets = Array[String](["", "Marker2D"])
+
+[node name="Marker2D" type="Marker2D" parent="Pills/ChoiceBridge/ChoiceMaker/DialogContent" unique_id=1481596011]
+position = Vector2(183, 255)
 
 [node name="ChoiceMaker3" parent="Pills/ChoiceBridge" unique_id=1554264409 instance=ExtResource("13_13gea")]
 icon = ExtResource("16_okijc")

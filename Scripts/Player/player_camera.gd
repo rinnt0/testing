@@ -2,6 +2,8 @@ class_name PlayerCamera extends Camera2D
 
 @onready var camera: Camera2D = $"."
 
+var cinematic_mode: bool = false
+
 
 func _ready() -> void:
 	LevelManager.tilemap_bounds_changed.connect( update_limits )
@@ -15,6 +17,8 @@ func _process(delta: float) -> void:
 		
 		
 func look_up():
+	if cinematic_mode:
+		return
 	if not PlayerManager.player.can_look_up:
 		return
 	if Input.is_action_pressed("up"):

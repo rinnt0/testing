@@ -2,12 +2,14 @@ class_name Level extends Node2D
 
 @onready var door_spawn: Marker2D = $Marker2D
 @export var music : AudioStream
+@export var ambient: AudioStream 
 
 var pills_taken = false
 var camera = PlayerManager.player.get_node("Camera2D")
 func _ready() -> void:
 	PlayerManager.set_as_parent(self)
 	AudioManager.play_music( music )
+	AudioManager.play_ambient( ambient )  # ← add this
 	
 	PlayerManager.player.visible = true
 	if camera:

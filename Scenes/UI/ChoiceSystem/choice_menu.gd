@@ -22,6 +22,7 @@ func show_options(new_options: Array):
 	current_index = 0
 	visible = true
 	rebuild()
+	AudioManager.play_sfx(AudioManager.ui_click_sound)
 	PlayerManager.player.can_look_up = false
 	
 	if PlayerManager.player.has_node("AnimationPlayer"):
@@ -58,14 +59,17 @@ func _input(event: InputEvent):
 		get_viewport().set_input_as_handled()
 		current_index = (current_index - 1 + options.size()) % options.size()
 		rebuild()
+		AudioManager.play_sfx(AudioManager.ui_click_sound)  # ← scroll
 		
 	elif event.is_action_pressed("ui_down"):
 		get_viewport().set_input_as_handled()
 		current_index = (current_index + 1) % options.size()
 		rebuild()
+		AudioManager.play_sfx(AudioManager.ui_click_sound)  # ← scroll
 		
 	elif event.is_action_pressed("interact"):
 		get_viewport().set_input_as_handled()
 		option_confirmed.emit(options[current_index].label)
 		option_index_confirmed.emit(current_index)
 		hide_menu()
+		AudioManager.play_sfx(AudioManager.ui_click_sound)  # ← scroll
