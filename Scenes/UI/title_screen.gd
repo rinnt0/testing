@@ -2,12 +2,14 @@ extends Control
 
 # You can remove start_scene since TransitionContent handles the next scene path!
 @export var music : AudioStream
+@export var ambient : AudioStream
 
 # Grab a reference to the new node
 @onready var transition_content: TransitionContent = $TransitionContent 
 
 func _ready() -> void:
 	AudioManager.play_music( music )
+	AudioManager.play_ambient( ambient )
 	if PlayerManager.player:
 		PlayerManager.player.visible = false
 		var camera = PlayerManager.player.get_node_or_null("Camera2D")

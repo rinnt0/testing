@@ -2,12 +2,18 @@
 
 [ext_resource type="Script" uid="uid://m3oq3vu0ghl1" path="res://Scripts/Player/player.gd" id="1_onrkg"]
 [ext_resource type="Texture2D" uid="uid://bdihefj2b4g7c" path="res://Scenes/Player/MC_base.png" id="2_gk6dx"]
+[ext_resource type="AudioStream" uid="uid://cws667kyuefrh" path="res://Assets/Music/Steps_wood-004.ogg" id="2_oikmp"]
+[ext_resource type="AudioStream" uid="uid://nmrl22ypl2p5" path="res://Assets/Music/Steps_wood-005.ogg" id="3_06tpx"]
 [ext_resource type="PackedScene" uid="uid://sxpps0plcwgd" path="res://Scenes/UI/player_camera.tscn" id="3_i3pqv"]
+[ext_resource type="AudioStream" uid="uid://dr3kjija0ui87" path="res://Assets/Music/Steps_wood-006.ogg" id="4_7g0yx"]
 [ext_resource type="Script" uid="uid://bk5u7p3e07ucs" path="res://Scripts/Player/player_camera.gd" id="4_sweqy"]
+[ext_resource type="AudioStream" uid="uid://4hthehgqic0n" path="res://Assets/Music/Steps_wood-008.ogg" id="5_dey5f"]
 [ext_resource type="Script" uid="uid://bge43u8hhekv4" path="res://Scripts/Player/player_state_machine.gd" id="6_dd0ac"]
 [ext_resource type="Script" uid="uid://bqh87o7pn634a" path="res://Scripts/Player/state_idle.gd" id="7_0u5uq"]
 [ext_resource type="Script" uid="uid://dxlsic7njtxnh" path="res://Scripts/Player/state_walk.gd" id="8_jlvik"]
 [ext_resource type="PackedScene" uid="uid://71ckskus41ak" path="res://Scenes/UI/pause_menu.tscn" id="10_jhyir"]
+[ext_resource type="Script" uid="uid://fhtdg6fans60" path="res://Scenes/Player/state_walk_to_interact.gd" id="12_06tpx"]
+[ext_resource type="Script" uid="uid://duius8b0qpx6d" path="res://Scenes/Player/state_locked.gd" id="13_7g0yx"]
 
 [sub_resource type="Gradient" id="Gradient_hqtel"]
 offsets = PackedFloat32Array(0, 0.701299, 1)
@@ -60,9 +66,9 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_jhyir"]
 resource_name = "walk"
-length = 0.8
+length = 0.6
 loop_mode = 1
-step = 0.2
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -70,7 +76,7 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.2, 0.4, 0.6),
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
 "values": [6, 7, 8, 9]
@@ -88,6 +94,7 @@ z_index = 1
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_onrkg")
+footstep_sounds = Array[AudioStream]([ExtResource("2_oikmp"), ExtResource("3_06tpx"), ExtResource("4_7g0yx"), ExtResource("5_dey5f")])
 
 [node name="PointLight2D" type="PointLight2D" parent="." unique_id=302630530]
 visible = false
@@ -123,6 +130,15 @@ script = ExtResource("7_0u5uq")
 
 [node name="Walk" type="Node" parent="StateMachine" unique_id=242002187]
 script = ExtResource("8_jlvik")
+move_speed = 60.0
+footstep_interval = 0.4
+
+[node name="WalkToInteract" type="Node" parent="StateMachine" unique_id=516412026]
+script = ExtResource("12_06tpx")
+move_speed = 60.0
+
+[node name="Locked" type="Node" parent="StateMachine" unique_id=1105469349]
+script = ExtResource("13_7g0yx")
 
 [node name="PauseMenu" parent="." unique_id=503717766 instance=ExtResource("10_jhyir")]
 offset_left = -675.0

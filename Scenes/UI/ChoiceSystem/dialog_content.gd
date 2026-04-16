@@ -4,3 +4,5 @@ class_name DialogContent extends Node
 @export var voice_profiles: Array[VoiceProfile] = []
 @export var camera_targets: Array[String] = []  # ← one per line, empty = no move
 @export var camera_zoom: Array[float] = []    # default zoom is 6, lower to zoom out, higher to zoom in.
+@export var player_targets: Array[String] = []  # ← one per line, empty = stay in place
+ 

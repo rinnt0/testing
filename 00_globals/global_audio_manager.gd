@@ -10,9 +10,17 @@ var music_bus: String = "Music"
 var music_fade_Duration: float = 1
 
 # ─────────────────────────────────────────────
+#  SFX
+# ─────────────────────────────────────────────
+var sfx_bus: String = "SFX" # Make sure you have an "SFX" bus in your Audio dock
+var sfx_pool_size: int = 4
+var sfx_players: Array[AudioStreamPlayer] = []
+var sfx_pool_index: int = 0
+
+# ─────────────────────────────────────────────
 #  Voice Blips
 # ─────────────────────────────────────────────
-var blip_bus: String = "SFX"
+var blip_bus: String = "Voice"
 var blip_pool_size: int = 4          # lets fast text overlap slightly
 var blip_players: Array[AudioStreamPlayer] = []
 var blip_pool_index: int = 0
@@ -39,7 +47,14 @@ func _ready() -> void:
 		ambient_players.append(player)
 
 		
-	
+	# SFX pool
+	for i in sfx_pool_size:
+		var player = AudioStreamPlayer.new()
+		add_child(player)
+		player.bus = sfx_bus
+		sfx_players.append(player)
+		
+		
 	# Music players
 	for i in music_audio_player_count:
 		var player = AudioStreamPlayer.new()
@@ -138,10 +153,13 @@ func fade_out_and_stop(player: AudioStreamPlayer) -> void:
 func play_sfx(sound: AudioStream) -> void:
 	if sound == null:
 		return
-	var player: AudioStreamPlayer = blip_players[blip_pool_index]
-	blip_pool_index = (blip_pool_index + 1) % blip_pool_size
+	
+	var player: AudioStreamPlayer = sfx_players[sfx_pool_index]
+	sfx_pool_index = (sfx_pool_index + 1) % sfx_pool_size
+	
 	player.stream = sound
-	player.pitch_scale = 1.0
+	# Optional: Add a tiny bit of random pitch variance so footsteps don't sound repetitive
+	player.pitch_scale = randf_range(0.9, 1.1) 
 	player.volume_db = 0.0
 	player.stop()
 	player.play()

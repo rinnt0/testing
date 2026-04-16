@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://00_workflow/level.gd" id="1_jxsyh"]
 [ext_resource type="AudioStream" uid="uid://brsvmrye7robu" path="res://Assets/Music/paulyudin-piano-piano-music-508963 (edited with Audjust).mp3" id="2_b8a2s"]
 [ext_resource type="PackedScene" uid="uid://7d73yofi60dg" path="res://Assets/Levels/Intro/intro_tilemaps.tscn" id="2_h2gsi"]
+[ext_resource type="AudioStream" uid="uid://qpragckoadsj" path="res://Assets/Music/freesound_community-computer-hum-78343.mp3" id="3_qabmb"]
 [ext_resource type="PackedScene" uid="uid://dvy64rhwe26ok" path="res://00_workflow/choice_bridge.tscn" id="4_0bbin"]
 [ext_resource type="Texture2D" uid="uid://2b0kavy5nxah" path="res://Assets/Sprites/npc.png" id="4_1uwx3"]
 [ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://00_workflow/ChoiceMaker.tscn" id="5_l8j1g"]
@@ -14,6 +15,9 @@
 [ext_resource type="Resource" uid="uid://ddfjyl7doihlw" path="res://VoiceProfiles/main_character_fast.tres" id="10_0edlu"]
 [ext_resource type="PackedScene" uid="uid://bjw7yyj5egq35" path="res://00_workflow/auto_trigger.tscn" id="13_qabmb"]
 [ext_resource type="AudioStream" uid="uid://dvf5xeriq2ooi" path="res://Assets/Music/voice_blip.wav" id="14_0edlu"]
+[ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://00_workflow/transition_content.tscn" id="16_0edlu"]
+[ext_resource type="Texture2D" uid="uid://oq5bhpgqjpfy" path="res://Scenes/UI/ChoiceSystem/icon_questionmark.png" id="16_4ayg5"]
+[ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://00_workflow/dialog_flag.tscn" id="16_w5gd5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7rjcx"]
 size = Vector2(17, 12)
@@ -29,9 +33,16 @@ base_volume_db = -8.344
 volume_variance_db = 1.903
 char_speed = 0.059
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qabmb"]
+size = Vector2(42, 20)
+
 [node name="Intro_2" type="Node2D" unique_id=392519284]
 script = ExtResource("1_jxsyh")
 music = ExtResource("2_b8a2s")
+ambient = ExtResource("3_qabmb")
+
+[node name="Right" type="Marker2D" parent="." unique_id=1780274209]
+position = Vector2(395, 233)
 
 [node name="Left" type="Marker2D" parent="." unique_id=617103891]
 position = Vector2(69, 233)
@@ -73,7 +84,7 @@ shape = SubResource("RectangleShape2D_4ayg5")
 [node name="ChoiceMaker" parent="AutoTrigger" unique_id=1759936187 instance=ExtResource("5_l8j1g")]
 
 [node name="DialogContent" parent="AutoTrigger/ChoiceMaker" unique_id=1021838570 instance=ExtResource("7_7rjcx")]
-lines = Array[String](["I'll see you tommorrow June.", "y-yeah."])
+lines = Array[String](["I'll see you tomorrow June.", "y-yeah."])
 portraits = Array[Texture2D]([ExtResource("4_1uwx3"), ExtResource("8_1uwx3")])
 voice_profiles = Array[ExtResource("9_qabmb")]([SubResource("Resource_w5gd5"), ExtResource("10_0edlu")])
 camera_targets = Array[String](["NPCcam", ""])
@@ -81,3 +92,25 @@ camera_zoom = Array[float]([7.0, 6.0])
 
 [node name="NPCcam" type="Marker2D" parent="AutoTrigger/ChoiceMaker/DialogContent" unique_id=898557269]
 position = Vector2(133, 209)
+
+[node name="DialogFlag" parent="AutoTrigger/ChoiceMaker" unique_id=971773713 instance=ExtResource("16_w5gd5")]
+flag_name = "worker_chat"
+
+[node name="Exit" parent="." unique_id=1030680228 instance=ExtResource("4_0bbin")]
+position = Vector2(424, 207)
+
+[node name="InteractPrompt" parent="Exit" unique_id=1843407434 instance=ExtResource("5_qw57x")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit/InteractPrompt" unique_id=543857406]
+position = Vector2(-1, 19)
+shape = SubResource("RectangleShape2D_qabmb")
+
+[node name="Leave" parent="Exit" unique_id=1693692011 instance=ExtResource("5_l8j1g")]
+label = "Leave."
+icon = ExtResource("16_4ayg5")
+
+[node name="DialogContent" parent="Exit/Leave" unique_id=48437694 instance=ExtResource("7_7rjcx")]
+
+[node name="TransitionContent" parent="Exit/Leave" unique_id=2021110483 instance=ExtResource("16_0edlu")]
+transition_target = "StorePoint"
+next_scene_path = "uid://cdfp6kytpdno2"

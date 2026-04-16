@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://00_workflow/level.gd" id="1_ywh4g"]
 [ext_resource type="AudioStream" uid="uid://brsvmrye7robu" path="res://Assets/Music/paulyudin-piano-piano-music-508963 (edited with Audjust).mp3" id="2_hgxr2"]
 [ext_resource type="PackedScene" uid="uid://bjw7yyj5egq35" path="res://00_workflow/auto_trigger.tscn" id="3_qirj0"]
+[ext_resource type="AudioStream" uid="uid://qpragckoadsj" path="res://Assets/Music/freesound_community-computer-hum-78343.mp3" id="3_w7fn5"]
 [ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://00_workflow/ChoiceMaker.tscn" id="4_00mg4"]
 [ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://00_workflow/dialog_content.tscn" id="5_wvc8l"]
 [ext_resource type="Texture2D" uid="uid://1f4vy0pa4egy" path="res://Scenes/UI/ChoiceSystem/speaker_test.png" id="6_pwars"]
@@ -36,6 +37,7 @@ char_speed = 0.059
 [node name="intro_1" type="Node2D" unique_id=2105917872]
 script = ExtResource("1_ywh4g")
 music = ExtResource("2_hgxr2")
+ambient = ExtResource("3_w7fn5")
 
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=359103280]
 position = Vector2(160, 204)
@@ -64,8 +66,11 @@ camera_zoom = Array[float]([8.0, 6.0])
 [node name="CamPoint" type="Marker2D" parent="WindowCutscene/ChoiceMaker/DialogContent" unique_id=1220047308]
 position = Vector2(313, 116)
 
+[node name="WalkPoint" type="Marker2D" parent="WindowCutscene/ChoiceMaker/DialogContent" unique_id=1712629646]
+position = Vector2(250, 202)
+
 [node name="ClosedDoor" parent="." unique_id=761932374 instance=ExtResource("9_pwars")]
-position = Vector2(75, 175)
+position = Vector2(84, 175)
 
 [node name="InteractPrompt" parent="ClosedDoor" unique_id=2122420552 instance=ExtResource("10_ycinp")]
 
@@ -109,7 +114,11 @@ lines = Array[String](["...okay..."])
 portraits = Array[Texture2D]([ExtResource("6_pwars")])
 voice_profiles = Array[ExtResource("7_ycinp")]([SubResource("Resource_tsg3l")])
 camera_zoom = Array[float]([7.0])
+player_targets = Array[String](["", "WalkLeave"])
 
 [node name="TransitionContent" parent="Exit/Leave" unique_id=2021110483 instance=ExtResource("14_w7fn5")]
 transition_target = "Left"
 next_scene_path = "uid://dcnvhculenwdc"
+facing_direction = 2
+
+[node name="WalkLeave" type="Marker2D" parent="Exit/Leave/TransitionContent" unique_id=284932783]

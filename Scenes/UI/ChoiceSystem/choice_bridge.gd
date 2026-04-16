@@ -21,6 +21,14 @@ func _on_exited():
 	player_in_range = false
 
 func _unhandled_input(event: InputEvent):
+	if is_open and event.is_action_pressed("ui_cancel"):
+		get_viewport().set_input_as_handled()
+		ChoiceMenu.hide_menu()
+		PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
+		PlayerManager.player.can_look_up = true
+		is_open = false
+		return
+
 	if player_in_range and not is_open and event.is_action_pressed("interact"):
 		get_viewport().set_input_as_handled()
 		
@@ -77,6 +85,16 @@ func _unhandled_input(event: InputEvent):
 			# 3. Handle Transitions (Run this last!)
 			if transition:
 				ChoiceMenu.hide_menu()
+
+				# Apply facing direction before transitioning
+				match transition.facing_direction:
+					TransitionContent.FacingDirection.LEFT:
+						PlayerManager.player.current_direction = Vector2.LEFT
+						PlayerManager.player.sprite.scale.x = -1
+					TransitionContent.FacingDirection.RIGHT:
+						PlayerManager.player.current_direction = Vector2.RIGHT
+						PlayerManager.player.sprite.scale.x = 1
+
 				TransitionBox.do_transition(transition, full_art != null)
 				await TransitionBox.transition_finished
 			

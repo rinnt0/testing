@@ -13,6 +13,7 @@ var is_typing = false
 var _active_dialog_content: DialogContent = null
 var _camera: PlayerCamera = null
 var _original_zoom: Vector2 = Vector2.ONE  # ← store zoom before dialog starts
+var _is_walking: bool = false
 signal dialog_finished
 
 func _ready():
@@ -37,7 +38,12 @@ func show_lines(new_lines: Array[String], new_portraits: Array = [], new_profile
 	
 
 func _input(event: InputEvent):
+	if _is_walking:  # ← must come BEFORE the visibility check
+		get_viewport().set_input_as_handled()
+		return
 	if not visible:
+		return
+	if lines.is_empty():
 		return
 	if event.is_action_pressed("interact") and not event.is_echo():
 		get_viewport().set_input_as_handled()
@@ -64,16 +70,35 @@ func on_typing_finished():
 	diamond.visible = true
 
 func display_current_line():
+	if lines.is_empty():
+		visible = false
+		dialog_finished.emit.call_deferred()  # deferred so await can catch it
+		return
 	is_typing = true
 	diamond.visible = false
 	_blip_char_counter = 0
 
+	# 1. SET VOICE PROFILE
 	if voice_profiles.size() > current_line and voice_profiles[current_line] != null:
 		current_voice_profile = voice_profiles[current_line]
 	else:
 		current_voice_profile = null
 
-	# Camera target for this line
+	# 2. PLAYER WALKING (DO THIS FIRST)
+	# We move this block up so the player starts moving before the camera adjusts.
+	if _active_dialog_content and _active_dialog_content.player_targets.size() > current_line:
+		var player_target_name = _active_dialog_content.player_targets[current_line]
+		if player_target_name != "":
+			var player_marker = _active_dialog_content.get_node_or_null(player_target_name)
+			if player_marker:
+				visible = false
+				_is_walking = true        # ← lock
+				await _walk_player_to(player_marker.global_position)
+				_is_walking = false       # ← unlock
+				visible = true
+
+	# 3. CAMERA LOGIC (WAITING IS DONE)
+	# Because of the 'await' above, this code won't run until the walk finishes.
 	var target_pos: Variant = null
 	if _active_dialog_content and _active_dialog_content.camera_targets.size() > current_line:
 		var target_name = _active_dialog_content.camera_targets[current_line]
@@ -84,14 +109,14 @@ func display_current_line():
 		else:
 			_restore_camera()
 
-	# Camera zoom for this line
-	var target_zoom: float = -1.0  # -1 means "no change"
+	var target_zoom: float = -1.0
 	if _active_dialog_content and _active_dialog_content.camera_zoom.size() > current_line:
 		target_zoom = _active_dialog_content.camera_zoom[current_line]
 
 	if target_pos != null or target_zoom > 0.0:
 		_move_camera_to(target_pos, target_zoom)
 
+	# 4. START TEXT TYPING
 	label.type = lines[current_line]
 	label.text = ""
 	label.current_index = 0
@@ -100,7 +125,29 @@ func display_current_line():
 
 	if portraits.size() > current_line and portraits[current_line] != null:
 		portrait.texture = portraits[current_line]
-		
+
+
+func _walk_player_to(target_pos: Vector2) -> void:
+	var player = PlayerManager.player
+	var walk_duration = abs(player.global_position.x - target_pos.x) / 100.0
+	walk_duration = clamp(walk_duration, 0.1, 2.0)
+
+	# 1. Determine the new direction based on movement
+	var new_dir = Vector2.LEFT if target_pos.x < player.global_position.x else Vector2.RIGHT
+	
+	# 2. Update the Player's internal state so the scripts stay in sync
+	player.current_direction = new_dir
+	
+	# 3. Update the visual scale
+	player.sprite.scale.x = -1 if new_dir == Vector2.LEFT else 1
+
+	player.update_animation("walk")
+
+	var tween = create_tween().set_trans(Tween.TRANS_LINEAR).set_ease(Tween.EASE_IN_OUT)
+	tween.tween_property(player, "global_position", Vector2(target_pos.x, player.global_position.y), walk_duration)
+	await tween.finished
+
+	player.update_animation("idle")
 		
 func _on_char_revealed(c: String) -> void:
 	print("profile: ", current_voice_profile)  # ← add this

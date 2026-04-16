@@ -21,4 +21,4 @@ extends Resource
 @export_range(1, 6) var blip_every_n_chars: int = 1
 
 ## Time between each character appearing. Lower = faster.
-@export_range(0.01, 0.2) var char_speed: float = 0.05
+@export_range(0.01, 0.4) var char_speed: float = 0.05

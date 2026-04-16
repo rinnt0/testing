@@ -6,8 +6,8 @@
 [resource]
 script = ExtResource("2_a64i2")
 blip_sound = ExtResource("1_3jsiv")
-base_pitch = 1.2229999999999999
+base_pitch = 1.223
 pitch_variance = 0.115
 base_volume_db = -8.344
 volume_variance_db = 1.903
-char_speed = 0.059000000000000004
+char_speed = 0.059

@@ -1,31 +1,45 @@
 class_name StateWalk extends State
 
-@export var move_speed : float = 40.0 # this is the speed the player should move anyways, its weighty, but not too slow, perfect for building tention and atmosphere
+@export var move_speed: float = 40.0
+@export var footstep_interval: float = 0.35
 
+var _footstep_timer: float = 0.0
 
 @onready var idle: State = $"../Idle"
 
+func enter_state() -> void:
+	player.update_animation("walk")
+	_footstep_timer = footstep_interval  # play first step immediately on enter
 
+func exit_state() -> void:
+	_footstep_timer = footstep_interval  # reset so next entry starts fresh
 
-func enter_state():
-	player.update_animation("walk") # change state to "walk"
-	pass
-	
-func exit_state():
-	pass
-
-func process( _delta : float ) -> State:
-	if player.direction == Vector2.ZERO: #if the player is not moving, return the idle state
+func process(delta: float) -> State:
+	if player.direction == Vector2.ZERO:
 		return idle
-	
-	player.velocity = player.direction * move_speed # the way you moved is the side you are holding the stick, or what key you are pressing and then applying the set speed to the direction
-	
-	if player.set_direction(): #if the player is holding a direction...
-		player.update_animation("walk") # update the state to walk
+
+	player.velocity = player.direction * move_speed
+
+	if player.set_direction():
+		player.update_animation("walk")
+
+	_tick_footsteps(delta)
 	return null
 
-func physics( _delta : float ) -> State:
+func _tick_footsteps(delta: float) -> void:
+	_footstep_timer -= delta
+	if _footstep_timer <= 0.0:
+		_footstep_timer = footstep_interval
+		_play_footstep()
+
+func _play_footstep() -> void:
+	if player.footstep_sounds.is_empty():
+		return
+	var sound: AudioStream = player.footstep_sounds[randi() % player.footstep_sounds.size()]
+	AudioManager.play_sfx(sound)
+
+func physics(_delta: float) -> State:
 	return null
-	
-func handle_input( _event : InputEvent ) -> State:
+
+func handle_input(_event: InputEvent) -> State:
 	return null

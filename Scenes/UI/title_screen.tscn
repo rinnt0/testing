@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://s68yi2hcoydf" path="res://Scenes/UI/title_screen.gd" id="1_ak2if"]
 [ext_resource type="Texture2D" uid="uid://daacyuy2avbst" path="res://Assets/titlescreen_test.png" id="1_v6p8y"]
 [ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/LowresPixel-Regular.otf" id="3_2br5b"]
+[ext_resource type="AudioStream" uid="uid://dtc0wxc5gan6o" path="res://Assets/Music/freesound_community-low-engine-hum-72529.mp3" id="3_824g0"]
 [ext_resource type="AudioStream" uid="uid://brsvmrye7robu" path="res://Assets/Music/paulyudin-piano-piano-music-508963 (edited with Audjust).mp3" id="4_bnqst"]
 [ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://00_workflow/transition_content.tscn" id="5_dsf7a"]
 [ext_resource type="Script" uid="uid://buevi6v0ikoyi" path="res://VoiceProfiles/voice_profiles.gd" id="6_824g0"]
@@ -18,6 +19,7 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ak2if")
 music = ExtResource("4_bnqst")
+ambient = ExtResource("3_824g0")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1302356482]
 layout_mode = 1
