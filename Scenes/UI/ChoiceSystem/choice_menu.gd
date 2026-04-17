@@ -1,75 +1,206 @@
 extends CanvasLayer
 
 signal option_confirmed(action: String)
+signal option_index_confirmed(index: int)
 
 @onready var vbox: VBoxContainer = $Control/VBoxContainer
-
+@onready var container_mask: Control = $Control # The parent with "Clip Content" on
+var bar_target_x: float
+var decor_target_x: float
 var options: Array = []
 var current_index: int = 0
+var slot_nodes: Array = []
+var is_closing: bool = false 
+var decor_base_x: float = 0.0 # Caches the decoration's intended position
 
-const VISIBLE_SLOTS = 5  # keep this odd so there's a true center
-const HALF = VISIBLE_SLOTS / 2  # = 2
+const SLOT_SCENE = preload("res://Scenes/UI/ChoiceSystem/ChoiceSlotSelected.tscn")
+const SCROLL_SPEED = 0.2 
 
-const SLOT_SELECTED = preload("res://Scenes/UI/ChoiceSystem/ChoiceSlotSelected.tscn")
-const SLOT_UNSELECTED = preload("res://Scenes/UI/ChoiceSystem/ChoiceSlotUnselected.tscn")
-signal option_index_confirmed(index: int)
 func _ready():
 	visible = false
+	$Control/SelectionBar.top_level = true
+	$Control/Decorations.top_level = true
+	
+	# Cache the original X position of the decorations to ensure reliable sliding targets
+	decor_base_x = $Control/Decorations.global_position.x
+	bar_target_x = $Control/SelectionBar.global_position.x
+	decor_target_x = $Control/Decorations.global_position.x
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func show_options(new_options: Array):
 	options = new_options
 	current_index = 0
+	is_closing = false
+	$Control.modulate.a = 1.0 # Ensure it's visible for the next use
 	visible = true
-	rebuild()
-	AudioManager.play_sfx(AudioManager.ui_click_sound)
-	PlayerManager.player.can_look_up = false
 	
+	setup_slots()
+	update_selection(false)
+	play_intro_animation()
+	
+	# Reset Player state
+	PlayerManager.player.can_look_up = false
 	if PlayerManager.player.has_node("AnimationPlayer"):
 		PlayerManager.player.get_node("AnimationPlayer").play("idle")
-	
 	PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_DISABLED
 	PlayerManager.player.velocity = Vector2.ZERO
-
-func hide_menu():
-	print("hide_menu called")
-	visible = false
-	options = []
-	PlayerManager.player.can_look_up = true
 	
-func rebuild():
+	setup_slots()
+	update_selection(false) # Snap to start without animation
+
+func setup_slots():
+	# Clear old nodes
 	for child in vbox.get_children():
 		child.queue_free()
-
-	for offset in range(-HALF, HALF + 1):
-		var i = current_index + offset
-		var slot = SLOT_SELECTED.instantiate() if offset == 0 else SLOT_UNSELECTED.instantiate()
+	slot_nodes.clear()
+	
+	# Instantiate all options at once
+	for i in range(options.size()):
+		var slot = SLOT_SCENE.instantiate()
 		vbox.add_child(slot)
-		if i < 0 or i >= options.size():
-			slot.modulate.a = 0.0  # invisible but identical size to a real slot
-		else:
-			slot.setup(options[i].label, options[i].icon)
+		slot.setup(options[i].label, options[i].icon)
+		slot_nodes.append(slot)
+
+func update_selection(animate: bool = true):
+	# CRITICAL: Wait one frame so the VBox updates its internal size/positions
+	if not is_node_ready(): await ready 
+	await get_tree().process_frame 
+
+	if slot_nodes.is_empty(): return
+
+	# 1. Get exact dimensions
+	var separation = vbox.get_theme_constant("separation")
+	var slot_height = slot_nodes[0].size.y # Use .size.y instead of custom_min
+	var full_slot_step = slot_height + separation
+	
+	# 2. Calculate the "Center" of your visible window
+	# We want the middle of the 'container_mask' to align with the middle of the slot
+	var mask_center = container_mask.size.y / 2.0
+	var slot_center_offset = slot_height / 2.0
+	
+	# The target position for the VBox
+	var target_y = mask_center - slot_center_offset - (current_index * full_slot_step)
+
+	# 3. Animate
+	var tween = create_tween().set_trans(Tween.TRANS_QUINT).set_ease(Tween.EASE_OUT)
+	
+	if animate:
+		tween.tween_property(vbox, "position:y", target_y, SCROLL_SPEED)
+	else:
+		vbox.position.y = target_y
+
+	# 4. Highlight Logic
+	for i in range(slot_nodes.size()):
+		var is_selected = (i == current_index)
+		# Optional: Dim the ones that aren't selected for a "focus" effect
+		var target_alpha = 1.0 if is_selected else 0.3
+		var target_scale = Vector2(1.05, 1.05) if is_selected else Vector2(1.0, 1.0)
 		
+		var s_tween = create_tween().set_parallel(true)
+		s_tween.tween_property(slot_nodes[i], "modulate:a", target_alpha, 0.1)
+		s_tween.tween_property(slot_nodes[i], "scale", target_scale, 0.1)
+
 func _input(event: InputEvent):
-	if not visible:
+	if not visible or options.size() == 0 or is_closing:
 		return
 		
-	# Check the 'event' rather than the global 'Input' state
 	if event.is_action_pressed("ui_up"):
 		get_viewport().set_input_as_handled()
 		current_index = (current_index - 1 + options.size()) % options.size()
-		rebuild()
-		AudioManager.play_sfx(AudioManager.ui_click_sound)  # ← scroll
+		update_selection()
+		AudioManager.play_sfx(AudioManager.ui_click_sound)
 		
 	elif event.is_action_pressed("ui_down"):
 		get_viewport().set_input_as_handled()
 		current_index = (current_index + 1) % options.size()
-		rebuild()
-		AudioManager.play_sfx(AudioManager.ui_click_sound)  # ← scroll
+		update_selection()
+		AudioManager.play_sfx(AudioManager.ui_click_sound)
 		
 	elif event.is_action_pressed("interact"):
 		get_viewport().set_input_as_handled()
 		option_confirmed.emit(options[current_index].label)
 		option_index_confirmed.emit(current_index)
 		hide_menu()
-		AudioManager.play_sfx(AudioManager.ui_click_sound)  # ← scroll
+		AudioManager.play_sfx(AudioManager.ui_click_sound)
+
+func hide_menu():
+	if is_closing: return
+	is_closing = true
+	
+	var bar = $Control/SelectionBar
+	var decor = $Control/Decorations
+	
+	var exit_tween = create_tween().set_parallel(true)
+	
+	exit_tween.set_trans(Tween.TRANS_CUBIC).set_ease(Tween.EASE_IN)
+	
+	# Main fade
+	exit_tween.tween_property($Control, "modulate:a", 0.0, 0.25)
+	
+	# 🔹 SelectionBar → RIGHT (fast)
+	exit_tween.tween_property(bar, "global_position:x", bar_target_x + 150, 0.25)
+	exit_tween.tween_property(bar, "modulate:a", 0.0, 0.12)
+	
+	# 🔹 Decorations → LEFT (slower + slight delay feel via duration)
+	exit_tween.tween_property(decor, "global_position:x", decor_target_x - 150, 0.45)
+	exit_tween.tween_property(decor, "modulate:a", 0.0, 0.18)
+	
+	exit_tween.finished.connect(func():
+		visible = false
+		is_closing = false
+		options = []
+		
+		# Reset everything cleanly
+		bar.global_position.x = bar_target_x
+		decor.global_position.x = decor_target_x
+		bar.modulate.a = 1.0
+		decor.modulate.a = 1.0
+		
+		PlayerManager.player.can_look_up = true
+		PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
+	)
+
+func play_intro_animation():
+	var main_control = $Control
+	var bar = $Control/SelectionBar
+	var decor = $Control/Decorations
+	
+	# Reset positions every time
+	bar.global_position.x = bar_target_x + 150
+	decor.global_position.x = decor_target_x - 150
+	
+	# Reset alpha
+	main_control.modulate.a = 0.0
+	bar.modulate.a = 0.0
+	decor.modulate.a = 0.0
+	
+	var intro = create_tween().set_parallel(true)
+	
+	# Main fade
+	intro.tween_property(main_control, "modulate:a", 1.0, 0.4)
+	
+	intro.set_trans(Tween.TRANS_QUART).set_ease(Tween.EASE_OUT)
+	
+	# 🔹 SelectionBar (fast + immediate)
+	intro.tween_property(bar, "global_position:x", bar_target_x, 0.3)
+	intro.tween_property(bar, "modulate:a", 1.0, 0.15)
+	
+	# 🔹 Decorations (slower + slight delay)
+	intro.tween_property(decor, "global_position:x", decor_target_x, 0.55).set_delay(0.05)
+	intro.tween_property(decor, "modulate:a", 1.0, 0.2).set_delay(0.05)
+
+func animate_bg_elements():
+	var delay = 0.0
+	# Loop through all children in your decoration container
+	for sprite in $Control/Decorations.get_children():
+		if sprite is Sprite2D:
+			sprite.modulate.a = 0
+			sprite.scale = Vector2.ZERO
+			
+			var tw = create_tween().set_trans(Tween.TRANS_ELASTIC).set_ease(Tween.EASE_OUT)
+			# Start each sprite slightly after the previous one
+			tw.set_parallel(true)
+			tw.tween_property(sprite, "modulate:a", 1.0, 0.5).set_delay(delay)
+			tw.tween_property(sprite, "scale", Vector2(1, 1), 0.6).set_delay(delay)
+			
+			delay += 0.1 # Increase delay for the next sprite

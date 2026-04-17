@@ -12,8 +12,7 @@
 [ext_resource type="Script" uid="uid://bqh87o7pn634a" path="res://Scripts/Player/state_idle.gd" id="7_0u5uq"]
 [ext_resource type="Script" uid="uid://dxlsic7njtxnh" path="res://Scripts/Player/state_walk.gd" id="8_jlvik"]
 [ext_resource type="PackedScene" uid="uid://71ckskus41ak" path="res://Scenes/UI/pause_menu.tscn" id="10_jhyir"]
-[ext_resource type="Script" uid="uid://fhtdg6fans60" path="res://Scenes/Player/state_walk_to_interact.gd" id="12_06tpx"]
-[ext_resource type="Script" uid="uid://duius8b0qpx6d" path="res://Scenes/Player/state_locked.gd" id="13_7g0yx"]
+[ext_resource type="Script" uid="uid://kbf1gchwy1o0" path="res://Scenes/Player/state_wait.gd" id="12_06tpx"]
 
 [sub_resource type="Gradient" id="Gradient_hqtel"]
 offsets = PackedFloat32Array(0, 0.701299, 1)
@@ -66,9 +65,9 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_jhyir"]
 resource_name = "walk"
-length = 0.6
+length = 0.77
 loop_mode = 1
-step = 0.05
+step = 0.01
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -76,10 +75,10 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
-"transitions": PackedFloat32Array(1, 1, 1, 1),
+"times": PackedFloat32Array(0, 0.112500004, 0.22500001, 0.33749998, 0.45000002, 0.5625, 0.67499995),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [6, 7, 8, 9]
+"values": [7, 8, 9, 10, 11, 12, 13]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_sweqy"]
@@ -110,7 +109,7 @@ shape = SubResource("RectangleShape2D_onrkg")
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=1725751434]
 position = Vector2(-1, -17)
 texture = SubResource("AtlasTexture_i3pqv")
-hframes = 6
+hframes = 7
 vframes = 2
 
 [node name="Camera2D" parent="." unique_id=1387555309 instance=ExtResource("3_i3pqv")]
@@ -133,12 +132,8 @@ script = ExtResource("8_jlvik")
 move_speed = 60.0
 footstep_interval = 0.4
 
-[node name="WalkToInteract" type="Node" parent="StateMachine" unique_id=516412026]
+[node name="Wait" type="Node" parent="StateMachine" unique_id=973145884]
 script = ExtResource("12_06tpx")
-move_speed = 60.0
-
-[node name="Locked" type="Node" parent="StateMachine" unique_id=1105469349]
-script = ExtResource("13_7g0yx")
 
 [node name="PauseMenu" parent="." unique_id=503717766 instance=ExtResource("10_jhyir")]
 offset_left = -675.0

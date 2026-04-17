@@ -14,19 +14,23 @@ var _active_dialog_content: DialogContent = null
 var _camera: PlayerCamera = null
 var _original_zoom: Vector2 = Vector2.ONE  # ← store zoom before dialog starts
 var _is_walking: bool = false
+var _is_wait_thought: bool = false  # ← true while WaitMoment is displaying; blocks input
+var _wait_thought_gen: int = 0      # ← ADD THIS: tracks the active wait thought to prevent premature hiding
 signal dialog_finished
-
+var is_closing: bool = false
+var _fade_tween: Tween
 func _ready():
 	visible = false
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func show_lines(new_lines: Array[String], new_portraits: Array = [], new_profiles: Array[VoiceProfile] = [], content: DialogContent = null):
+	
 	lines = new_lines
 	portraits = new_portraits
 	voice_profiles = new_profiles
 	_active_dialog_content = content
 	current_line = 0
-	visible = true
+	fade_in()
 	diamond.visible = false
 	# Capture original zoom before any dialog changes it
 	var cam = PlayerManager.player.get_node_or_null("Camera2D")
@@ -35,10 +39,44 @@ func show_lines(new_lines: Array[String], new_portraits: Array = [], new_profile
 	display_current_line()
 	PlayerManager.player.can_look_up = false
 	PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_DISABLED
-	
+	PlayerManager.player.movement_locked = true
+
+# ─────────────────────────────────────────────
+#  WaitMoment thoughts — no player state management, no input, no diamond.
+#  WaitBox calls this; it calls hide_wait_thought() when the wait ends.
+# ─────────────────────────────────────────────
+func show_wait_thought(text: String, portrait_tex: Texture2D = null, voice_profile: VoiceProfile = null) -> void:
+	_wait_thought_gen += 1  # ← Invalidate any previous hide timers
+	_is_wait_thought = true
+	current_voice_profile = voice_profile
+	fade_in()
+	diamond.visible = false
+	portrait.texture = portrait_tex
+	label.type = text
+	label.text = ""
+	label.current_index = 0
+	var speed = voice_profile.char_speed if voice_profile else label.timer_time
+	label.timer.start(speed)
+	PlayerManager.player.movement_locked = true
+	is_typing = true
+
+func hide_wait_thought() -> void:
+	_wait_thought_gen += 1  # ← Prevent any lingering 5-second timers from firing
+	_is_wait_thought = false
+	await fade_out()
+	PlayerManager.player.movement_locked = false
+	label.text = ""
 
 func _input(event: InputEvent):
-	if _is_walking:  # ← must come BEFORE the visibility check
+	if is_closing:
+		return
+	if _is_wait_thought:
+		# Consume interact so it can't bleed into _unhandled_input handlers.
+		# ui_cancel is intentionally left unconsumed so WaitBox can catch it.
+		if event.is_action_pressed("interact") and not event.is_echo():
+			get_viewport().set_input_as_handled()
+		return
+	if _is_walking:
 		get_viewport().set_input_as_handled()
 		return
 	if not visible:
@@ -58,16 +96,27 @@ func _input(event: InputEvent):
 			current_line += 1
 			display_current_line()
 		else:
-			visible = false
-			_restore_camera()
+			
+			restore_camera()
 			PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
 			PlayerManager.player.can_look_up = true
+			PlayerManager.player.movement_locked = false
+			await fade_out()
 			dialog_finished.emit()
 
 func on_typing_finished():
 	print("typing finished")
 	is_typing = false
-	diamond.visible = true
+	if not _is_wait_thought:
+		diamond.visible = true
+	else:
+		# ← ADD THIS BLOCK: Auto-hide wait thoughts 5 seconds after they finish typing
+		var current_gen = _wait_thought_gen
+		await get_tree().create_timer(5.0).timeout
+		
+		# Only hide if we are still on the exact same thought and haven't been canceled
+		if _is_wait_thought and _wait_thought_gen == current_gen:
+			hide_wait_thought()
 
 func display_current_line():
 	if lines.is_empty():
@@ -85,17 +134,16 @@ func display_current_line():
 		current_voice_profile = null
 
 	# 2. PLAYER WALKING (DO THIS FIRST)
-	# We move this block up so the player starts moving before the camera adjusts.
 	if _active_dialog_content and _active_dialog_content.player_targets.size() > current_line:
 		var player_target_name = _active_dialog_content.player_targets[current_line]
 		if player_target_name != "":
 			var player_marker = _active_dialog_content.get_node_or_null(player_target_name)
 			if player_marker:
-				visible = false
-				_is_walking = true        # ← lock
+				_is_walking = true       # ← lock
+				await fade_out()         # ← cinematic fade out
 				await _walk_player_to(player_marker.global_position)
-				_is_walking = false       # ← unlock
-				visible = true
+				_is_walking = false      # ← unlock
+				fade_in()                # ← cinematic fade in
 
 	# 3. CAMERA LOGIC (WAITING IS DONE)
 	# Because of the 'await' above, this code won't run until the walk finishes.
@@ -107,14 +155,14 @@ func display_current_line():
 			if marker:
 				target_pos = marker.global_position
 		else:
-			_restore_camera()
+			restore_camera()
 
 	var target_zoom: float = -1.0
 	if _active_dialog_content and _active_dialog_content.camera_zoom.size() > current_line:
 		target_zoom = _active_dialog_content.camera_zoom[current_line]
 
 	if target_pos != null or target_zoom > 0.0:
-		_move_camera_to(target_pos, target_zoom)
+		move_camera_to(target_pos, target_zoom)
 
 	# 4. START TEXT TYPING
 	label.type = lines[current_line]
@@ -160,7 +208,7 @@ func _on_char_revealed(c: String) -> void:
 		var sound = current_voice_profile.blip_sound if current_voice_profile else null
 		AudioManager.play_voice_blip(sound, current_voice_profile)
 
-func _move_camera_to(target_pos: Variant, target_zoom: float = -1.0) -> void:
+func move_camera_to(target_pos: Variant, target_zoom: float = -1.0) -> void:
 	if not _camera:
 		_camera = PlayerManager.player.get_node_or_null("Camera2D")
 	if not _camera:
@@ -187,26 +235,69 @@ func _move_camera_to(target_pos: Variant, target_zoom: float = -1.0) -> void:
 	if target_zoom > 0.0:
 		tween.tween_property(_camera, "zoom", Vector2(target_zoom, target_zoom), 0.4)
 
-func _restore_camera() -> void:
+# Inside DialogBox.gd
+
+func restore_camera(preferred_zoom: Variant = null) -> void:
+	if not _camera:
+		_camera = PlayerManager.player.get_node_or_null("Camera2D")
 	if not _camera:
 		return
 		
 	var tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).set_parallel(true)
 	
-	# Calculate exactly where the camera sits relative to the player
+	# Determine which zoom to return to: 
+	# 1. The one passed in (WaitBox's)
+	# 2. The one stored here (DialogBox's)
+	# 3. Default to (1,1) if all else fails
+	var final_zoom = _original_zoom
+	if preferred_zoom is Vector2:
+		final_zoom = preferred_zoom
+	
 	var target_return_pos = PlayerManager.player.global_position + Vector2(0, -17)
 	
 	tween.tween_property(_camera, "global_position", target_return_pos, 0.4)
-	tween.tween_property(_camera, "zoom", _original_zoom, 0.4)  # ← restore zoom
+	tween.tween_property(_camera, "zoom", final_zoom, 0.4)
+	
 	await tween.finished
 	
-	# Re-attach to player
+	# Re-attach logic
 	_camera.top_level = false
 	_camera.cinematic_mode = false
 	_camera.position = Vector2(0, -17)
-	
-	# Force the camera to 'forget' the transition and stick to the player
 	_camera.reset_smoothing()
 	_camera.position_smoothing_enabled = true
-	
 	_camera = null
+
+
+func fade_in():
+	is_closing = false
+	visible = true
+	
+	if _fade_tween and _fade_tween.is_running():
+		_fade_tween.kill()
+		
+	_fade_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_OUT)
+	
+	# Start transparent
+	$NinePatchRect.modulate.a = 0.0
+	portrait.modulate.a = 0.0
+	
+	_fade_tween.tween_property($NinePatchRect, "modulate:a", 1.0, 0.2)
+	_fade_tween.tween_property(portrait, "modulate:a", 1.0, 0.2)
+
+func fade_out():
+	if is_closing: return
+	is_closing = true
+	
+	if _fade_tween and _fade_tween.is_running():
+		_fade_tween.kill()
+		
+	_fade_tween = create_tween().set_parallel(true).set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN)
+	
+	_fade_tween.tween_property($NinePatchRect, "modulate:a", 0.0, 0.2)
+	_fade_tween.tween_property(portrait, "modulate:a", 0.0, 0.2)
+	
+	await _fade_tween.finished
+	
+	visible = false
+	is_closing = false

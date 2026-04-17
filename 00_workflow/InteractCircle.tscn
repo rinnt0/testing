@@ -83,8 +83,8 @@ _data = {
 [node name="InteractCircle" type="Node2D" unique_id=1023788363]
 script = ExtResource("2_pfcu6")
 activate_distance = 100.0
-arrival_threshold = 20.0
-button_visible_distance = 120.0
+arrival_threshold = 0.0
+button_visible_distance = 45.0
 
 [node name="interact_prompt_circle" type="Sprite2D" parent="." unique_id=1070503081]
 modulate = Color(1, 1, 1, 0.364706)

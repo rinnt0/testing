@@ -38,6 +38,7 @@ FullArtBox="*uid://crm1rjgiu7ewn"
 TransitionBox="*uid://dskbaorg3v56p"
 ScreenFx="*uid://c85sf8dy2bk5v"
 interactCircle="*uid://dtgj6uqagrydq"
+WaitBox="*uid://cqus4cwnq7ibl"
 
 [display]
 

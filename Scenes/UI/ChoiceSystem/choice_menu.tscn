@@ -1,9 +1,12 @@
 [gd_scene format=3 uid="uid://b04j2ddrfepjq"]
 
 [ext_resource type="Script" uid="uid://djh6bib26snca" path="res://Scenes/UI/ChoiceSystem/choice_menu.gd" id="1_sxsc4"]
+[ext_resource type="Texture2D" uid="uid://2dm3d8xtdinp" path="res://Scenes/UI/ChoiceSystem/interact_menu.png" id="2_0xeq7"]
+[ext_resource type="Texture2D" uid="uid://e0fbojjv2qtx" path="res://Scenes/UI/ChoiceSystem/Decorations.png" id="3_resng"]
 
 [node name="ChoiceMenu" type="CanvasLayer" unique_id=271566204]
 process_mode = 3
+follow_viewport_scale = 0.2
 script = ExtResource("1_sxsc4")
 
 [node name="Control" type="Control" parent="." unique_id=1340515248]
@@ -27,6 +30,17 @@ offset_bottom = 118.0
 grow_horizontal = 0
 grow_vertical = 2
 theme_override_constants/separation = 59
+
+[node name="SelectionBar" type="Sprite2D" parent="Control" unique_id=909844332]
+z_index = 1
+position = Vector2(963.50006, 548.5)
+scale = Vector2(6.0218754, 6.1388893)
+texture = ExtResource("2_0xeq7")
+
+[node name="Decorations" type="Sprite2D" parent="Control" unique_id=420073362]
+position = Vector2(983, 556)
+scale = Vector2(6.2000003, 6.2000003)
+texture = ExtResource("3_resng")
 
 [node name="CenterContainer" type="CenterContainer" parent="." unique_id=1832364901]
 anchors_preset = 6

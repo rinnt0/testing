@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://dep56ap7oa4bn"]
+
+[ext_resource type="Script" uid="uid://c0m0nswdxsmx6" path="res://wait_moment.gd" id="1_aaomq"]
+
+[node name="WaitMoment" type="Node" unique_id=1158179160]
+script = ExtResource("1_aaomq")

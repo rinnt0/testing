@@ -19,6 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://wx0c2rx20k48" path="res://Assets/Levels/Level 1/base_cityscape.png" id="17_bbpso"]
 [ext_resource type="Texture2D" uid="uid://daacyuy2avbst" path="res://Assets/titlescreen_test.png" id="18_3t4r2"]
 [ext_resource type="AudioStream" uid="uid://dvf5xeriq2ooi" path="res://Assets/Music/voice_blip.wav" id="18_a4hmm"]
+[ext_resource type="PackedScene" uid="uid://dep56ap7oa4bn" path="res://wait_moment.tscn" id="20_bbpso"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bgru3"]
 size = Vector2(24.5, 10)
@@ -64,6 +65,9 @@ base_volume_db = -8.344
 volume_variance_db = 1.903
 char_speed = 0.2
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bbpso"]
+size = Vector2(39, 11)
+
 [node name="Intro_3" type="Node2D" unique_id=2106242955]
 script = ExtResource("1_uh20e")
 
@@ -77,7 +81,7 @@ tile_map_data = PackedByteArray("AABJAA8AAgAGAAQAAABJABAAAgAGAAUAAABJABEAAgAHAAY
 script = null
 
 [node name="StorePoint" type="Marker2D" parent="." unique_id=26977251]
-position = Vector2(1048, 339)
+position = Vector2(579, 339)
 
 [node name="StoreEntrance" parent="." unique_id=761932374 instance=ExtResource("3_rufm4")]
 position = Vector2(1061, 315)
@@ -153,3 +157,23 @@ voice_profiles = Array[ExtResource("11_sgfny")]([SubResource("Resource_3t4r2"), 
 
 [node name="DialogFlag" parent="Stairs/GoUp" unique_id=114420541 instance=ExtResource("13_42yxs")]
 flag_name = "smoke_after_work"
+
+[node name="ChoiceBridge" parent="." unique_id=771402014 instance=ExtResource("3_rufm4")]
+
+[node name="InteractPrompt" parent="ChoiceBridge" unique_id=1754272260 instance=ExtResource("4_eevuw")]
+position = Vector2(541, 312)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChoiceBridge/InteractPrompt" unique_id=1673062358]
+position = Vector2(-7.5, 24)
+shape = SubResource("RectangleShape2D_bbpso")
+
+[node name="ChoiceMaker" parent="ChoiceBridge" unique_id=1321343351 instance=ExtResource("5_4xcpq")]
+
+[node name="WaitMoment" parent="ChoiceBridge/ChoiceMaker" unique_id=1158179160 instance=ExtResource("20_bbpso")]
+thoughts = Array[String](["...", "Maybe I should have bought some milk", "Will I still be doing this in 10 years?"])
+thought_delays = Array[float]([0.0, 15.0, 40.0])
+portraits = Array[Texture2D]([ExtResource("10_ln4y2"), ExtResource("10_ln4y2"), ExtResource("10_ln4y2")])
+voice_profiles = Array[ExtResource("11_sgfny")]([ExtResource("12_w1yqk"), ExtResource("12_w1yqk"), ExtResource("12_w1yqk")])
+camera_zoom = Array[float]([4.0, 4.0, 5.0])
+
+[node name="ChoiceMaker2" parent="ChoiceBridge" unique_id=216681711 instance=ExtResource("5_4xcpq")]

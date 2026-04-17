@@ -56,16 +56,13 @@ func do_transition(content: TransitionContent, already_black: bool = false):
 	await FullArtBox.play_fade_in()
 
 	if PlayerManager.player:
-		# 1. Restore the state machine 
 		PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
 		PlayerManager.player.can_look_up = true
-		
-		# 2. FIX: Manually restore what the Title Screen hid 
+		PlayerManager.player.movement_locked = false  # ← here
 		PlayerManager.player.visible = true
 		var camera = PlayerManager.player.get_node_or_null("Camera2D")
 		if camera:
 			camera.enabled = true
-
 	transition_finished.emit()
 
 func _typewrite(label_node: Label, text: String, profile: VoiceProfile = null):

@@ -3,7 +3,7 @@ class_name Player extends CharacterBody2D
 var current_direction = Vector2.DOWN
 var direction = Vector2.ZERO
 var can_look_up = true
-
+var movement_locked: bool = false
 # ─────────────────────────────────────────────
 #  Footsteps
 # ─────────────────────────────────────────────
@@ -24,7 +24,7 @@ func _ready() -> void:
 	sprite.scale.x = -1
 
 func _process(delta: float) -> void:
-	direction.x = Input.get_action_strength("right") - Input.get_action_strength("left")
+	direction.x = 0.0 if movement_locked else Input.get_action_strength("right") - Input.get_action_strength("left")
 	is_looking_up()
 
 
