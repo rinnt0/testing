@@ -12,32 +12,19 @@
 [ext_resource type="PackedScene" uid="uid://3lpjvhvnw8h5" path="res://Scenes/Levels/level_transition.tscn" id="6_kj5ij"]
 [ext_resource type="PackedScene" uid="uid://gr83mbq341i4" path="res://Scenes/Levels/dialog_ui.tscn" id="7_456kb"]
 [ext_resource type="Script" uid="uid://dy61y8se2bt2b" path="res://Scenes/Levels/dialog_only.gd" id="8_fywi0"]
-[ext_resource type="Texture2D" uid="uid://c7u4k85bjoqnw" path="res://Assets/Sprites/pills.png" id="12_hvs5j"]
-[ext_resource type="PackedScene" uid="uid://dvy64rhwe26ok" path="res://00_workflow/choice_bridge.tscn" id="12_sahnr"]
-[ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://00_workflow/ChoiceMaker.tscn" id="13_13gea"]
-[ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://00_workflow/dialog_content.tscn" id="14_bowc5"]
-[ext_resource type="Texture2D" uid="uid://bnswuhuglfvkw" path="res://Scenes/UI/ChoiceSystem/icon_examine.png" id="14_okijc"]
-[ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://00_workflow/dialog_flag.tscn" id="15_okijc"]
-[ext_resource type="Texture2D" uid="uid://1f4vy0pa4egy" path="res://Scenes/UI/ChoiceSystem/speaker_test.png" id="16_gx6f8"]
-[ext_resource type="Texture2D" uid="uid://oq5bhpgqjpfy" path="res://Scenes/UI/ChoiceSystem/icon_questionmark.png" id="16_okijc"]
 [ext_resource type="PackedScene" uid="uid://bj5u6p2251xvb" path="res://Scenes/UI/dust_fx.tscn" id="17_13gea"]
-[ext_resource type="Texture2D" uid="uid://dt6xb8panfct2" path="res://Scenes/UI/ChoiceSystem/icon_take.png" id="17_lqbkx"]
-[ext_resource type="Script" uid="uid://buevi6v0ikoyi" path="res://VoiceProfiles/voice_profiles.gd" id="18_kl3re"]
-[ext_resource type="Resource" uid="uid://ddfjyl7doihlw" path="res://VoiceProfiles/main_character_fast.tres" id="19_smcvq"]
-[ext_resource type="AudioStream" uid="uid://dvf5xeriq2ooi" path="res://Assets/Music/voice_blip.wav" id="20_7r763"]
-[ext_resource type="Texture2D" uid="uid://bq0f4jbpqm62n" path="res://Scenes/UI/ChoiceSystem/icon_talk.png" id="20_fqxiv"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ce5c8"]
 size = Vector2(44, 14)
 
-[sub_resource type="Gradient" id="Gradient_osokm"]
+[sub_resource type="Gradient" id="Gradient_hvs5j"]
 offsets = PackedFloat32Array(1)
 colors = PackedColorArray(0.560023, 0.0754424, 0.176681, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_o86a8"]
-gradient = SubResource("Gradient_osokm")
+gradient = SubResource("Gradient_hvs5j")
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_7r763"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x6eyg"]
 resource_local_to_scene = true
 size = Vector2(16, 16)
 
@@ -55,18 +42,6 @@ colors = PackedColorArray(1, 1, 0.247059, 1, 0, 0, 0, 1)
 gradient = SubResource("Gradient_35opv")
 fill = 1
 fill_from = Vector2(0.470085, 0.564103)
-
-[sub_resource type="Resource" id="Resource_r8mod"]
-script = ExtResource("18_kl3re")
-blip_sound = ExtResource("20_7r763")
-base_pitch = 1.223
-pitch_variance = 0.115
-base_volume_db = -8.344
-volume_variance_db = 1.903
-char_speed = 0.097
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_sahnr"]
-size = Vector2(23, 13)
 
 [node name="Game" type="Node2D" unique_id=1339658638]
 script = ExtResource("1_kj5ij")
@@ -140,7 +115,7 @@ side = 3
 
 [node name="CollisionShape2D" parent="level_transition_0" index="0"]
 position = Vector2(16, 0)
-shape = SubResource("RectangleShape2D_7r763")
+shape = SubResource("RectangleShape2D_x6eyg")
 
 [node name="Closet" type="Node2D" parent="." unique_id=813238078]
 process_mode = 3
@@ -182,48 +157,6 @@ texture = SubResource("GradientTexture2D_hvs5j")
 
 [node name="Marker2D" type="Marker2D" parent="." unique_id=605417302]
 position = Vector2(492, 273)
-
-[node name="Pills" type="Node" parent="." unique_id=706232871]
-
-[node name="ChoiceBridge" parent="Pills" unique_id=761932374 instance=ExtResource("12_sahnr")]
-position = Vector2(254, 256)
-
-[node name="ChoiceMaker" parent="Pills/ChoiceBridge" unique_id=701856808 instance=ExtResource("13_13gea")]
-label = "Examine"
-icon = ExtResource("14_okijc")
-
-[node name="DialogContent" parent="Pills/ChoiceBridge/ChoiceMaker" unique_id=326983792 instance=ExtResource("14_bowc5")]
-lines = Array[String](["oh... my pills...", "I should probably take these..."])
-portraits = Array[Texture2D]([ExtResource("16_gx6f8"), ExtResource("16_gx6f8")])
-voice_profiles = Array[ExtResource("18_kl3re")]([ExtResource("19_smcvq"), SubResource("Resource_r8mod")])
-camera_targets = Array[String](["", "Marker2D"])
-
-[node name="Marker2D" type="Marker2D" parent="Pills/ChoiceBridge/ChoiceMaker/DialogContent" unique_id=1481596011]
-position = Vector2(183, 255)
-
-[node name="ChoiceMaker3" parent="Pills/ChoiceBridge" unique_id=1554264409 instance=ExtResource("13_13gea")]
-icon = ExtResource("16_okijc")
-
-[node name="ChoiceMaker2" parent="Pills/ChoiceBridge" unique_id=512242180 instance=ExtResource("13_13gea")]
-label = "Take"
-icon = ExtResource("17_lqbkx")
-
-[node name="DialogFlag" parent="Pills/ChoiceBridge/ChoiceMaker2" unique_id=971773713 instance=ExtResource("15_okijc")]
-
-[node name="Pills2" type="Sprite2D" parent="Pills/ChoiceBridge" unique_id=1330244322]
-position = Vector2(12, -8)
-texture = ExtResource("12_hvs5j")
-
-[node name="InteractPrompt" parent="Pills/ChoiceBridge" unique_id=2122420552 instance=ExtResource("4_6kmi7")]
-position = Vector2(11, -5)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pills/ChoiceBridge/InteractPrompt" unique_id=1523982914]
-position = Vector2(-6, 16)
-shape = SubResource("RectangleShape2D_sahnr")
-
-[node name="ChoiceMaker4" parent="Pills/ChoiceBridge" unique_id=620298902 instance=ExtResource("13_13gea")]
-label = "talk"
-icon = ExtResource("20_fqxiv")
 
 [node name="DustFX" parent="." unique_id=1835810399 instance=ExtResource("17_13gea")]
 position = Vector2(327, 167)

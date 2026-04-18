@@ -7,8 +7,9 @@ class_name Level extends Node2D
 var pills_taken = false
 var camera = PlayerManager.player.get_node("Camera2D")
 func _ready() -> void:
+	add_to_group("level")  # ADD THIS
 	PlayerManager.set_as_parent(self)
-	AudioManager.play_music( music )
+	AudioManager.play_music(music)
 	AudioManager.play_ambient( ambient )  # ← add this
 	
 	PlayerManager.player.visible = true

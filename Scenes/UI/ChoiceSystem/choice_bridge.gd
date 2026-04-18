@@ -73,12 +73,14 @@ func _unhandled_input(event: InputEvent):
 				var _wait_done := false
 				FullArtBox.art_finished.connect(func(): _art_done = true, CONNECT_ONE_SHOT)
 				WaitBox.wait_finished.connect(func(): _wait_done = true, CONNECT_ONE_SHOT)
-				WaitBox.do_wait(wait, true)
+				# ↓ was: WaitBox.do_wait(wait, true)
+				_do_wait_with_audio(wait)  # don't await — runs parallel with art
 				FullArtBox.show_art(full_art, transition != null)
 				while not (_art_done and _wait_done):
 					await get_tree().process_frame
 			elif wait:
-				await WaitBox.do_wait(wait)
+				# ↓ was: await WaitBox.do_wait(wait)
+				await _do_wait_with_audio(wait)
 			elif full_art:
 				await FullArtBox.show_art(full_art, transition != null)
 			elif dialog:
@@ -107,3 +109,25 @@ func _unhandled_input(event: InputEvent):
 				await TransitionBox.transition_finished
 
 			is_open = false
+
+# ── add this helper ──────────────────────────────────────────────
+func _do_wait_with_audio(wait: WaitMoment) -> void:
+	# Snapshot current level audio
+	var level = get_tree().get_first_node_in_group("level")
+	var prev_music:   AudioStream = level.music   if level else null
+	var prev_ambient: AudioStream = level.ambient if level else null
+
+	# Override if set
+	if wait.override_music:
+		AudioManager.play_music(wait.override_music)
+	if wait.override_ambient:
+		AudioManager.play_ambient(wait.override_ambient)
+
+	await WaitBox.do_wait(wait)
+
+	# Restore
+	if wait.override_music and prev_music:
+		AudioManager.play_music(prev_music)
+	if wait.override_ambient and prev_ambient:
+		AudioManager.play_ambient(prev_ambient)
+# ────────────────────────────────────────────────────────────────

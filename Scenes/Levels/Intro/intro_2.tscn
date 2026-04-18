@@ -16,7 +16,6 @@
 [ext_resource type="PackedScene" uid="uid://bjw7yyj5egq35" path="res://00_workflow/auto_trigger.tscn" id="13_qabmb"]
 [ext_resource type="AudioStream" uid="uid://dvf5xeriq2ooi" path="res://Assets/Music/voice_blip.wav" id="14_0edlu"]
 [ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://00_workflow/transition_content.tscn" id="16_0edlu"]
-[ext_resource type="Texture2D" uid="uid://oq5bhpgqjpfy" path="res://Scenes/UI/ChoiceSystem/icon_questionmark.png" id="16_4ayg5"]
 [ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://00_workflow/dialog_flag.tscn" id="16_w5gd5"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7rjcx"]
@@ -96,21 +95,14 @@ position = Vector2(133, 209)
 [node name="DialogFlag" parent="AutoTrigger/ChoiceMaker" unique_id=971773713 instance=ExtResource("16_w5gd5")]
 flag_name = "worker_chat"
 
-[node name="Exit" parent="." unique_id=1030680228 instance=ExtResource("4_0bbin")]
-position = Vector2(424, 207)
+[node name="AutoTrigger2" parent="." unique_id=1132993504 instance=ExtResource("13_qabmb")]
+free_on_complete = false
 
-[node name="InteractPrompt" parent="Exit" unique_id=1843407434 instance=ExtResource("5_qw57x")]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Exit/InteractPrompt" unique_id=543857406]
-position = Vector2(-1, 19)
-shape = SubResource("RectangleShape2D_qabmb")
-
-[node name="Leave" parent="Exit" unique_id=1693692011 instance=ExtResource("5_l8j1g")]
-label = "Leave."
-icon = ExtResource("16_4ayg5")
-
-[node name="DialogContent" parent="Exit/Leave" unique_id=48437694 instance=ExtResource("7_7rjcx")]
-
-[node name="TransitionContent" parent="Exit/Leave" unique_id=2021110483 instance=ExtResource("16_0edlu")]
+[node name="TransitionContent" parent="AutoTrigger2" unique_id=2021110483 instance=ExtResource("16_0edlu")]
 transition_target = "StorePoint"
 next_scene_path = "uid://cdfp6kytpdno2"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="AutoTrigger2" unique_id=543857406]
+z_index = 4
+position = Vector2(423, 226)
+shape = SubResource("RectangleShape2D_qabmb")
