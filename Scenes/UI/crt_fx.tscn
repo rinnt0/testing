@@ -9,7 +9,7 @@ shader_parameter/scanline_density = 438.226018440735
 shader_parameter/scanline_speed = 0.274000013015
 
 [node name="Printlines" type="TextureRect" unique_id=141781502]
-z_index = 360
+z_index = 31
 texture_filter = 1
 material = SubResource("ShaderMaterial_8wk6j")
 offset_left = -165.0

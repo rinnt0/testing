@@ -117,8 +117,8 @@ camera_zoom = Array[float]([7.0])
 player_targets = Array[String](["", "WalkLeave"])
 
 [node name="TransitionContent" parent="Exit/Leave" unique_id=2021110483 instance=ExtResource("14_w7fn5")]
-transition_target = "HomeDoor"
-next_scene_path = "uid://cdgljxcg3wuwr"
-facing_direction = 1
+transition_target = "Left"
+next_scene_path = "uid://dcnvhculenwdc"
+facing_direction = 2
 
 [node name="WalkLeave" type="Marker2D" parent="Exit/Leave/TransitionContent" unique_id=284932783]

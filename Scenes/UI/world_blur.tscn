@@ -5,8 +5,11 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_56fmg"]
 shader = ExtResource("1_tql0t")
 shader_parameter/blur_strength = 1.0450000496375
-shader_parameter/blur_radius = 0.0
+shader_parameter/blur_radius = 0.2970000141075
+shader_parameter/ca_strength = 1.114000052915
+shader_parameter/ca_radius = 0.750000035625
 shader_parameter/glitch_intensity = 0.0
+shader_parameter/glitch_radius = 0.4
 
 [sub_resource type="ViewportTexture" id="ViewportTexture_n0fv1"]
 viewport_path = NodePath("world_blur_viewport")
@@ -22,8 +25,8 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_left = -97.0
 offset_top = -32.0
-offset_right = 647.0
-offset_bottom = 164.0
+offset_right = 54.0
+offset_bottom = 17.0
 grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2

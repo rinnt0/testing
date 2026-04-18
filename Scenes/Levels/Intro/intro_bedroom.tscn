@@ -29,7 +29,7 @@ colors = PackedColorArray(0.560023, 0.0754424, 0.176681, 1)
 gradient = SubResource("Gradient_osokm")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_y7xnf"]
-size = Vector2(27, 9)
+size = Vector2(21, 9)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nni3d"]
 size = Vector2(44, 10)
@@ -87,7 +87,7 @@ facing_direction = 2
 position = Vector2(-4, -24)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Door/InteractPrompt" unique_id=949866127]
-position = Vector2(-3.5, 23.5)
+position = Vector2(-0.5, 23.5)
 shape = SubResource("RectangleShape2D_y7xnf")
 
 [node name="Bed" parent="." unique_id=776171229 instance=ExtResource("3_k5247")]
@@ -119,8 +119,8 @@ voice_profiles = Array[ExtResource("11_vkkuc")]([ExtResource("12_ru7cd"), ExtRes
 
 [node name="TransitionContent" parent="Bed/SleepHasPills" unique_id=1789802670 instance=ExtResource("6_1m2vx")]
 transition_texts = Array[String](["I'm sure of it."])
-transition_target = "HouseDoorPoint"
-next_scene_path = "uid://cdfp6kytpdno2"
+transition_target = "BedWakeUp"
+next_scene_path = "uid://myjew4cx72es"
 voice_profiles = Array[ExtResource("11_vkkuc")]([ExtResource("12_ru7cd")])
 facing_direction = 2
 
