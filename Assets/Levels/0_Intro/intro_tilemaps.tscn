@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://7d73yofi60dg"]
 
-[ext_resource type="Texture2D" uid="uid://dp23b0wm45b3c" path="res://Assets/Levels/Intro/Intro 1.png" id="1_40smb"]
-[ext_resource type="Texture2D" uid="uid://8kd8m22m87jr" path="res://Assets/Levels/Intro/Intro 2.png" id="2_v2oir"]
+[ext_resource type="Texture2D" uid="uid://dp23b0wm45b3c" path="res://Assets/Levels/0_Intro/Intro 1.png" id="1_40smb"]
+[ext_resource type="Texture2D" uid="uid://8kd8m22m87jr" path="res://Assets/Levels/0_Intro/Intro 2.png" id="2_v2oir"]
 [ext_resource type="Script" uid="uid://dm1ey3gxh7q40" path="res://00_workflow/level_tilemap.gd" id="3_afb7b"]
-[ext_resource type="Texture2D" uid="uid://d3id4387oavg5" path="res://Assets/Levels/Intro/Intro 3.png" id="3_ph0eu"]
-[ext_resource type="Texture2D" uid="uid://dm1to1lddioft" path="res://Assets/Levels/Intro/Intro_roof.png" id="4_qx1mi"]
-[ext_resource type="Texture2D" uid="uid://v74adh1nciy3" path="res://Assets/Levels/Intro/Level_0.png" id="5_xumhg"]
+[ext_resource type="Texture2D" uid="uid://d3id4387oavg5" path="res://Assets/Levels/0_Intro/Intro 3.png" id="3_ph0eu"]
+[ext_resource type="Texture2D" uid="uid://dm1to1lddioft" path="res://Assets/Levels/0_Intro/Intro_roof.png" id="4_qx1mi"]
+[ext_resource type="Texture2D" uid="uid://v74adh1nciy3" path="res://Assets/Levels/0_Intro/Level_0.png" id="5_xumhg"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_um535"]
 texture = ExtResource("1_40smb")

@@ -1,7 +1,7 @@
 [gd_scene format=4 uid="uid://myjew4cx72es"]
 
 [ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://00_workflow/level.gd" id="1_qql46"]
-[ext_resource type="PackedScene" uid="uid://7d73yofi60dg" path="res://Assets/Levels/Intro/intro_tilemaps.tscn" id="2_rhp41"]
+[ext_resource type="PackedScene" uid="uid://7d73yofi60dg" path="res://Assets/Levels/0_Intro/intro_tilemaps.tscn" id="2_rhp41"]
 [ext_resource type="PackedScene" uid="uid://bj5u6p2251xvb" path="res://Scenes/UI/dust_fx.tscn" id="3_7qrwv"]
 [ext_resource type="PackedScene" uid="uid://ct4yl6h1iak3s" path="res://Scenes/UI/glitch_fx.tscn" id="4_58mgy"]
 [ext_resource type="PackedScene" uid="uid://dvy64rhwe26ok" path="res://00_workflow/choice_bridge.tscn" id="5_sroog"]
@@ -16,7 +16,7 @@
 [ext_resource type="Resource" uid="uid://ddfjyl7doihlw" path="res://VoiceProfiles/main_character_fast.tres" id="14_omphy"]
 [ext_resource type="Resource" uid="uid://b8hxdd4wcrx4j" path="res://VoiceProfiles/main_character_slow.tres" id="15_qql46"]
 [ext_resource type="PackedScene" uid="uid://hbmmv6ave85g" path="res://00_workflow/full_art_content.tscn" id="16_ef6sc"]
-[ext_resource type="Texture2D" uid="uid://wx0c2rx20k48" path="res://Assets/Levels/Intro/base_cityscape.png" id="17_7dnvu"]
+[ext_resource type="Texture2D" uid="uid://wx0c2rx20k48" path="res://Assets/Levels/0_Intro/base_cityscape.png" id="17_7dnvu"]
 
 [sub_resource type="Gradient" id="Gradient_osokm"]
 offsets = PackedFloat32Array(1)
@@ -78,7 +78,8 @@ label = "Leave"
 icon = ExtResource("8_i5htc")
 
 [node name="TransitionContent" parent="Door/ChoiceMaker" unique_id=2021110483 instance=ExtResource("9_s1l11")]
-next_scene_path = "uid://b0eqeyh1f6ow0"
+transition_target = "PlayerSpawn"
+next_scene_path = "uid://pk7d0rnflaik"
 facing_direction = 2
 
 [node name="BedroomCutscene" parent="." unique_id=904244366 instance=ExtResource("10_aos0f")]

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b60phi7r7nxay"
-path="res://.godot/imported/fullart1.png-875261cc58a22c3bad71534813a19342.ctex"
+uid="uid://ca80gsfd0uyem"
+path="res://.godot/imported/Theater_Lobby.png-c0ed6cae52ed453666c53b736601e315.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Levels/Intro/fullart1.png"
-dest_files=["res://.godot/imported/fullart1.png-875261cc58a22c3bad71534813a19342.ctex"]
+source_file="res://Assets/Levels/1_Theater/Theater_Lobby.png"
+dest_files=["res://.godot/imported/Theater_Lobby.png-c0ed6cae52ed453666c53b736601e315.ctex"]
 
 [params]
 

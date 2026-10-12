@@ -3,7 +3,7 @@ class_name CameraZoomArea extends Area2D
 @export var target_zoom: Vector2 = Vector2(6, 6)
 @export var zoom_duration: float = 0.5
 @export var area_music: AudioStream  # Leave empty to keep level music as-is
-
+@export var delete: bool = false
 var _camera: PlayerCamera
 var _level_music: AudioStream  # stores the level's original track
 
@@ -31,3 +31,5 @@ func _on_body_exited(body: Node2D) -> void:
 		return
 	if _camera:
 		_camera.tween_zoom(_camera.default_zoom, zoom_duration)
+	if delete == true:
+		queue_free()

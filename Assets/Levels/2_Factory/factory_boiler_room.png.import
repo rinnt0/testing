@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://8kd8m22m87jr"
-path="res://.godot/imported/Intro 2.png-2a028bbec79c53e0579b01f7b7b904b0.ctex"
+uid="uid://gbku8oq5bx2u"
+path="res://.godot/imported/factory_boiler_room.png-055ae201d051d1d2da88d9c481e9f15a.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Levels/Intro/Intro 2.png"
-dest_files=["res://.godot/imported/Intro 2.png-2a028bbec79c53e0579b01f7b7b904b0.ctex"]
+source_file="res://Assets/Levels/2_Factory/factory_boiler_room.png"
+dest_files=["res://.godot/imported/factory_boiler_room.png-055ae201d051d1d2da88d9c481e9f15a.ctex"]
 
 [params]
 

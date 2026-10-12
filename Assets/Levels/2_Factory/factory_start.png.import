@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dm1to1lddioft"
-path="res://.godot/imported/Intro_roof.png-2cab555d97b677ea457bef59065714b1.ctex"
+uid="uid://dsscepl522i4d"
+path="res://.godot/imported/factory_start.png-5a729de34d99c03ec90429322007a915.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Levels/Intro/Intro_roof.png"
-dest_files=["res://.godot/imported/Intro_roof.png-2cab555d97b677ea457bef59065714b1.ctex"]
+source_file="res://Assets/Levels/2_Factory/factory_start.png"
+dest_files=["res://.godot/imported/factory_start.png-5a729de34d99c03ec90429322007a915.ctex"]
 
 [params]
 

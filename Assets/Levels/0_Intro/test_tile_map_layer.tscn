@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://d2rsvgwv3qqoa"]
 
-[ext_resource type="Texture2D" uid="uid://b8y1yimgoms5m" path="res://Assets/Levels/Intro/Level_1.png" id="2_lrwof"]
+[ext_resource type="Texture2D" uid="uid://b8y1yimgoms5m" path="res://Assets/Levels/0_Intro/Level_1.png" id="2_lrwof"]
 [ext_resource type="Texture2D" uid="uid://bdt6amdlqlajx" path="res://Assets/Levels/Level 1/prologue_level_1.png" id="3_fm2a8"]
 [ext_resource type="Script" uid="uid://dm1ey3gxh7q40" path="res://00_workflow/level_tilemap.gd" id="6_lrwof"]
-[ext_resource type="Texture2D" uid="uid://v74adh1nciy3" path="res://Assets/Levels/Intro/Level_0.png" id="7_ga85c"]
+[ext_resource type="Texture2D" uid="uid://v74adh1nciy3" path="res://Assets/Levels/0_Intro/Level_0.png" id="7_ga85c"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fm2a8"]
 texture = ExtResource("7_ga85c")

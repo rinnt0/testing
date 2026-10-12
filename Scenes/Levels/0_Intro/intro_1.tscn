@@ -1,21 +1,21 @@
 [gd_scene format=4 uid="uid://wuvkws2qcocr"]
 
-[ext_resource type="PackedScene" uid="uid://7d73yofi60dg" path="res://Assets/Levels/Intro/intro_tilemaps.tscn" id="1_wlsfe"]
-[ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://00_workflow/level.gd" id="1_ywh4g"]
-[ext_resource type="AudioStream" uid="uid://brsvmrye7robu" path="res://Assets/Music/paulyudin-piano-piano-music-508963 (edited with Audjust).mp3" id="2_hgxr2"]
-[ext_resource type="PackedScene" uid="uid://bjw7yyj5egq35" path="res://00_workflow/auto_trigger.tscn" id="3_qirj0"]
-[ext_resource type="AudioStream" uid="uid://qpragckoadsj" path="res://Assets/Music/freesound_community-computer-hum-78343.mp3" id="3_w7fn5"]
-[ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://00_workflow/ChoiceMaker.tscn" id="4_00mg4"]
-[ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://00_workflow/dialog_content.tscn" id="5_wvc8l"]
-[ext_resource type="Texture2D" uid="uid://1f4vy0pa4egy" path="res://Assets/Characters/Speaker_Icons/speaker_test.png" id="6_pwars"]
-[ext_resource type="Script" uid="uid://buevi6v0ikoyi" path="res://VoiceProfiles/voice_profiles.gd" id="7_ycinp"]
-[ext_resource type="Resource" uid="uid://ddfjyl7doihlw" path="res://VoiceProfiles/main_character_fast.tres" id="8_qirj0"]
-[ext_resource type="PackedScene" uid="uid://dvy64rhwe26ok" path="res://00_workflow/choice_bridge.tscn" id="9_pwars"]
-[ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://00_workflow/interact_prompt.tscn" id="10_ycinp"]
-[ext_resource type="Texture2D" uid="uid://bnswuhuglfvkw" path="res://Assets/UI/icon_examine.png" id="11_nroym"]
-[ext_resource type="Texture2D" uid="uid://oq5bhpgqjpfy" path="res://Assets/UI/icon_questionmark.png" id="12_3guds"]
-[ext_resource type="AudioStream" uid="uid://dvf5xeriq2ooi" path="res://Assets/Music/voice_blip.wav" id="13_hgxr2"]
-[ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://00_workflow/transition_content.tscn" id="14_w7fn5"]
+[ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://00_workflow/level.gd" id="1_635jy"]
+[ext_resource type="AudioStream" uid="uid://brsvmrye7robu" path="res://Assets/Music/paulyudin-piano-piano-music-508963 (edited with Audjust).mp3" id="2_137ui"]
+[ext_resource type="AudioStream" uid="uid://qpragckoadsj" path="res://Assets/Music/freesound_community-computer-hum-78343.mp3" id="3_y7ljt"]
+[ext_resource type="PackedScene" uid="uid://7d73yofi60dg" path="res://Assets/Levels/0_Intro/intro_tilemaps.tscn" id="4_1r2se"]
+[ext_resource type="PackedScene" uid="uid://bjw7yyj5egq35" path="res://00_workflow/auto_trigger.tscn" id="5_bgosq"]
+[ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://00_workflow/ChoiceMaker.tscn" id="6_tevag"]
+[ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://00_workflow/dialog_content.tscn" id="7_gls2c"]
+[ext_resource type="Texture2D" uid="uid://1f4vy0pa4egy" path="res://Assets/Characters/Speaker_Icons/speaker_test.png" id="8_cf380"]
+[ext_resource type="Script" uid="uid://buevi6v0ikoyi" path="res://VoiceProfiles/voice_profiles.gd" id="9_bctsj"]
+[ext_resource type="Resource" uid="uid://ddfjyl7doihlw" path="res://VoiceProfiles/main_character_fast.tres" id="10_5ds8g"]
+[ext_resource type="PackedScene" uid="uid://dvy64rhwe26ok" path="res://00_workflow/choice_bridge.tscn" id="11_5dlpv"]
+[ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://00_workflow/interact_prompt.tscn" id="12_8en0r"]
+[ext_resource type="Texture2D" uid="uid://bnswuhuglfvkw" path="res://Assets/UI/icon_examine.png" id="13_4g36q"]
+[ext_resource type="Texture2D" uid="uid://oq5bhpgqjpfy" path="res://Assets/UI/icon_questionmark.png" id="14_ayy5r"]
+[ext_resource type="AudioStream" uid="uid://dvf5xeriq2ooi" path="res://Assets/Music/voice_blip.wav" id="15_qq0yv"]
+[ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://00_workflow/transition_content.tscn" id="16_upnbs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3guds"]
 
@@ -26,8 +26,8 @@ size = Vector2(31, 13)
 size = Vector2(32, 20)
 
 [sub_resource type="Resource" id="Resource_tsg3l"]
-script = ExtResource("7_ycinp")
-blip_sound = ExtResource("13_hgxr2")
+script = ExtResource("9_bctsj")
+blip_sound = ExtResource("15_qq0yv")
 base_pitch = 1.223
 pitch_variance = 0.115
 base_volume_db = -11.972
@@ -35,31 +35,31 @@ volume_variance_db = 1.903
 char_speed = 0.059
 
 [node name="intro_1" type="Node2D" unique_id=2105917872]
-script = ExtResource("1_ywh4g")
-music = ExtResource("2_hgxr2")
-ambient = ExtResource("3_w7fn5")
+script = ExtResource("1_635jy")
+music = ExtResource("2_137ui")
+ambient = ExtResource("3_y7ljt")
 
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=359103280]
 position = Vector2(160, 204)
 
 [node name="Tilemaps" type="Node" parent="." unique_id=629653800]
 
-[node name="IntroTilemaps" parent="Tilemaps" unique_id=946063030 instance=ExtResource("1_wlsfe")]
+[node name="IntroTilemaps" parent="Tilemaps" unique_id=946063030 instance=ExtResource("4_1r2se")]
 tile_map_data = PackedByteArray("AAAAAAAAAAAYAAQAAAAAAAEAAAAYAAUAAAAAAAIAAAAYAAYAAAAAAAMAAAAYAAcAAAAAAAQAAAAYAAgAAAAAAAUAAAAYAAkAAAAAAAYAAAAYAAoAAAAAAAcAAAAYAAsAAAAAAAgAAAAYAAwAAAAAAAkAAAAYAAUAAAAAAAoAAAAYAAYAAAAAAAsAAAAYAAcAAAAAAAwAAAAYAAgAAAAAAA0AAAAYAAkAAAAAAA4AAAAYAAoAAAAAAA8AAAAYAAsAAAAAABAAAAAYAAwAAAABAAAAAAABAAAAAAABAAEAAAABAAEAAAABAAIAAAABAAIAAAABAAMAAAABAAMAAAABAAQAAAABAAQAAAABAAUAAAABAAUAAAABAAYAAAABAAYAAAABAAcAAAABAAcAAAABAAgAAAAYAAQAAAABAAkAAAAYAAUAAAABAAoAAAAYAAYAAAABAAsAAAAYAAcAAAABAAwAAAAYAAgAAAABAA0AAAAYAAkAAAABAA4AAAAYAAoAAAABAA8AAAAYAAsAAAABABAAAAAYAAwAAAACAAAAAAACAAAAAAACAAEAAAACAAEAAAACAAIAAAACAAIAAAACAAMAAAACAAMAAAACAAQAAAACAAQAAAACAAUAAAACAAUAAAACAAYAAAACAAYAAAACAAcAAAACAAcAAAACAAgAAAACAAgAAAACAAkAAAACAAkAAAACAAoAAAACAAoAAAACAAsAAAACAAsAAAACAAwAAAACAAwAAAACAA0AAAACAA0AAAACAA4AAAACAA4AAAACAA8AAAACAA8AAAACABAAAAACABAAAAADAAAAAAADAAAAAAADAAEAAAADAAEAAAADAAIAAAADAAIAAAADAAMAAAADAAMAAAADAAQAAAADAAQAAAADAAUAAAADAAUAAAADAAYAAAADAAYAAAADAAcAAAADAAcAAAADAAgAAAADAAgAAAADAAkAAAADAAkAAAADAAoAAAADAAoAAAADAAsAAAADAAsAAAADAAwAAAADAAwAAAADAA0AAAADAA0AAAADAA4AAAADAA4AAAADAA8AAAADAA8AAAADABAAAAADABAAAAAEAAAAAAAEAAAAAAAEAAEAAAAEAAEAAAAEAAIAAAAEAAIAAAAEAAMAAAAEAAMAAAAEAAQAAAAEAAQAAAAEAAUAAAAEAAUAAAAEAAYAAAAEAAYAAAAEAAcAAAAEAAcAAAAEAAgAAAAEAAgAAAAEAAkAAAAEAAkAAAAEAAoAAAAEAAoAAAAEAAsAAAAEAAsAAAAEAAwAAAAEAAwAAAAEAA0AAAAEAA0AAAAEAA4AAAAEAA4AAAAEAA8AAAAEAA8AAAAEABAAAAAEABAAAAAFAAAAAAAFAAAAAAAFAAEAAAAFAAEAAAAFAAIAAAAFAAIAAAAFAAMAAAAFAAMAAAAFAAQAAAAFAAQAAAAFAAUAAAAFAAUAAAAFAAYAAAAFAAYAAAAFAAcAAAAFAAcAAAAFAAgAAAAFAAgAAAAFAAkAAAAFAAkAAAAFAAoAAAAFAAoAAAAFAAsAAAAFAAsAAAAFAAwAAAAFAAwAAAAFAA0AAAAFAA0AAAAFAA4AAAAFAA4AAAAFAA8AAAAFAA8AAAAFABAAAAAFABAAAAAGAAAAAAAGAAAAAAAGAAEAAAAGAAEAAAAGAAIAAAAGAAIAAAAGAAMAAAAGAAMAAAAGAAQAAAAGAAQAAAAGAAUAAAAGAAUAAAAGAAYAAAAGAAYAAAAGAAcAAAAGAAcAAAAGAAgAAAAGAAgAAAAGAAkAAAAGAAkAAAAGAAoAAAAGAAoAAAAGAAsAAAAGAAsAAAAGAAwAAAAGAAwAAAAGAA0AAAAGAA0AAAAGAA4AAAAGAA4AAAAGAA8AAAAGAA8AAAAGABAAAAAGABAAAAAHAAAAAAAHAAAAAAAHAAEAAAAHAAEAAAAHAAIAAAAHAAIAAAAHAAMAAAAHAAMAAAAHAAQAAAAHAAQAAAAHAAUAAAAHAAUAAAAHAAYAAAAHAAYAAAAHAAcAAAAHAAcAAAAHAAgAAAAHAAgAAAAHAAkAAAAHAAkAAAAHAAoAAAAHAAoAAAAHAAsAAAAHAAsAAAAHAAwAAAAHAAwAAAAHAA0AAAAHAA0AAAAHAA4AAAAHAA4AAAAHAA8AAAAHAA8AAAAHABAAAAAHABAAAAAIAAAAAAAIAAAAAAAIAAEAAAAIAAEAAAAIAAIAAAAIAAIAAAAIAAMAAAAIAAMAAAAIAAQAAAAIAAQAAAAIAAUAAAAIAAUAAAAIAAYAAAAIAAYAAAAIAAcAAAAIAAcAAAAIAAgAAAAIAAgAAAAIAAkAAAAIAAkAAAAIAAoAAAAIAAoAAAAIAAsAAAAIAAsAAAAIAAwAAAAIAAwAAAAIAA0AAAAIAA0AAAAIAA4AAAAIAA4AAAAIAA8AAAAIAA8AAAAIABAAAAAIABAAAAAJAAAAAAAJAAAAAAAJAAEAAAAJAAEAAAAJAAIAAAAJAAIAAAAJAAMAAAAJAAMAAAAJAAQAAAAJAAQAAAAJAAUAAAAJAAUAAAAJAAYAAAAJAAYAAAAJAAcAAAAJAAcAAAAJAAgAAAAJAAgAAAAJAAkAAAAJAAkAAAAJAAoAAAAJAAoAAAAJAAsAAAAJAAsAAAAJAAwAAAAJAAwAAAAJAA0AAAAJAA0AAAAJAA4AAAAJAA4AAAAJAA8AAAAJAA8AAAAJABAAAAAJABAAAAAKAAAAAAAKAAAAAAAKAAEAAAAKAAEAAAAKAAIAAAAKAAIAAAAKAAMAAAAKAAMAAAAKAAQAAAAKAAQAAAAKAAUAAAAKAAUAAAAKAAYAAAAKAAYAAAAKAAcAAAAKAAcAAAAKAAgAAAAKAAgAAAAKAAkAAAAKAAkAAAAKAAoAAAAKAAoAAAAKAAsAAAAKAAsAAAAKAAwAAAAKAAwAAAAKAA0AAAAKAA0AAAAKAA4AAAAKAA4AAAAKAA8AAAAKAA8AAAAKABAAAAAKABAAAAALAAAAAAALAAAAAAALAAEAAAALAAEAAAALAAIAAAALAAIAAAALAAMAAAALAAMAAAALAAQAAAALAAQAAAALAAUAAAALAAUAAAALAAYAAAALAAYAAAALAAcAAAALAAcAAAALAAgAAAALAAgAAAALAAkAAAALAAkAAAALAAoAAAALAAoAAAALAAsAAAALAAsAAAALAAwAAAALAAwAAAALAA0AAAALAA0AAAALAA4AAAALAA4AAAALAA8AAAALAA8AAAALABAAAAALABAAAAAMAAAAAAAMAAAAAAAMAAEAAAAMAAEAAAAMAAIAAAAMAAIAAAAMAAMAAAAMAAMAAAAMAAQAAAAMAAQAAAAMAAUAAAAMAAUAAAAMAAYAAAAMAAYAAAAMAAcAAAAMAAcAAAAMAAgAAAAMAAgAAAAMAAkAAAAMAAkAAAAMAAoAAAAMAAoAAAAMAAsAAAAMAAsAAAAMAAwAAAAMAAwAAAAMAA0AAAAMAA0AAAAMAA4AAAAMAA4AAAAMAA8AAAAMAA8AAAAMABAAAAAMABAAAAANAAAAAAANAAAAAAANAAEAAAANAAEAAAANAAIAAAANAAIAAAANAAMAAAANAAMAAAANAAQAAAANAAQAAAANAAUAAAANAAUAAAANAAYAAAANAAYAAAANAAcAAAANAAcAAAANAAgAAAANAAgAAAANAAkAAAANAAkAAAANAAoAAAANAAoAAAANAAsAAAANAAsAAAANAAwAAAANAAwAAAANAA0AAAANAA0AAAANAA4AAAANAA4AAAANAA8AAAANAA8AAAANABAAAAANABAAAAAOAAAAAAAOAAAAAAAOAAEAAAAOAAEAAAAOAAIAAAAOAAIAAAAOAAMAAAAOAAMAAAAOAAQAAAAOAAQAAAAOAAUAAAAOAAUAAAAOAAYAAAAOAAYAAAAOAAcAAAAOAAcAAAAOAAgAAAAOAAgAAAAOAAkAAAAOAAkAAAAOAAoAAAAOAAoAAAAOAAsAAAAOAAsAAAAOAAwAAAAOAAwAAAAOAA0AAAAOAA0AAAAOAA4AAAAOAA4AAAAOAA8AAAAOAA8AAAAOABAAAAAOABAAAAAPAAAAAAAPAAAAAAAPAAEAAAAPAAEAAAAPAAIAAAAPAAIAAAAPAAMAAAAPAAMAAAAPAAQAAAAPAAQAAAAPAAUAAAAPAAUAAAAPAAYAAAAPAAYAAAAPAAcAAAAPAAcAAAAPAAgAAAAPAAgAAAAPAAkAAAAPAAkAAAAPAAoAAAAPAAoAAAAPAAsAAAAPAAsAAAAPAAwAAAAPAAwAAAAPAA0AAAAPAA0AAAAPAA4AAAAPAA4AAAAPAA8AAAAPAA8AAAAPABAAAAAPABAAAAAQAAAAAAAQAAAAAAAQAAEAAAAQAAEAAAAQAAIAAAAQAAIAAAAQAAMAAAAQAAMAAAAQAAQAAAAQAAQAAAAQAAUAAAAQAAUAAAAQAAYAAAAQAAYAAAAQAAcAAAAQAAcAAAAQAAgAAAAQAAgAAAAQAAkAAAAQAAkAAAAQAAoAAAAQAAoAAAAQAAsAAAAQAAsAAAAQAAwAAAAQAAwAAAAQAA0AAAAQAA0AAAAQAA4AAAAQAA4AAAAQAA8AAAAQAA8AAAAQABAAAAAQABAAAAARAAAAAAARAAAAAAARAAEAAAARAAEAAAARAAIAAAARAAIAAAARAAMAAAARAAMAAAARAAQAAAARAAQAAAARAAUAAAARAAUAAAARAAYAAAARAAYAAAARAAcAAAARAAcAAAARAAgAAAARAAgAAAARAAkAAAARAAkAAAARAAoAAAARAAoAAAARAAsAAAARAAsAAAARAAwAAAARAAwAAAARAA0AAAARAA0AAAARAA4AAAARAA4AAAARAA8AAAARAA8AAAARABAAAAARABAAAAASAAAAAAASAAAAAAASAAEAAAASAAEAAAASAAIAAAASAAIAAAASAAMAAAASAAMAAAASAAQAAAASAAQAAAASAAUAAAASAAUAAAASAAYAAAASAAYAAAASAAcAAAASAAcAAAASAAgAAAASAAgAAAASAAkAAAASAAkAAAASAAoAAAASAAoAAAASAAsAAAASAAsAAAASAAwAAAASAAwAAAASAA0AAAASAA0AAAASAA4AAAASAA4AAAASAA8AAAASAA8AAAASABAAAAASABAAAAATAAAAAAATAAAAAAATAAEAAAATAAEAAAATAAIAAAATAAIAAAATAAMAAAATAAMAAAATAAQAAAATAAQAAAATAAUAAAATAAUAAAATAAYAAAATAAYAAAATAAcAAAATAAcAAAATAAgAAAATAAgAAAATAAkAAAATAAkAAAATAAoAAAATAAoAAAATAAsAAAATAAsAAAATAAwAAAATAAwAAAATAA0AAAATAA0AAAATAA4AAAATAA4AAAATAA8AAAATAA8AAAATABAAAAATABAAAAAUAAAAAAAUAAAAAAAUAAEAAAAUAAEAAAAUAAIAAAAUAAIAAAAUAAMAAAAUAAMAAAAUAAQAAAAUAAQAAAAUAAUAAAAUAAUAAAAUAAYAAAAUAAYAAAAUAAcAAAAUAAcAAAAUAAgAAAAUAAgAAAAUAAkAAAAUAAkAAAAUAAoAAAAUAAoAAAAUAAsAAAAUAAsAAAAUAAwAAAAUAAwAAAAUAA0AAAAUAA0AAAAUAA4AAAAUAA4AAAAUAA8AAAAUAA8AAAAUABAAAAAUABAAAAAVAAAAAAAVAAAAAAAVAAEAAAAVAAEAAAAVAAIAAAAVAAIAAAAVAAMAAAAVAAMAAAAVAAQAAAAVAAQAAAAVAAUAAAAVAAUAAAAVAAYAAAAVAAYAAAAVAAcAAAAVAAcAAAAVAAgAAAAVAAgAAAAVAAkAAAAVAAkAAAAVAAoAAAAVAAoAAAAVAAsAAAAVAAsAAAAVAAwAAAAVAAwAAAAVAA0AAAAVAA0AAAAVAA4AAAAVAA4AAAAVAA8AAAAVAA8AAAAVABAAAAAVABAAAAAWAAAAAAAWAAAAAAAWAAEAAAAWAAEAAAAWAAIAAAAWAAIAAAAWAAMAAAAWAAMAAAAWAAQAAAAWAAQAAAAWAAUAAAAWAAUAAAAWAAYAAAAWAAYAAAAWAAcAAAAWAAcAAAAWAAgAAAAWAAgAAAAWAAkAAAAWAAkAAAAWAAoAAAAWAAoAAAAWAAsAAAAWAAsAAAAWAAwAAAAWAAwAAAAWAA0AAAAWAA0AAAAWAA4AAAAWAA4AAAAWAA8AAAAWAA8AAAAWABAAAAAWABAAAAAXAAAAAAAXAAAAAAAXAAEAAAAXAAEAAAAXAAIAAAAXAAIAAAAXAAMAAAAXAAMAAAAXAAQAAAAXAAQAAAAXAAUAAAAXAAUAAAAXAAYAAAAXAAYAAAAXAAcAAAAXAAcAAAAXAAgAAAAXAAgAAAAXAAkAAAAXAAkAAAAXAAoAAAAXAAoAAAAXAAsAAAAXAAsAAAAXAAwAAAAXAAwAAAAXAA0AAAAXAA0AAAAXAA4AAAAXAA4AAAAXAA8AAAAXAA8AAAAXABAAAAAXABAAAAAYAAAAAAAYAAAAAAAYAAEAAAAYAAEAAAAYAAIAAAAYAAIAAAAYAAMAAAAYAAMAAAAYAAQAAAAYAAQAAAAYAAUAAAAYAAUAAAAYAAYAAAAYAAYAAAAYAAcAAAAYAAcAAAAYAAgAAAAYAAgAAAAYAAkAAAAYAAkAAAAYAAoAAAAYAAoAAAAYAAsAAAAYAAsAAAAYAAwAAAAYAAwAAAAYAA0AAAAYAA0AAAAYAA4AAAAYAA4AAAAYAA8AAAAYAA8AAAAYABAAAAAYABAAAAAZAAgAAAAYAAwAAAAZAAkAAAAYAAUAAAAZAAoAAAAYAAYAAAAZAAsAAAAYAAcAAAAZAAwAAAAYAAgAAAAZAA0AAAAYAAkAAAAZAA4AAAAYAAoAAAAZAA8AAAAYAAsAAAAZABAAAAAYAAwAAAAaAAgAAAAYAAwAAAAaAAkAAAAYAAUAAAAaAAoAAAAYAAYAAAAaAAsAAAAYAAcAAAAaAAwAAAAYAAgAAAAaAA0AAAAYAAkAAAAaAA4AAAAYAAoAAAAaAA8AAAAYAAsAAAAaABAAAAAYAAwAAAAbAAgAAAAYAAwAAAAbAAkAAAAYAAUAAAAbAAoAAAAYAAYAAAAbAAsAAAAYAAcAAAAbAAwAAAAYAAgAAAAbAA0AAAAYAAkAAAAbAA4AAAAYAAoAAAAbAA8AAAAYAAsAAAAbABAAAAAYAAwAAAAcAAgAAAAYAAwAAAAcAAkAAAAYAAUAAAAcAAoAAAAYAAYAAAAcAAsAAAAYAAcAAAAcAAwAAAAYAAgAAAAcAA0AAAAYAAkAAAAcAA4AAAAYAAoAAAAcAA8AAAAYAAsAAAAcABAAAAAYAAwAAAAZAAAAAAAYAAQAAAAZAAEAAAAYAAUAAAAZAAIAAAAYAAYAAAAZAAMAAAAYAAcAAAAZAAQAAAAYAAgAAAAZAAUAAAAYAAkAAAAZAAYAAAAYAAoAAAAZAAcAAAAYAAsAAAAaAAAAAAAYAAQAAAAaAAEAAAAYAAUAAAAaAAIAAAAYAAYAAAAaAAMAAAAYAAcAAAAaAAQAAAAYAAgAAAAaAAUAAAAYAAkAAAAaAAYAAAAYAAoAAAAaAAcAAAAYAAsAAAAbAAAAAAAYAAQAAAAbAAEAAAAYAAUAAAAbAAIAAAAYAAYAAAAbAAMAAAAYAAcAAAAbAAQAAAAYAAgAAAAbAAUAAAAYAAkAAAAbAAYAAAAYAAoAAAAbAAcAAAAYAAsAAAAcAAAAAAAYAAQAAAAcAAEAAAAYAAUAAAAcAAIAAAAYAAYAAAAcAAMAAAAYAAcAAAAcAAQAAAAYAAgAAAAcAAUAAAAYAAkAAAAcAAYAAAAYAAoAAAAcAAcAAAAYAAsAAAD//wgAAAAYAAwAAAD//wkAAAAYAAUAAAD//woAAAAYAAYAAAD//wsAAAAYAAcAAAD//wwAAAAYAAgAAAD//w0AAAAYAAkAAAD//w4AAAAYAAoAAAD//w8AAAAYAAsAAAD//xAAAAAYAAwAAAD+/wgAAAAYAAwAAAD+/wkAAAAYAAUAAAD+/woAAAAYAAYAAAD+/wsAAAAYAAcAAAD+/wwAAAAYAAgAAAD+/w0AAAAYAAkAAAD+/w4AAAAYAAoAAAD+/w8AAAAYAAsAAAD+/xAAAAAYAAwAAAD//wAAAAAYAAQAAAD//wEAAAAYAAUAAAD//wIAAAAYAAYAAAD//wMAAAAYAAcAAAD//wQAAAAYAAgAAAD//wUAAAAYAAkAAAD//wYAAAAYAAoAAAD//wcAAAAYAAsAAAD+/wAAAAAYAAQAAAD+/wEAAAAYAAUAAAD+/wIAAAAYAAYAAAD+/wMAAAAYAAcAAAD+/wQAAAAYAAgAAAD+/wUAAAAYAAkAAAD+/wYAAAAYAAoAAAD+/wcAAAAYAAsAAAD9/wAAAAAYAAQAAAD9/wEAAAAYAAUAAAD9/wIAAAAYAAYAAAD9/wMAAAAYAAcAAAD9/wQAAAAYAAgAAAD9/wUAAAAYAAkAAAD9/wYAAAAYAAoAAAD9/wcAAAAYAAsAAAD9/wgAAAAYAAQAAAD9/wkAAAAYAAUAAAD9/woAAAAYAAYAAAD9/wsAAAAYAAcAAAD9/wwAAAAYAAgAAAD9/w0AAAAYAAkAAAD9/w4AAAAYAAoAAAD9/w8AAAAYAAsAAAD9/xAAAAAYAAwAAAA=")
 
-[node name="WindowCutscene" parent="." unique_id=904244366 instance=ExtResource("3_qirj0")]
+[node name="WindowCutscene" parent="." unique_id=904244366 instance=ExtResource("5_bgosq")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WindowCutscene" unique_id=1341411673]
 z_index = 11
 position = Vector2(297, 199)
 shape = SubResource("RectangleShape2D_3guds")
 
-[node name="ChoiceMaker" parent="WindowCutscene" unique_id=701856808 instance=ExtResource("4_00mg4")]
+[node name="ChoiceMaker" parent="WindowCutscene" unique_id=701856808 instance=ExtResource("6_tevag")]
 
-[node name="DialogContent" parent="WindowCutscene/ChoiceMaker" unique_id=326983792 instance=ExtResource("5_wvc8l")]
+[node name="DialogContent" parent="WindowCutscene/ChoiceMaker" unique_id=326983792 instance=ExtResource("7_gls2c")]
 lines = Array[String](["I'ts late...", "Let's get home."])
-portraits = Array[Texture2D]([ExtResource("6_pwars"), ExtResource("6_pwars")])
-voice_profiles = Array[ExtResource("7_ycinp")]([ExtResource("8_qirj0"), ExtResource("8_qirj0")])
+portraits = Array[Texture2D]([ExtResource("8_cf380"), ExtResource("8_cf380")])
+voice_profiles = Array[ExtResource("9_bctsj")]([ExtResource("10_5ds8g"), ExtResource("10_5ds8g")])
 camera_targets = Array[String](["CamPoint", "CamPoint"])
 camera_zoom = Array[float]([8.0, 6.0])
 
@@ -69,54 +69,54 @@ position = Vector2(313, 116)
 [node name="WalkPoint" type="Marker2D" parent="WindowCutscene/ChoiceMaker/DialogContent" unique_id=1712629646]
 position = Vector2(250, 202)
 
-[node name="ClosedDoor" parent="." unique_id=761932374 instance=ExtResource("9_pwars")]
+[node name="ClosedDoor" parent="." unique_id=761932374 instance=ExtResource("11_5dlpv")]
 position = Vector2(84, 175)
 
-[node name="InteractPrompt" parent="ClosedDoor" unique_id=2122420552 instance=ExtResource("10_ycinp")]
+[node name="InteractPrompt" parent="ClosedDoor" unique_id=2122420552 instance=ExtResource("12_8en0r")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="ClosedDoor/InteractPrompt" unique_id=1421534644]
 position = Vector2(11.5, 22.5)
 shape = SubResource("RectangleShape2D_hgxr2")
 
-[node name="Examine" parent="ClosedDoor" unique_id=1025277267 instance=ExtResource("4_00mg4")]
+[node name="Examine" parent="ClosedDoor" unique_id=1025277267 instance=ExtResource("6_tevag")]
 label = "Examine."
-icon = ExtResource("11_nroym")
+icon = ExtResource("13_4g36q")
 
-[node name="DialogContent" parent="ClosedDoor/Examine" unique_id=242066101 instance=ExtResource("5_wvc8l")]
+[node name="DialogContent" parent="ClosedDoor/Examine" unique_id=242066101 instance=ExtResource("7_gls2c")]
 lines = Array[String](["This door is locked."])
-portraits = Array[Texture2D]([ExtResource("6_pwars")])
-voice_profiles = Array[ExtResource("7_ycinp")]([ExtResource("8_qirj0")])
+portraits = Array[Texture2D]([ExtResource("8_cf380")])
+voice_profiles = Array[ExtResource("9_bctsj")]([ExtResource("10_5ds8g")])
 
-[node name="Exit" parent="." unique_id=1168034702 instance=ExtResource("9_pwars")]
+[node name="Exit" parent="." unique_id=1168034702 instance=ExtResource("11_5dlpv")]
 position = Vector2(335, 180)
 
-[node name="InteractPrompt" parent="Exit" unique_id=311829034 instance=ExtResource("10_ycinp")]
+[node name="InteractPrompt" parent="Exit" unique_id=311829034 instance=ExtResource("12_8en0r")]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Exit/InteractPrompt" unique_id=1917183900]
 position = Vector2(-10, 19)
 shape = SubResource("RectangleShape2D_pwars")
 
-[node name="Examine" parent="Exit" unique_id=597089326 instance=ExtResource("4_00mg4")]
+[node name="Examine" parent="Exit" unique_id=597089326 instance=ExtResource("6_tevag")]
 label = "Examine."
-icon = ExtResource("11_nroym")
+icon = ExtResource("13_4g36q")
 
-[node name="DialogContent" parent="Exit/Examine" unique_id=336429520 instance=ExtResource("5_wvc8l")]
+[node name="DialogContent" parent="Exit/Examine" unique_id=336429520 instance=ExtResource("7_gls2c")]
 lines = Array[String](["Here we go..."])
-portraits = Array[Texture2D]([ExtResource("6_pwars")])
-voice_profiles = Array[ExtResource("7_ycinp")]([ExtResource("8_qirj0")])
+portraits = Array[Texture2D]([ExtResource("8_cf380")])
+voice_profiles = Array[ExtResource("9_bctsj")]([ExtResource("10_5ds8g")])
 
-[node name="Leave" parent="Exit" unique_id=1059996293 instance=ExtResource("4_00mg4")]
+[node name="Leave" parent="Exit" unique_id=1059996293 instance=ExtResource("6_tevag")]
 label = "Leave."
-icon = ExtResource("12_3guds")
+icon = ExtResource("14_ayy5r")
 
-[node name="DialogContent" parent="Exit/Leave" unique_id=932484857 instance=ExtResource("5_wvc8l")]
+[node name="DialogContent" parent="Exit/Leave" unique_id=932484857 instance=ExtResource("7_gls2c")]
 lines = Array[String](["...okay..."])
-portraits = Array[Texture2D]([ExtResource("6_pwars")])
-voice_profiles = Array[ExtResource("7_ycinp")]([SubResource("Resource_tsg3l")])
+portraits = Array[Texture2D]([ExtResource("8_cf380")])
+voice_profiles = Array[ExtResource("9_bctsj")]([SubResource("Resource_tsg3l")])
 camera_zoom = Array[float]([7.0])
 player_targets = Array[String](["", "WalkLeave"])
 
-[node name="TransitionContent" parent="Exit/Leave" unique_id=2021110483 instance=ExtResource("14_w7fn5")]
+[node name="TransitionContent" parent="Exit/Leave" unique_id=2021110483 instance=ExtResource("16_upnbs")]
 transition_target = "Left"
 next_scene_path = "uid://dcnvhculenwdc"
 facing_direction = 2
