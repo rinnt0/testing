@@ -63,5 +63,16 @@ transition_target = "PlayerSpawn"
 next_scene_path = "uid://wuvkws2qcocr"
 voice_profiles = Array[ExtResource("6_824g0")]([ExtResource("7_tjte5")])
 
+[node name="RichTextLabel" type="RichTextLabel" parent="." unique_id=435597421]
+layout_mode = 0
+offset_left = 188.0
+offset_top = 146.0
+offset_right = 1776.0
+offset_bottom = 577.0
+theme_override_fonts/normal_font = ExtResource("3_2br5b")
+theme_override_font_sizes/normal_font_size = 82
+bbcode_enabled = true
+text = "[pulse freq=1.0 color=#ffffff40 ease=-2.0]When Tomorrow Comes[/pulse]."
+
 [connection signal="pressed" from="Background/MenuLayout/StartButton" to="." method="_on_start_pressed"]
 [connection signal="pressed" from="QuitButton" to="." method="_on_quit_pressed"]

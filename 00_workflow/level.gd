@@ -5,19 +5,26 @@ class_name Level extends Node2D
 @export var ambient: AudioStream 
 
 var pills_taken = false
-var camera = PlayerManager.player.get_node("Camera2D")
+
+# 1. Declare the variable, but don't assign it yet
+var camera: Camera2D 
+
 func _ready() -> void:
-	add_to_group("level")  # ADD THIS
-	PlayerManager.set_as_parent(self)
+	add_to_group("level")  
+	PlayerManager.set_as_parent(self) # This likely creates/assigns the player
+	
 	AudioManager.play_music(music)
-	AudioManager.play_ambient( ambient )  # ← add this
+	AudioManager.play_ambient(ambient)  
 	
-	PlayerManager.player.visible = true
-	if camera:
-		camera.enabled = true
-	
-	# Re-enable player movement (in case it was disabled)
+	# 2. Assign the camera ONLY if the player exists now
 	if PlayerManager.player and is_instance_valid(PlayerManager.player):
+		camera = PlayerManager.player.get_node_or_null("Camera2D")
+		PlayerManager.player.visible = true
+		
+		if camera:
+			camera.enabled = true
+	
+		# Re-enable player movement (in case it was disabled)
 		PlayerManager.player.set_physics_process(true)
 		PlayerManager.player.set_process(true)
 	
@@ -32,8 +39,17 @@ func _ready() -> void:
 			if door_spawn and PlayerManager.player and is_instance_valid(PlayerManager.player):
 				PlayerManager.set_player_position(door_spawn.global_position)
 	else:
-		# No transition set, use default spawn
-		if door_spawn and PlayerManager.player and is_instance_valid(PlayerManager.player):
+		# No transition set (Happens when using F6)
+		# First try to find a PlayerSpawn node
+		var default_spawn = get_node_or_null("PlayerSpawn")
+		
+		if default_spawn and PlayerManager.player and is_instance_valid(PlayerManager.player):
+			PlayerManager.set_player_position(default_spawn.global_position)
+			if not PlayerManager.player_spawned:
+				PlayerManager.player.scale.x = 1 # Adjust facing direction if needed
+				
+		# Fall back to door_spawn if PlayerSpawn doesn't exist in this level
+		elif door_spawn and PlayerManager.player and is_instance_valid(PlayerManager.player):
 			PlayerManager.set_player_position(door_spawn.global_position)
 			if not PlayerManager.player_spawned:
 				PlayerManager.player.scale.x = -1

@@ -49,6 +49,9 @@ size = Vector2(23, 13)
 [node name="IntroBedroom" type="Node2D" unique_id=935113179]
 script = ExtResource("1_xus0x")
 
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1410988330]
+position = Vector2(398, 146)
+
 [node name="Tilemaps" type="Node" parent="." unique_id=17462146]
 
 [node name="IntroTilemaps" parent="Tilemaps" unique_id=946063030 instance=ExtResource("1_1o1np")]
@@ -119,7 +122,7 @@ voice_profiles = Array[ExtResource("11_vkkuc")]([ExtResource("12_ru7cd"), ExtRes
 
 [node name="TransitionContent" parent="Bed/SleepHasPills" unique_id=1789802670 instance=ExtResource("6_1m2vx")]
 transition_texts = Array[String](["I'm sure of it."])
-transition_target = "BedWakeUp"
+transition_target = "PlayerSpawn"
 next_scene_path = "uid://myjew4cx72es"
 voice_profiles = Array[ExtResource("11_vkkuc")]([ExtResource("12_ru7cd")])
 facing_direction = 2
