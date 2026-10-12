@@ -66,21 +66,40 @@ label = "Floor 0"
 transition_target = "Floor_0_Elevator"
 next_scene_path = "uid://tbsrvi5dib75"
 
-[node name="ChoiceBridge" parent="." unique_id=1003404861 instance=ExtResource("3_f85mw")]
+[node name="Screen3" parent="." unique_id=1003404861 instance=ExtResource("3_f85mw")]
 position = Vector2(161, 183)
 
-[node name="InteractPrompt" parent="ChoiceBridge" unique_id=2055139078 instance=ExtResource("4_6htfx")]
+[node name="InteractPrompt" parent="Screen3" unique_id=2055139078 instance=ExtResource("4_6htfx")]
 position = Vector2(-6, -32)
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="ChoiceBridge/InteractPrompt" unique_id=313385077]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Screen3/InteractPrompt" unique_id=313385077]
 position = Vector2(-2.5, 26.5)
 shape = SubResource("RectangleShape2D_f85mw")
 
-[node name="Enter" parent="ChoiceBridge" unique_id=1950830113 instance=ExtResource("5_s5mon")]
+[node name="Enter" parent="Screen3" unique_id=1950830113 instance=ExtResource("5_s5mon")]
 label = "Enter"
 icon = ExtResource("12_6htfx")
 
-[node name="TransitionContent" parent="ChoiceBridge/Enter" unique_id=1796959724 instance=ExtResource("11_1unkt")]
+[node name="TransitionContent" parent="Screen3/Enter" unique_id=1796959724 instance=ExtResource("11_1unkt")]
 transition_target = "FactoryStart"
 next_scene_path = "uid://bwiwov2imfelu"
+facing_direction = 2
+
+[node name="Screen4" parent="." unique_id=723050539 instance=ExtResource("3_f85mw")]
+position = Vector2(431, 183)
+
+[node name="InteractPrompt" parent="Screen4" unique_id=275178499 instance=ExtResource("4_6htfx")]
+position = Vector2(-6, -32)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Screen4/InteractPrompt" unique_id=1476980900]
+position = Vector2(-2.5, 26.5)
+shape = SubResource("RectangleShape2D_f85mw")
+
+[node name="Enter" parent="Screen4" unique_id=1193309339 instance=ExtResource("5_s5mon")]
+label = "Enter"
+icon = ExtResource("12_6htfx")
+
+[node name="TransitionContent" parent="Screen4/Enter" unique_id=1876251034 instance=ExtResource("11_1unkt")]
+transition_target = "Chapter2Start"
+next_scene_path = "uid://l0k3p65v5w4l"
 facing_direction = 2
