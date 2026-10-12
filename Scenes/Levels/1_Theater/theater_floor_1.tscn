@@ -25,6 +25,9 @@ script = ExtResource("1_qswf4")
 [node name="Floor_1_Elevator" type="Marker2D" parent="." unique_id=1177969133]
 position = Vector2(324, 185)
 
+[node name="Screen3Door" type="Marker2D" parent="." unique_id=490493157]
+position = Vector2(152, 185)
+
 [node name="Tilemaps" type="Node" parent="." unique_id=222144733]
 
 [node name="Theater_Tilemap" parent="Tilemaps" unique_id=1563932346 instance=ExtResource("2_q4ujg")]

@@ -30,8 +30,17 @@ position = Vector2(565, 352)
 [node name="FactoryOfficeDoor" type="Marker2D" parent="." unique_id=756097754]
 position = Vector2(34, 351)
 
+[node name="FactoryChainDoor" type="Marker2D" parent="." unique_id=864975769]
+position = Vector2(631, 351)
+
+[node name="FactoryControlDoor" type="Marker2D" parent="." unique_id=234686163]
+position = Vector2(754, 246)
+
 [node name="FactoryBasementDoor" type="Marker2D" parent="." unique_id=1937241795]
 position = Vector2(361, 351)
+
+[node name="FactoryRoofDoor" type="Marker2D" parent="." unique_id=768776858]
+position = Vector2(694, 244)
 
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1100393263]
 position = Vector2(170, 351)
@@ -121,6 +130,59 @@ label = "Enter"
 transition_target = "FactoryOfficeDoor"
 next_scene_path = "uid://cv2x4ahnkliv4"
 facing_direction = 1
+
+[node name="ChainDoor" parent="." unique_id=302617731 instance=ExtResource("3_8i0vo")]
+position = Vector2(630, 356)
+
+[node name="InteractPrompt" parent="ChainDoor" unique_id=1675432498 instance=ExtResource("4_ygqth")]
+position = Vector2(-11, -30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ChainDoor/InteractPrompt" unique_id=1552586889]
+position = Vector2(12, 24)
+shape = SubResource("RectangleShape2D_28gmi")
+
+[node name="Enter" parent="ChainDoor" unique_id=800854052 instance=ExtResource("5_txl7s")]
+label = "Enter"
+
+[node name="TransitionContent" parent="ChainDoor/Enter" unique_id=1810730265 instance=ExtResource("6_rjqt1")]
+transition_target = "FactoryChainDoor"
+next_scene_path = "uid://cwmhiqucd63s5"
+facing_direction = 2
+
+[node name="RoofDoor" parent="." unique_id=1303637397 instance=ExtResource("3_8i0vo")]
+position = Vector2(694, 245)
+
+[node name="InteractPrompt" parent="RoofDoor" unique_id=990108734 instance=ExtResource("4_ygqth")]
+position = Vector2(-1, -30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RoofDoor/InteractPrompt" unique_id=527013798]
+position = Vector2(0, 24)
+shape = SubResource("RectangleShape2D_28gmi")
+
+[node name="Enter" parent="RoofDoor" unique_id=1859115982 instance=ExtResource("5_txl7s")]
+label = "Enter"
+
+[node name="TransitionContent" parent="RoofDoor/Enter" unique_id=1986598684 instance=ExtResource("6_rjqt1")]
+transition_target = "FactoryRoofDoor"
+next_scene_path = "uid://br7m6f25aam5t"
+
+[node name="Control Door" parent="." unique_id=215108823 instance=ExtResource("3_8i0vo")]
+position = Vector2(764, 249)
+
+[node name="InteractPrompt" parent="Control Door" unique_id=1664109211 instance=ExtResource("4_ygqth")]
+position = Vector2(-6, -30)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Control Door/InteractPrompt" unique_id=1816727036]
+position = Vector2(12, 24)
+shape = SubResource("RectangleShape2D_28gmi")
+
+[node name="Enter" parent="Control Door" unique_id=1027120840 instance=ExtResource("5_txl7s")]
+label = "Enter"
+
+[node name="TransitionContent" parent="Control Door/Enter" unique_id=829742110 instance=ExtResource("6_rjqt1")]
+transition_target = "FactoryControlDoor"
+next_scene_path = "uid://dmlpr177o3c5r"
+facing_direction = 2
 
 [node name="BasementDoor" parent="." unique_id=344709996 instance=ExtResource("3_8i0vo")]
 position = Vector2(361, 356)
