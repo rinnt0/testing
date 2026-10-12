@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://cm1csi84rdy43"]
 
-[ext_resource type="Script" uid="uid://bemx4a8gy4ykh" path="res://Scenes/Levels/animation_player.gd" id="1_xmd2t"]
+[ext_resource type="Script" uid="uid://bemx4a8gy4ykh" path="res://Scenes/Levels/level_scripts/animation_player.gd" id="1_xmd2t"]
 
 [sub_resource type="Animation" id="Animation_456kb"]
 resource_name = "FA_1"

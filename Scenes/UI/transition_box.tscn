@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dskbaorg3v56p"]
 
 [ext_resource type="Script" uid="uid://d3hbegd35ov7q" path="res://Scenes/UI/transition_box.gd" id="1_s8jou"]
-[ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/LowresPixel-Regular.otf" id="2_7nucw"]
+[ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/UI/LowresPixel-Regular.otf" id="2_7nucw"]
 
 [node name="TransitionBox" type="CanvasLayer" unique_id=1267278031]
 script = ExtResource("1_s8jou")

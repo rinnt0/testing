@@ -2,8 +2,8 @@
 
 [ext_resource type="Script" uid="uid://0u3lnprdid3o" path="res://Scenes/UI/ChoiceSystem/choice_slot.gd" id="1_7eq5a"]
 [ext_resource type="Texture2D" uid="uid://b6cok4fdyp6cp" path="res://ZZ_OLD/icon.svg" id="1_v51ep"]
-[ext_resource type="Texture2D" uid="uid://db6o3ouaolhgd" path="res://Assets/Sprites/interact_prompt_button.png" id="2_7eq5a"]
-[ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/LowresPixel-Regular.otf" id="3_hb5ei"]
+[ext_resource type="Texture2D" uid="uid://db6o3ouaolhgd" path="res://Assets/UI/interact_prompt_button.png" id="2_7eq5a"]
+[ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/UI/LowresPixel-Regular.otf" id="3_hb5ei"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tukwi"]
 content_margin_left = 117.0

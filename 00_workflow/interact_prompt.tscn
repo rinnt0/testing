@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://rbkdjakxwqqe"]
 
 [ext_resource type="Script" uid="uid://dibfd6qpvsr0o" path="res://Scripts/UI/interact_prompt.gd" id="1_uts8w"]
-[ext_resource type="Texture2D" uid="uid://bq4qhql1pkn3u" path="res://Assets/Sprites/interact_prompt_star.png" id="2_iotcb"]
+[ext_resource type="Texture2D" uid="uid://bq4qhql1pkn3u" path="res://Assets/UI/interact_prompt_star.png" id="2_iotcb"]
 
 [sub_resource type="Animation" id="Animation_k22l2"]
 length = 0.001

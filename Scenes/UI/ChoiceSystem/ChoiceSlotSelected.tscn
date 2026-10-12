@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://2773h4vmi8g5"]
 
 [ext_resource type="Script" uid="uid://0u3lnprdid3o" path="res://Scenes/UI/ChoiceSystem/choice_slot.gd" id="1_aa88b"]
-[ext_resource type="Texture2D" uid="uid://dvslppvbn1kv5" path="res://Scenes/UI/ChoiceSystem/select_bar.png" id="1_bsm6e"]
-[ext_resource type="Texture2D" uid="uid://bnswuhuglfvkw" path="res://Scenes/UI/ChoiceSystem/icon_examine.png" id="2_gh3og"]
-[ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/LowresPixel-Regular.otf" id="3_gh3og"]
+[ext_resource type="Texture2D" uid="uid://dvslppvbn1kv5" path="res://Assets/UI/select_bar.png" id="1_bsm6e"]
+[ext_resource type="Texture2D" uid="uid://bnswuhuglfvkw" path="res://Assets/UI/icon_examine.png" id="2_gh3og"]
+[ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/UI/LowresPixel-Regular.otf" id="3_gh3og"]
 
 [sub_resource type="StyleBoxTexture" id="StyleBoxTexture_mldav"]
 texture = ExtResource("1_bsm6e")

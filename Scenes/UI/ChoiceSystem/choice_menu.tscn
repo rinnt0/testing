@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://b04j2ddrfepjq"]
 
 [ext_resource type="Script" uid="uid://djh6bib26snca" path="res://Scenes/UI/ChoiceSystem/choice_menu.gd" id="1_sxsc4"]
-[ext_resource type="Texture2D" uid="uid://2dm3d8xtdinp" path="res://Scenes/UI/ChoiceSystem/interact_menu.png" id="2_0xeq7"]
-[ext_resource type="Texture2D" uid="uid://e0fbojjv2qtx" path="res://Scenes/UI/ChoiceSystem/Decorations.png" id="3_resng"]
+[ext_resource type="Texture2D" uid="uid://2dm3d8xtdinp" path="res://Assets/UI/interact_menu.png" id="2_0xeq7"]
+[ext_resource type="Texture2D" uid="uid://e0fbojjv2qtx" path="res://Assets/UI/Decorations.png" id="3_resng"]
 
 [node name="ChoiceMenu" type="CanvasLayer" unique_id=271566204]
 process_mode = 3

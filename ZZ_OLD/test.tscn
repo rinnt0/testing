@@ -1,7 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://dshj5av5fy83"]
-
-[ext_resource type="Texture2D" uid="uid://belbqkq2vi7t7" path="res://Assets/Sprites/chatbox.png" id="1_37kl0"]
-
-[node name="Chatbox" type="Sprite2D"]
-position = Vector2(266, 171)
-texture = ExtResource("1_37kl0")

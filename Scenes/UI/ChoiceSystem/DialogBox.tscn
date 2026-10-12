@@ -1,11 +1,11 @@
 [gd_scene format=3 uid="uid://crprox1djmhpp"]
 
-[ext_resource type="Texture2D" uid="uid://exn8fu7kbckv" path="res://Assets/textbox.png" id="1_4g3jw"]
+[ext_resource type="Texture2D" uid="uid://exn8fu7kbckv" path="res://Assets/UI/textbox.png" id="1_4g3jw"]
 [ext_resource type="Script" uid="uid://b07vt1ny53ih5" path="res://Scenes/UI/ChoiceSystem/dialog_box.gd" id="1_fqg7g"]
 [ext_resource type="Texture2D" uid="uid://b6cok4fdyp6cp" path="res://ZZ_OLD/icon.svg" id="2_3f5xn"]
-[ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/LowresPixel-Regular.otf" id="3_314r7"]
+[ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/UI/LowresPixel-Regular.otf" id="3_314r7"]
 [ext_resource type="Script" uid="uid://bb8b5pwfuirew" path="res://Scenes/UI/typewriter.gd" id="3_tmmap"]
-[ext_resource type="Texture2D" uid="uid://cdmuym8gw3n2k" path="res://Scenes/UI/ChoiceSystem/spinning_icon_1.png" id="6_qe61k"]
+[ext_resource type="Texture2D" uid="uid://cdmuym8gw3n2k" path="res://Assets/UI/spinning_icon_1.png" id="6_qe61k"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_bpx86"]
 atlas = ExtResource("6_qe61k")
