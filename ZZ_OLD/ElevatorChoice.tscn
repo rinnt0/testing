@@ -1,6 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://dfm4bnakeioj8"]
+[gd_scene format=3 uid="uid://dfm4bnakeioj8"]
 
-[ext_resource type="Script" uid="uid://b0baf4lq7826a" path="res://elevator_choice.gd" id="1_qn6p8"]
+[ext_resource type="Script" uid="uid://b0baf4lq7826a" path="res://ZZ_OLD/elevator_choice.gd" id="1_qn6p8"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pbtkd"]
 bg_color = Color(0.6, 0.6, 0.6, 0)

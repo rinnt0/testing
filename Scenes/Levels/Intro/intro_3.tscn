@@ -18,7 +18,7 @@
 [ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://00_workflow/dialog_flag.tscn" id="13_42yxs"]
 [ext_resource type="Texture2D" uid="uid://dt6xb8panfct2" path="res://Scenes/UI/ChoiceSystem/icon_take.png" id="15_a4hmm"]
 [ext_resource type="AudioStream" uid="uid://dtc0wxc5gan6o" path="res://Assets/Music/freesound_community-low-engine-hum-72529.mp3" id="19_bbpso"]
-[ext_resource type="PackedScene" uid="uid://dep56ap7oa4bn" path="res://wait_moment.tscn" id="20_bbpso"]
+[ext_resource type="PackedScene" uid="uid://dep56ap7oa4bn" path="res://00_workflow/wait_moment.tscn" id="20_bbpso"]
 [ext_resource type="Script" uid="uid://bu6ng3xwr40dg" path="res://00_workflow/Area2DZoom.gd" id="21_1mt8q"]
 [ext_resource type="AudioStream" uid="uid://7t2wbed50ki8" path="res://Assets/Music/Lily Allen  Not Fair (Official Video).mp3" id="23_apn47"]
 

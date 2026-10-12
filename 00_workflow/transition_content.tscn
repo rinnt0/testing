@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://boql8kevdeie3"]
 
-[ext_resource type="Script" uid="uid://c3npcy35yyh8c" path="res://transition_content.gd" id="1_r4cdg"]
+[ext_resource type="Script" uid="uid://c3npcy35yyh8c" path="res://00_workflow/transition_content.gd" id="1_r4cdg"]
 
 [node name="TransitionContent" type="Node" unique_id=2021110483]
 script = ExtResource("1_r4cdg")

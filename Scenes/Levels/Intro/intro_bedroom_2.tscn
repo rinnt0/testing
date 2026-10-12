@@ -3,7 +3,7 @@
 [ext_resource type="Script" uid="uid://cr5uvf0xoqcbp" path="res://00_workflow/level.gd" id="1_qql46"]
 [ext_resource type="PackedScene" uid="uid://7d73yofi60dg" path="res://Assets/Levels/Intro/intro_tilemaps.tscn" id="2_rhp41"]
 [ext_resource type="PackedScene" uid="uid://bj5u6p2251xvb" path="res://Scenes/UI/dust_fx.tscn" id="3_7qrwv"]
-[ext_resource type="PackedScene" uid="uid://ct4yl6h1iak3s" path="res://glitch_fx.tscn" id="4_58mgy"]
+[ext_resource type="PackedScene" uid="uid://ct4yl6h1iak3s" path="res://Scenes/UI/glitch_fx.tscn" id="4_58mgy"]
 [ext_resource type="PackedScene" uid="uid://dvy64rhwe26ok" path="res://00_workflow/choice_bridge.tscn" id="5_sroog"]
 [ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://00_workflow/interact_prompt.tscn" id="6_4b6i2"]
 [ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://00_workflow/ChoiceMaker.tscn" id="7_g5kd0"]

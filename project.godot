@@ -18,7 +18,7 @@ config/name="test"
 run/main_scene="uid://cw4gwycbfphrr"
 config/features=PackedStringArray("4.6", "Forward Plus")
 run/max_fps=60
-config/icon="res://icon.svg"
+config/icon="res://ZZ_OLD/icon.svg"
 
 [audio]
 
@@ -30,8 +30,8 @@ AudioManager="*uid://c3brltvgc5a8q"
 LevelManager="*res://00_globals/global_level_manager.gd"
 PlayerManager="*res://00_globals/global_player_manager.gd"
 GlobalWorldEnvironment="*res://Scenes/UI/world_environment.tscn"
-GlobalFlags="*res://global_flags.gd"
-PersistentData="*res://global_persistent_data.gd"
+GlobalFlags="*res://00_globals/global_flags.gd"
+PersistentData="*res://00_globals/global_persistent_data.gd"
 ChoiceMenu="*uid://b04j2ddrfepjq"
 DialogBox="*uid://crprox1djmhpp"
 FullArtBox="*uid://crm1rjgiu7ewn"

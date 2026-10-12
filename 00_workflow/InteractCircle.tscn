@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://dtgj6uqagrydq"]
 
 [ext_resource type="Texture2D" uid="uid://dkicr1s23frtj" path="res://Assets/Sprites/interact_prompt_circle.png" id="1_rww84"]
-[ext_resource type="Script" uid="uid://bid2r8je7d0yn" path="res://interact_circle.gd" id="2_pfcu6"]
+[ext_resource type="Script" uid="uid://bid2r8je7d0yn" path="res://00_workflow/interact_circle.gd" id="2_pfcu6"]
 [ext_resource type="Texture2D" uid="uid://db6o3ouaolhgd" path="res://Assets/Sprites/interact_prompt_button.png" id="3_yjymc"]
 
 [sub_resource type="Animation" id="Animation_iotcb"]

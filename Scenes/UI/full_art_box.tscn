@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://crm1rjgiu7ewn"]
 
 [ext_resource type="Script" uid="uid://bwhifokqtsjsy" path="res://Scenes/UI/full_art_box.gd" id="1_2iy4u"]
-[ext_resource type="PackedScene" uid="uid://cm1csi84rdy43" path="res://fade_player.tscn" id="2_6bhvy"]
+[ext_resource type="PackedScene" uid="uid://cm1csi84rdy43" path="res://Scenes/UI/fade_player.tscn" id="2_6bhvy"]
 
 [node name="FullArtBox" type="CanvasLayer" unique_id=50997226]
 script = ExtResource("1_2iy4u")

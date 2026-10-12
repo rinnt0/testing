@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://d2rsvgwv3qqoa" path="res://Scenes/Levels/test_tile_map_layer.tscn" id="1_4dpyx"]
 [ext_resource type="PackedScene" uid="uid://3aqfed86hvwr" path="res://Scenes/Levels/player_spawner.tscn" id="2_4dpyx"]
 [ext_resource type="PackedScene" uid="uid://3lpjvhvnw8h5" path="res://Scenes/Levels/level_transition.tscn" id="3_iixi8"]
-[ext_resource type="PackedScene" uid="uid://ct4yl6h1iak3s" path="res://glitch_fx.tscn" id="8_3628d"]
+[ext_resource type="PackedScene" uid="uid://ct4yl6h1iak3s" path="res://Scenes/UI/glitch_fx.tscn" id="8_3628d"]
 
 [sub_resource type="Gradient" id="Gradient_osokm"]
 offsets = PackedFloat32Array(1)

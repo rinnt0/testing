@@ -7,7 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://00_workflow/interact_prompt.tscn" id="5_mvx4k"]
 [ext_resource type="Script" uid="uid://dmdkq6sxjeoys" path="res://Scenes/Levels/fullart.gd" id="6_5nxe4"]
 [ext_resource type="Texture2D" uid="uid://wx0c2rx20k48" path="res://Assets/Levels/Level 1/base_cityscape.png" id="7_6nayo"]
-[ext_resource type="PackedScene" uid="uid://cm1csi84rdy43" path="res://fade_player.tscn" id="8_mq18j"]
+[ext_resource type="PackedScene" uid="uid://cm1csi84rdy43" path="res://Scenes/UI/fade_player.tscn" id="8_mq18j"]
 [ext_resource type="PackedScene" uid="uid://gr83mbq341i4" path="res://Scenes/Levels/dialog_ui.tscn" id="9_73eiq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_4gyrl"]
