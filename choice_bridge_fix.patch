@@ -1,0 +1,32 @@
+diff --git a/Scenes/UI/ChoiceSystem/choice_bridge.gd b/Scenes/UI/ChoiceSystem/choice_bridge.gd
+index fd4e7cc..5c937bc 100644
+--- a/Scenes/UI/ChoiceSystem/choice_bridge.gd
++++ b/Scenes/UI/ChoiceSystem/choice_bridge.gd
+@@ -55,19 +55,23 @@ func _unhandled_input(event: InputEvent):
+ 	if player_in_range and not is_open and event.is_action_pressed("interact"):
+ 		get_viewport().set_input_as_handled()
+ 
+-		var active_flagged_labels = {}
++		# One entry per label. A flagged maker whose condition matches hides any
++		# unflagged maker with the same label, and if several flagged makers with
++		# the same label match (e.g. Examine1 and Examine2 once both fuses are
++		# placed), only the LAST one in the scene tree wins - later = further along.
++		var active_flagged_by_label = {}
+ 		for c in _live_makers():
+ 			if c.requires_flag:
+ 				if PersistentData.get_flag(c.flag_name) == c.flag_value:
+-					active_flagged_labels[c.label] = true
++					active_flagged_by_label[c.label] = c
+ 
+ 		var choices = []
+ 		for c in _live_makers():
+ 			if c.requires_flag:
+-				if PersistentData.get_flag(c.flag_name) == c.flag_value:
++				if active_flagged_by_label.get(c.label) == c:
+ 					choices.append(c)
+ 			else:
+-				if not active_flagged_labels.has(c.label):
++				if not active_flagged_by_label.has(c.label):
+ 					choices.append(c)
+ 
+ 		# Nothing to show -> don't open an empty menu (it would lock the player)
