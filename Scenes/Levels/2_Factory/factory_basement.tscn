@@ -138,16 +138,6 @@ lines = Array[String](["A fusebox. it has [color=red]3[/color] slots."])
 portraits = Array[Texture2D]([ExtResource("8_2sey1")])
 voice_profiles = Array[ExtResource("9_2hvnx")]([ExtResource("10_eecdu")])
 
-[node name="Examine2" parent="Fusebox" unique_id=1053296474 instance=ExtResource("5_41r4t")]
-label = "Examine"
-requires_flag = true
-flag_name = "fuse_2_placed"
-
-[node name="DialogContent" parent="Fusebox/Examine2" unique_id=1541133139 instance=ExtResource("7_41r4t")]
-lines = Array[String](["There is only [color=red]1[/color] slot left."])
-portraits = Array[Texture2D]([ExtResource("8_2sey1")])
-voice_profiles = Array[ExtResource("9_2hvnx")]([ExtResource("10_eecdu")])
-
 [node name="Examine1" parent="Fusebox" unique_id=1393393577 instance=ExtResource("5_41r4t")]
 label = "Examine"
 requires_flag = true
@@ -155,6 +145,16 @@ flag_name = "fuse_1_placed"
 
 [node name="DialogContent" parent="Fusebox/Examine1" unique_id=1709175237 instance=ExtResource("7_41r4t")]
 lines = Array[String](["A fusebox. it has [color=red]2[/color] slots."])
+portraits = Array[Texture2D]([ExtResource("8_2sey1")])
+voice_profiles = Array[ExtResource("9_2hvnx")]([ExtResource("10_eecdu")])
+
+[node name="Examine2" parent="Fusebox" unique_id=1053296474 instance=ExtResource("5_41r4t")]
+label = "Examine"
+requires_flag = true
+flag_name = "fuse_2_placed"
+
+[node name="DialogContent" parent="Fusebox/Examine2" unique_id=1541133139 instance=ExtResource("7_41r4t")]
+lines = Array[String](["There is only [color=red]1[/color] slot left."])
 portraits = Array[Texture2D]([ExtResource("8_2sey1")])
 voice_profiles = Array[ExtResource("9_2hvnx")]([ExtResource("10_eecdu")])
 

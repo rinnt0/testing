@@ -8,12 +8,21 @@
 [ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://00_workflow/transition_content.tscn" id="6_rgxhb"]
 [ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://00_workflow/dialog_content.tscn" id="7_7ke8i"]
 [ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://00_workflow/dialog_flag.tscn" id="8_p151g"]
+[ext_resource type="Texture2D" uid="uid://1f4vy0pa4egy" path="res://Assets/Characters/Speaker_Icons/speaker_test.png" id="9_6clme"]
+[ext_resource type="PackedScene" uid="uid://hbmmv6ave85g" path="res://00_workflow/full_art_content.tscn" id="9_30dj4"]
+[ext_resource type="Texture2D" uid="uid://b60phi7r7nxay" path="res://Assets/Levels/0_Intro/fullart1.png" id="10_6clme"]
+[ext_resource type="Texture2D" uid="uid://b6cok4fdyp6cp" path="res://ZZ_OLD/icon.svg" id="11_wft8w"]
+[ext_resource type="Script" uid="uid://buevi6v0ikoyi" path="res://VoiceProfiles/voice_profiles.gd" id="12_7jlrn"]
+[ext_resource type="Resource" uid="uid://ddfjyl7doihlw" path="res://VoiceProfiles/main_character_fast.tres" id="13_8s754"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_huqre"]
 size = Vector2(40, 12)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_7ke8i"]
 size = Vector2(20, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3cwfi"]
+size = Vector2(44, 10)
 
 [node name="Factory_Control_Room" type="Node2D" unique_id=103997993]
 script = ExtResource("1_wr734")
@@ -59,7 +68,6 @@ label = "Examine"
 [node name="DialogContent" parent="Locker/Examine" unique_id=326983792 instance=ExtResource("7_7ke8i")]
 lines = Array[String](["Bolt cutters."])
 portraits = Array[Texture2D]([null])
-voice_profiles = Array[Texture2D]([null])
 
 [node name="Take" parent="Locker" unique_id=173404440 instance=ExtResource("5_xfhpo")]
 label = "Take"
@@ -67,3 +75,31 @@ label = "Take"
 [node name="DialogFlag" parent="Locker/Take" unique_id=971773713 instance=ExtResource("8_p151g")]
 flag_name = "bolt_cutters_obtained"
 delete_after_interaction = 2
+
+[node name="ControlTerminal" parent="." unique_id=2019845324 instance=ExtResource("3_7ke8i")]
+position = Vector2(97, 99)
+
+[node name="InteractPrompt" parent="ControlTerminal" unique_id=687514495 instance=ExtResource("4_p151g")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="ControlTerminal/InteractPrompt" unique_id=1481945809]
+position = Vector2(0, 18)
+shape = SubResource("RectangleShape2D_3cwfi")
+
+[node name="Examine" parent="ControlTerminal" unique_id=750368144 instance=ExtResource("5_xfhpo")]
+label = "Examine"
+
+[node name="DialogContent" parent="ControlTerminal/Examine" unique_id=2034593576 instance=ExtResource("7_7ke8i")]
+lines = Array[String](["Not enough power."])
+portraits = Array[Texture2D]([ExtResource("9_6clme")])
+voice_profiles = Array[ExtResource("12_7jlrn")]([ExtResource("13_8s754")])
+
+[node name="Examine2" parent="ControlTerminal" unique_id=914849876 instance=ExtResource("5_xfhpo")]
+label = "Examine"
+requires_flag = true
+flag_name = "fuse_2_placed"
+
+[node name="FullArtContent" parent="ControlTerminal/Examine2" unique_id=1903622026 instance=ExtResource("9_30dj4")]
+texture = ExtResource("10_6clme")
+lines = Array[String](["The camera shows a fuse in the office vent"])
+portraits = Array[Texture2D]([ExtResource("11_wft8w")])
+voice_profiles = Array[ExtResource("12_7jlrn")]([ExtResource("13_8s754")])

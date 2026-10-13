@@ -1,0 +1,36 @@
+diff --git a/Scenes/UI/ChoiceSystem/choice_bridge.gd b/Scenes/UI/ChoiceSystem/choice_bridge.gd
+index 5c937bc..c836b0f 100644
+--- a/Scenes/UI/ChoiceSystem/choice_bridge.gd
++++ b/Scenes/UI/ChoiceSystem/choice_bridge.gd
+@@ -61,9 +61,8 @@ func _unhandled_input(event: InputEvent):
+ 		# placed), only the LAST one in the scene tree wins - later = further along.
+ 		var active_flagged_by_label = {}
+ 		for c in _live_makers():
+-			if c.requires_flag:
+-				if PersistentData.get_flag(c.flag_name) == c.flag_value:
+-					active_flagged_by_label[c.label] = c
++			if c.requires_flag and c.conditions_met():
++				active_flagged_by_label[c.label] = c
+ 
+ 		var choices = []
+ 		for c in _live_makers():
+diff --git a/Scenes/UI/ChoiceSystem/choice_maker.gd b/Scenes/UI/ChoiceSystem/choice_maker.gd
+index 0055af9..c71a94c 100644
+--- a/Scenes/UI/ChoiceSystem/choice_maker.gd
++++ b/Scenes/UI/ChoiceSystem/choice_maker.gd
+@@ -7,3 +7,15 @@ class_name ChoiceMaker extends Node
+ @export var requires_flag: bool = false
+ @export var flag_name: String = ""
+ @export var flag_value: bool = true  # show when flag equals this value
++## Additional flags, ALL must match too (flag name -> required value)
++@export var extra_flags: Dictionary[String, bool] = {}
++
++func conditions_met() -> bool:
++	if not requires_flag:
++		return true
++	if PersistentData.get_flag(flag_name) != flag_value:
++		return false
++	for f in extra_flags:
++		if PersistentData.get_flag(f) != extra_flags[f]:
++			return false
++	return true
