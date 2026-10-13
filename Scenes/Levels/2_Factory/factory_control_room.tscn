@@ -6,9 +6,14 @@
 [ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://00_workflow/interact_prompt.tscn" id="4_p151g"]
 [ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://00_workflow/ChoiceMaker.tscn" id="5_xfhpo"]
 [ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://00_workflow/transition_content.tscn" id="6_rgxhb"]
+[ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://00_workflow/dialog_content.tscn" id="7_7ke8i"]
+[ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://00_workflow/dialog_flag.tscn" id="8_p151g"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_huqre"]
 size = Vector2(40, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_7ke8i"]
+size = Vector2(20, 12)
 
 [node name="Factory_Control_Room" type="Node2D" unique_id=103997993]
 script = ExtResource("1_wr734")
@@ -38,3 +43,27 @@ label = "Leave"
 transition_target = "FactoryControlDoor"
 next_scene_path = "uid://bx2crt8pwbnki"
 facing_direction = 1
+
+[node name="Locker" parent="." unique_id=996547801 instance=ExtResource("3_7ke8i")]
+position = Vector2(152, 105)
+
+[node name="InteractPrompt" parent="Locker" unique_id=205483242 instance=ExtResource("4_p151g")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Locker/InteractPrompt" unique_id=1392778939]
+position = Vector2(0, 10)
+shape = SubResource("RectangleShape2D_7ke8i")
+
+[node name="Examine" parent="Locker" unique_id=642262295 instance=ExtResource("5_xfhpo")]
+label = "Examine"
+
+[node name="DialogContent" parent="Locker/Examine" unique_id=326983792 instance=ExtResource("7_7ke8i")]
+lines = Array[String](["Bolt cutters."])
+portraits = Array[Texture2D]([null])
+voice_profiles = Array[Texture2D]([null])
+
+[node name="Take" parent="Locker" unique_id=173404440 instance=ExtResource("5_xfhpo")]
+label = "Take"
+
+[node name="DialogFlag" parent="Locker/Take" unique_id=971773713 instance=ExtResource("8_p151g")]
+flag_name = "bolt_cutters_obtained"
+delete_after_interaction = 2

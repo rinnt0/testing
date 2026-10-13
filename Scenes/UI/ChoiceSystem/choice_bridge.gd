@@ -119,7 +119,10 @@ func _unhandled_input(event: InputEvent):
 					PersistentData.set_flag(flag.flag_name, flag.flag_value)
 
 			if toast and toast.timing == ToastContent.Timing.END:
-				await ToastBox.show_toast(toast)
+				if transition:
+					await ToastBox.show_toast(toast)   # let it finish before the fade
+				else:
+					ToastBox.show_toast(toast)   
 
 			if transition:
 				ChoiceMenu.hide_menu()

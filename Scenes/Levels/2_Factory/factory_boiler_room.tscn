@@ -6,9 +6,19 @@
 [ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://00_workflow/interact_prompt.tscn" id="4_xjclb"]
 [ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://00_workflow/ChoiceMaker.tscn" id="5_ch5dp"]
 [ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://00_workflow/transition_content.tscn" id="6_547yd"]
+[ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://00_workflow/dialog_content.tscn" id="7_6udbl"]
+[ext_resource type="Texture2D" uid="uid://1f4vy0pa4egy" path="res://Assets/Characters/Speaker_Icons/speaker_test.png" id="8_fdeld"]
+[ext_resource type="Script" uid="uid://buevi6v0ikoyi" path="res://VoiceProfiles/voice_profiles.gd" id="9_qhud0"]
+[ext_resource type="Resource" uid="uid://ddfjyl7doihlw" path="res://VoiceProfiles/main_character_fast.tres" id="10_5v7s8"]
+[ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://00_workflow/dialog_flag.tscn" id="11_7pl6d"]
+[ext_resource type="PackedScene" path="res://00_workflow/toast_content.tscn" id="12_kcqdl"]
+[ext_resource type="Texture2D" uid="uid://b6cok4fdyp6cp" path="res://ZZ_OLD/icon.svg" id="13_ed512"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_huqre"]
 size = Vector2(40, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6lidk"]
+size = Vector2(22, 8)
 
 [node name="Factory_Start_Room" type="Node2D" unique_id=103997993]
 script = ExtResource("1_w3gbl")
@@ -38,3 +48,32 @@ label = "Leave"
 transition_target = "FactoryBoilerDoor"
 next_scene_path = "uid://bnafrdiijx7xi"
 facing_direction = 2
+
+[node name="Fuse1" parent="." unique_id=1214139093 instance=ExtResource("3_3lk68")]
+position = Vector2(43, 101)
+
+[node name="InteractPrompt" parent="Fuse1" unique_id=465572785 instance=ExtResource("4_xjclb")]
+position = Vector2(7, -11)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fuse1/InteractPrompt" unique_id=1899333877]
+position = Vector2(1, 9)
+shape = SubResource("RectangleShape2D_6lidk")
+
+[node name="Examine" parent="Fuse1" unique_id=402197184 instance=ExtResource("5_ch5dp")]
+label = "Examine"
+
+[node name="DialogContent" parent="Fuse1/Examine" unique_id=326983792 instance=ExtResource("7_6udbl")]
+lines = Array[String](["A fuse."])
+portraits = Array[Texture2D]([ExtResource("8_fdeld")])
+voice_profiles = Array[ExtResource("9_qhud0")]([ExtResource("10_5v7s8")])
+
+[node name="Take" parent="Fuse1" unique_id=1819623791 instance=ExtResource("5_ch5dp")]
+label = "Take"
+
+[node name="DialogFlag" parent="Fuse1/Take" unique_id=971773713 instance=ExtResource("11_7pl6d")]
+flag_name = "fuse_1_obtained"
+delete_after_interaction = 2
+
+[node name="ToastContent" parent="Fuse1/Take" unique_id=1623676460 instance=ExtResource("12_kcqdl")]
+icon = ExtResource("13_ed512")
+item_name = "Fuse"

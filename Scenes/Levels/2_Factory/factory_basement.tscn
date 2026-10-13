@@ -6,6 +6,13 @@
 [ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://00_workflow/interact_prompt.tscn" id="4_bo4ns"]
 [ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://00_workflow/ChoiceMaker.tscn" id="5_41r4t"]
 [ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://00_workflow/transition_content.tscn" id="6_2sey1"]
+[ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://00_workflow/dialog_content.tscn" id="7_41r4t"]
+[ext_resource type="Texture2D" uid="uid://1f4vy0pa4egy" path="res://Assets/Characters/Speaker_Icons/speaker_test.png" id="8_2sey1"]
+[ext_resource type="Script" uid="uid://buevi6v0ikoyi" path="res://VoiceProfiles/voice_profiles.gd" id="9_2hvnx"]
+[ext_resource type="Resource" uid="uid://ddfjyl7doihlw" path="res://VoiceProfiles/main_character_fast.tres" id="10_eecdu"]
+[ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://00_workflow/dialog_flag.tscn" id="11_eecdu"]
+[ext_resource type="PackedScene" path="res://00_workflow/toast_content.tscn" id="12_2qm63"]
+[ext_resource type="Texture2D" uid="uid://b6cok4fdyp6cp" path="res://ZZ_OLD/icon.svg" id="13_ocq2u"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_huqre"]
 size = Vector2(40, 12)
@@ -13,10 +20,19 @@ size = Vector2(40, 12)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fuicu"]
 size = Vector2(40, 12)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2qm63"]
+size = Vector2(24, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_41r4t"]
+size = Vector2(20, 9)
+
 [node name="Factory_Basement" type="Node2D" unique_id=103997993]
 script = ExtResource("1_fuicu")
 
 [node name="FactoryBasementDoor" type="Marker2D" parent="." unique_id=1052711606]
+position = Vector2(96, 240)
+
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=582523515]
 position = Vector2(96, 240)
 
 [node name="FactoryBoilerDoor" type="Marker2D" parent="." unique_id=1243012714]
@@ -62,3 +78,86 @@ label = "Enter"
 transition_target = "FactoryBoilerDoor"
 next_scene_path = "uid://bjd8becelsqbt"
 facing_direction = 2
+
+[node name="Lever" parent="." unique_id=537205151 instance=ExtResource("3_kknv7")]
+position = Vector2(309, 227)
+
+[node name="InteractPrompt" parent="Lever" unique_id=420411626 instance=ExtResource("4_bo4ns")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Lever/InteractPrompt" unique_id=1327140398]
+position = Vector2(-1, 11)
+shape = SubResource("RectangleShape2D_2qm63")
+
+[node name="UseNoPower" parent="Lever" unique_id=574593164 instance=ExtResource("5_41r4t")]
+label = "Use"
+requires_flag = true
+flag_name = "fuse_1_placed"
+flag_value = false
+
+[node name="DialogContent" parent="Lever/UseNoPower" unique_id=326983792 instance=ExtResource("7_41r4t")]
+lines = Array[String](["Nothing happens."])
+portraits = Array[Texture2D]([ExtResource("8_2sey1")])
+voice_profiles = Array[ExtResource("9_2hvnx")]([ExtResource("10_eecdu")])
+
+[node name="Use" parent="Lever" unique_id=1932843494 instance=ExtResource("5_41r4t")]
+label = "Use"
+requires_flag = true
+flag_name = "fuse_1_placed"
+
+[node name="DialogContent" parent="Lever/Use" unique_id=1445085633 instance=ExtResource("7_41r4t")]
+lines = Array[String](["The lever flips."])
+portraits = Array[Texture2D]([ExtResource("8_2sey1")])
+voice_profiles = Array[ExtResource("9_2hvnx")]([ExtResource("10_eecdu")])
+
+[node name="DialogFlag" parent="Lever/Use" unique_id=971773713 instance=ExtResource("11_eecdu")]
+flag_name = "factory_lever_flipped"
+delete_after_interaction = 2
+
+[node name="ToastContent" parent="Lever/Use" unique_id=206154552 instance=ExtResource("12_2qm63")]
+header_text = "Flipped"
+icon = ExtResource("13_ocq2u")
+item_name = "Lever"
+
+[node name="Fusebox" parent="." unique_id=1847749543 instance=ExtResource("3_kknv7")]
+position = Vector2(359, 224)
+
+[node name="InteractPrompt" parent="Fusebox" unique_id=1860336477 instance=ExtResource("4_bo4ns")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Fusebox/InteractPrompt" unique_id=1618626455]
+position = Vector2(0, 14)
+shape = SubResource("RectangleShape2D_41r4t")
+
+[node name="Examine0" parent="Fusebox" unique_id=67012618 instance=ExtResource("5_41r4t")]
+label = "Examine"
+requires_flag = true
+flag_name = "fuse_1_placed"
+flag_value = false
+
+[node name="DialogContent" parent="Fusebox/Examine0" unique_id=1844366464 instance=ExtResource("7_41r4t")]
+lines = Array[String](["A fusebox. it has [color=red]3[/color] slots."])
+portraits = Array[Texture2D]([ExtResource("8_2sey1")])
+voice_profiles = Array[ExtResource("9_2hvnx")]([ExtResource("10_eecdu")])
+
+[node name="Examine1" parent="Fusebox" unique_id=1393393577 instance=ExtResource("5_41r4t")]
+label = "Examine"
+requires_flag = true
+flag_name = "fuse_1_placed"
+
+[node name="DialogContent" parent="Fusebox/Examine1" unique_id=1709175237 instance=ExtResource("7_41r4t")]
+lines = Array[String](["A fusebox. it has [color=red]2[/color] slots."])
+portraits = Array[Texture2D]([ExtResource("8_2sey1")])
+voice_profiles = Array[ExtResource("9_2hvnx")]([ExtResource("10_eecdu")])
+
+[node name="Place1" parent="Fusebox" unique_id=1590025013 instance=ExtResource("5_41r4t")]
+label = "Place"
+requires_flag = true
+flag_name = "fuse_1_obtained"
+
+[node name="DialogFlag" parent="Fusebox/Place1" unique_id=621403244 instance=ExtResource("11_eecdu")]
+flag_name = "fuse_1_placed"
+delete_after_interaction = 1
+
+[node name="ToastContent" parent="Fusebox/Place1" unique_id=2044367834 instance=ExtResource("12_2qm63")]
+header_text = "Placed"
+icon = ExtResource("13_ocq2u")
+item_name = "Fuse"
