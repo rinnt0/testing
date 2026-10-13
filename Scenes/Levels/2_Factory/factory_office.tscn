@@ -209,7 +209,7 @@ flag_name = "file_cabinet_moved"
 
 [node name="DialogFlag" parent="FileCabinet/ClimbUp" unique_id=1435355523 instance=ExtResource("11_wkdr3")]
 flag_name = "on_top_cabinet"
-delete_after_interaction = 1
+delete_after_interaction = 0
 
 [node name="ClimbDown" parent="FileCabinet" unique_id=1804932794 instance=ExtResource("5_84l1t")]
 label = "Climb Down"

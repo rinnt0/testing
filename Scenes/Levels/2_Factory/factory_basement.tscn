@@ -199,7 +199,7 @@ item_name = "Fuse"
 [node name="Place3" parent="Fusebox" unique_id=538204206 instance=ExtResource("5_41r4t")]
 label = "Place"
 requires_flag = true
-flag_name = "fuse_2_obtained"
+flag_name = "fuse_3_obtained"
 
 [node name="DialogFlag" parent="Fusebox/Place3" unique_id=49271627 instance=ExtResource("11_eecdu")]
 flag_name = "fuse_3_placed"
