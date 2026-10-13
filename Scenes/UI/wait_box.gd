@@ -27,7 +27,7 @@ func do_wait(content: WaitMoment, skip_player_lock: bool = false) -> void:
 		_original_zoom = cam.zoom
 
 	if not skip_player_lock:
-		_lock_player()
+		PlayerManager.lock_player()
 
 	for i in content.thought_delays.size():
 		_show_thought_after(content, i, current_gen)
@@ -44,34 +44,12 @@ func _cancel() -> void:
 	_wait_gen += 1
 	
 	DialogBox.hide_wait_thought()
-	
-	# PASS THE ZOOM HERE:
-	DialogBox.restore_camera(_original_zoom) 
+	await DialogBox.restore_camera(_original_zoom)
 	
 	if not _skip_player_lock:
-		_unlock_player()
+		PlayerManager.unlock_player()
 	
 	wait_finished.emit()
-
-# ── helpers ──────────────────────────────────────────────────────────────────
-
-func _lock_player() -> void:
-	var sm = PlayerManager.player.state_machine
-	var wait_state = sm.get_node_or_null("Wait")
-	if wait_state:
-		sm.change_state(wait_state)
-	else:
-		sm.process_mode = Node.PROCESS_MODE_DISABLED
-
-func _unlock_player() -> void:
-	var sm = PlayerManager.player.state_machine
-	sm.process_mode = Node.PROCESS_MODE_INHERIT
-	
-	var idle_state = sm.get_node_or_null("Idle")
-	if idle_state:
-		sm.change_state(idle_state)
-		
-	PlayerManager.player.can_look_up = true
 
 func _show_thought_after(content: WaitMoment, index: int, gen: int) -> void:
 	await get_tree().create_timer(content.thought_delays[index]).timeout

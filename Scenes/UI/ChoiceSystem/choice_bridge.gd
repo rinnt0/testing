@@ -45,10 +45,11 @@ func _unhandled_input(event: InputEvent):
 	if _menu_open and event.is_action_pressed("ui_cancel"):
 		get_viewport().set_input_as_handled()
 		ChoiceMenu.hide_menu()
-		PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
-		PlayerManager.player.can_look_up = true
 		_menu_open = false
 		is_open = false
+		return
+
+	if TransitionBox.visible or DialogBox.visible or FullArtBox.visible:
 		return
 
 	if player_in_range and not is_open and event.is_action_pressed("interact"):
@@ -111,8 +112,7 @@ func _unhandled_input(event: InputEvent):
 				DialogBox.show_lines(dialog.lines, dialog.portraits, dialog.voice_profiles, dialog)
 				await DialogBox.dialog_finished
 			else:
-				PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
-				PlayerManager.player.can_look_up = true
+				PlayerManager.unlock_player()
 
 			if flag:
 				if flag.set_flag_on_complete and flag.flag_name != "":
@@ -145,6 +145,7 @@ func _unhandled_input(event: InputEvent):
 					DialogFlag.DeleteMode.CHOICE_BRIDGE:
 						queue_free()
 
+		PlayerManager.unlock_player()
 		is_open = false
 
 func _find_toast(maker: Node) -> ToastContent:

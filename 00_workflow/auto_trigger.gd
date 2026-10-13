@@ -15,11 +15,8 @@ func _on_body_entered(body: Node) -> void:
 	if _triggered or not body is Player:
 		return
 	_triggered = true
-	body.velocity = Vector2.ZERO
-	body.direction = Vector2.ZERO
-	body.state_machine.change_state(body.state_machine.states[0])
+	PlayerManager.lock_player()
 	await get_tree().process_frame
-	body.state_machine.process_mode = Node.PROCESS_MODE_DISABLED
 
 	var maker = get_children().filter(func(c): return c is ChoiceMaker).front()
 	var flag = maker.get_node_or_null("DialogFlag") if maker else null
@@ -63,13 +60,12 @@ func _on_body_entered(body: Node) -> void:
 			DialogBox.show_lines(content.lines, content.portraits, content.voice_profiles, content)
 			await DialogBox.dialog_finished
 			if is_last_visual and not transition:
-				body.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
+				PlayerManager.unlock_player()
 		elif content is FullArtContent:
 			await FullArtBox.show_art(content, transition != null and is_last_visual)
 
 	if not played_any:
-		PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
-		PlayerManager.player.can_look_up = true
+		PlayerManager.unlock_player()
 
 	# Handle flags
 	if flag and flag.set_flag_on_complete and flag.flag_name != "":

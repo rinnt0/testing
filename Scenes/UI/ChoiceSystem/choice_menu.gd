@@ -38,12 +38,7 @@ func show_options(new_options: Array):
 	update_selection(false)
 	play_intro_animation()
 	
-	# Reset Player state
-	PlayerManager.player.can_look_up = false
-	if PlayerManager.player.has_node("AnimationPlayer"):
-		PlayerManager.player.get_node("AnimationPlayer").play("idle")
-	PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_DISABLED
-	PlayerManager.player.velocity = Vector2.ZERO
+	PlayerManager.lock_player()
 	
 	setup_slots()
 	update_selection(false) # Snap to start without animation
@@ -156,8 +151,7 @@ func hide_menu():
 		bar.modulate.a = 1.0
 		decor.modulate.a = 1.0
 		
-		PlayerManager.player.can_look_up = true
-		PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
+		PlayerManager.unlock_player()
 	)
 
 func play_intro_animation():

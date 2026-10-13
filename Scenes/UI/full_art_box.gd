@@ -17,8 +17,7 @@ func show_art(content: FullArtContent, leave_black: bool = false):
 	# --- configure the correct display node, hide the other ---
 	_setup_display(content)
 
-	PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_DISABLED
-	PlayerManager.player.can_look_up = false
+	PlayerManager.lock_player()
 
 	animation_player.play("FA_1")
 	await animation_player.animation_finished
@@ -57,8 +56,7 @@ func show_art(content: FullArtContent, leave_black: bool = false):
 		animation_player.play("FA_2")
 		await animation_player.animation_finished
 		visible = false
-		PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
-		PlayerManager.player.can_look_up = true
+		PlayerManager.unlock_player()
 
 	art_finished.emit()
 

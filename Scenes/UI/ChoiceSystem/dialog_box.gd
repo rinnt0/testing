@@ -37,9 +37,7 @@ func show_lines(new_lines: Array[String], new_portraits: Array = [], new_profile
 	if cam:
 		_original_zoom = cam.zoom
 	display_current_line()
-	PlayerManager.player.can_look_up = false
-	PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_DISABLED
-	PlayerManager.player.movement_locked = true
+	PlayerManager.lock_player()
 
 # ─────────────────────────────────────────────
 #  WaitMoment thoughts — no player state management, no input, no diamond.
@@ -54,14 +52,13 @@ func show_wait_thought(text: String, portrait_tex: Texture2D = null, voice_profi
 	portrait.texture = portrait_tex
 	var speed = voice_profile.char_speed if voice_profile else label.timer_time
 	label.play(text, speed)
-	PlayerManager.player.movement_locked = true
+	PlayerManager.lock_player()
 	is_typing = true
 
 func hide_wait_thought() -> void:
 	_wait_thought_gen += 1  # ← Prevent any lingering 5-second timers from firing
 	_is_wait_thought = false
 	await fade_out()
-	PlayerManager.player.movement_locked = false
 	label.clear_text()
 
 func _input(event: InputEvent):
@@ -92,11 +89,9 @@ func _input(event: InputEvent):
 			display_current_line()
 		else:
 			
-			restore_camera()
-			PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
-			PlayerManager.player.can_look_up = true
-			PlayerManager.player.movement_locked = false
+			await restore_camera()
 			await fade_out()
+			PlayerManager.unlock_player()
 			dialog_finished.emit()
 
 func on_typing_finished():
@@ -234,25 +229,22 @@ func restore_camera(preferred_zoom: Variant = null) -> void:
 		_camera = PlayerManager.player.get_node_or_null("Camera2D")
 	if not _camera:
 		return
-		
-	var tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).set_parallel(true)
-	
-	# Determine which zoom to return to: 
-	# 1. The one passed in (WaitBox's)
-	# 2. The one stored here (DialogBox's)
-	# 3. Default to (1,1) if all else fails
+
+	# Never hijacked — don't tween or detach, or the follow cam lags then snaps
+	if not _camera.cinematic_mode and not _camera.top_level:
+		_camera = null
+		return
+
 	var final_zoom = _original_zoom
 	if preferred_zoom is Vector2:
 		final_zoom = preferred_zoom
-	
+
 	var target_return_pos = PlayerManager.player.global_position + Vector2(0, -17)
-	
+	var tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).set_parallel(true)
 	tween.tween_property(_camera, "global_position", target_return_pos, 0.4)
 	tween.tween_property(_camera, "zoom", final_zoom, 0.4)
-	
 	await tween.finished
-	
-	# Re-attach logic
+
 	_camera.top_level = false
 	_camera.cinematic_mode = false
 	_camera.position = Vector2(0, -17)

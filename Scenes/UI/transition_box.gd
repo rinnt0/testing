@@ -16,8 +16,7 @@ func do_transition(content: TransitionContent, already_black: bool = false):
 	
 	# ADD SAFETY CHECK: The player might not exist on the title screen
 	if PlayerManager.player:
-		PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_DISABLED
-		PlayerManager.player.can_look_up = false
+		PlayerManager.lock_player()
 
 	if not already_black:
 		color_rect.color.a = 0.0
@@ -56,13 +55,16 @@ func do_transition(content: TransitionContent, already_black: bool = false):
 	await FullArtBox.play_fade_in()
 
 	if PlayerManager.player:
-		PlayerManager.player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
-		PlayerManager.player.can_look_up = true
-		PlayerManager.player.movement_locked = false  # ← here
 		PlayerManager.player.visible = true
 		var camera = PlayerManager.player.get_node_or_null("Camera2D")
 		if camera:
 			camera.enabled = true
+			camera.top_level = false
+			camera.cinematic_mode = false
+			camera.position = Vector2(0, -17)
+			camera.reset_smoothing()
+	visible = false
+	PlayerManager.unlock_player()
 	transition_finished.emit()
 
 func _typewrite(label_node: Label, text: String, profile: VoiceProfile = null):

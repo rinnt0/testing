@@ -34,3 +34,39 @@ func unparent_player(_p : Node2D):
 		if player.get_parent() == _p:
 			_p.remove_child(player)
 			add_child(player)
+
+func is_busy() -> bool:
+	if ChoiceMenu.visible:
+		return true
+	if DialogBox.visible:
+		return true
+	if FullArtBox.visible:
+		return true
+	if TransitionBox.visible:
+		return true
+	return false
+
+func lock_player() -> void:
+	if not player or not is_instance_valid(player):
+		return
+	player.movement_locked = true
+	player.velocity = Vector2.ZERO
+	player.direction = Vector2.ZERO
+	player.can_look_up = false
+	if player.state_machine:
+		player.state_machine.process_mode = Node.PROCESS_MODE_DISABLED
+	if player.has_node("AnimationPlayer"):
+		player.get_node("AnimationPlayer").play("idle")
+
+func unlock_player() -> void:
+	if not player or not is_instance_valid(player):
+		return
+	if is_busy():
+		return
+	player.movement_locked = false
+	player.can_look_up = true
+	if player.state_machine:
+		player.state_machine.process_mode = Node.PROCESS_MODE_INHERIT
+		var idle_state = player.state_machine.get_node_or_null("Idle")
+		if idle_state:
+			player.state_machine.change_state(idle_state)
