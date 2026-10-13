@@ -216,8 +216,21 @@ position = Vector2(-1, -30)
 position = Vector2(0, 24)
 shape = SubResource("RectangleShape2D_28gmi")
 
+[node name="Examine" parent="RoofDoor" unique_id=1352647012 instance=ExtResource("5_txl7s")]
+label = "Examine"
+requires_flag = true
+flag_name = "fuse_3_placed"
+flag_value = false
+
+[node name="DialogContent" parent="RoofDoor/Examine" unique_id=1187107792 instance=ExtResource("8_65ho0")]
+lines = Array[String](["This door is shut."])
+portraits = Array[Texture2D]([ExtResource("9_uudkc")])
+voice_profiles = Array[ExtResource("10_r24y6")]([ExtResource("10_ygqth")])
+
 [node name="Enter" parent="RoofDoor" unique_id=1859115982 instance=ExtResource("5_txl7s")]
 label = "Enter"
+requires_flag = true
+flag_name = "fuse_3_placed"
 
 [node name="TransitionContent" parent="RoofDoor/Enter" unique_id=1986598684 instance=ExtResource("6_rjqt1")]
 transition_target = "FactoryRoofDoor"

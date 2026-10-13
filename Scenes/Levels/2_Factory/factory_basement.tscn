@@ -158,6 +158,30 @@ lines = Array[String](["There is only [color=red]1[/color] slot left."])
 portraits = Array[Texture2D]([ExtResource("8_2sey1")])
 voice_profiles = Array[ExtResource("9_2hvnx")]([ExtResource("10_eecdu")])
 
+[node name="Examine3" parent="Fusebox" unique_id=1536277936 instance=ExtResource("5_41r4t")]
+label = "Examine"
+requires_flag = true
+flag_name = "fuse_3_placed"
+
+[node name="DialogContent" parent="Fusebox/Examine3" unique_id=154575017 instance=ExtResource("7_41r4t")]
+lines = Array[String](["Power restored."])
+portraits = Array[Texture2D]([ExtResource("8_2sey1")])
+voice_profiles = Array[ExtResource("9_2hvnx")]([ExtResource("10_eecdu")])
+
+[node name="Place1" parent="Fusebox" unique_id=1590025013 instance=ExtResource("5_41r4t")]
+label = "Place"
+requires_flag = true
+flag_name = "fuse_1_obtained"
+
+[node name="DialogFlag" parent="Fusebox/Place1" unique_id=621403244 instance=ExtResource("11_eecdu")]
+flag_name = "fuse_1_placed"
+delete_after_interaction = 1
+
+[node name="ToastContent" parent="Fusebox/Place1" unique_id=2044367834 instance=ExtResource("12_2qm63")]
+header_text = "Placed"
+icon = ExtResource("13_ocq2u")
+item_name = "Fuse"
+
 [node name="Place2" parent="Fusebox" unique_id=2018051764 instance=ExtResource("5_41r4t")]
 label = "Place"
 requires_flag = true
@@ -172,16 +196,16 @@ header_text = "Placed"
 icon = ExtResource("13_ocq2u")
 item_name = "Fuse"
 
-[node name="Place1" parent="Fusebox" unique_id=1590025013 instance=ExtResource("5_41r4t")]
+[node name="Place3" parent="Fusebox" unique_id=538204206 instance=ExtResource("5_41r4t")]
 label = "Place"
 requires_flag = true
-flag_name = "fuse_1_obtained"
+flag_name = "fuse_2_obtained"
 
-[node name="DialogFlag" parent="Fusebox/Place1" unique_id=621403244 instance=ExtResource("11_eecdu")]
-flag_name = "fuse_1_placed"
+[node name="DialogFlag" parent="Fusebox/Place3" unique_id=49271627 instance=ExtResource("11_eecdu")]
+flag_name = "fuse_3_placed"
 delete_after_interaction = 1
 
-[node name="ToastContent" parent="Fusebox/Place1" unique_id=2044367834 instance=ExtResource("12_2qm63")]
+[node name="ToastContent" parent="Fusebox/Place3" unique_id=541317810 instance=ExtResource("12_2qm63")]
 header_text = "Placed"
 icon = ExtResource("13_ocq2u")
 item_name = "Fuse"

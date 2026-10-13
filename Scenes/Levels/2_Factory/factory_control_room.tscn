@@ -103,3 +103,7 @@ texture = ExtResource("10_6clme")
 lines = Array[String](["The camera shows a fuse in the office vent"])
 portraits = Array[Texture2D]([ExtResource("11_wft8w")])
 voice_profiles = Array[ExtResource("12_7jlrn")]([ExtResource("13_8s754")])
+
+[node name="DialogFlag" parent="ControlTerminal/Examine2" unique_id=625121539 instance=ExtResource("8_p151g")]
+flag_name = "vent_fuse_seen"
+delete_after_interaction = 0

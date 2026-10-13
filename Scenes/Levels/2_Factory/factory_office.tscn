@@ -138,6 +138,44 @@ lines = Array[String](["Just a vent."])
 portraits = Array[Texture2D]([ExtResource("8_3iqq4")])
 voice_profiles = Array[ExtResource("9_1oomo")]([ExtResource("10_s7h0h")])
 
+[node name="Examine2" parent="Vent" unique_id=1107416685 instance=ExtResource("5_84l1t")]
+label = "Examine"
+requires_flag = true
+flag_name = "vent_fuse_seen"
+
+[node name="DialogContent" parent="Vent/Examine2" unique_id=1667288147 instance=ExtResource("7_ilbpm")]
+lines = Array[String](["I can't reach it."])
+portraits = Array[Texture2D]([ExtResource("8_3iqq4")])
+voice_profiles = Array[ExtResource("9_1oomo")]([ExtResource("10_s7h0h")])
+
+[node name="Examine3" parent="Vent" unique_id=675170652 instance=ExtResource("5_84l1t")]
+label = "Examine"
+requires_flag = true
+flag_name = "fuse_3_obtained"
+
+[node name="DialogContent" parent="Vent/Examine3" unique_id=1188997390 instance=ExtResource("7_ilbpm")]
+lines = Array[String](["REPLACE THIS"])
+portraits = Array[Texture2D]([ExtResource("8_3iqq4")])
+voice_profiles = Array[ExtResource("9_1oomo")]([ExtResource("10_s7h0h")])
+
+[node name="Take" parent="Vent" unique_id=296093094 instance=ExtResource("5_84l1t")]
+label = "Take"
+requires_flag = true
+flag_name = "on_top_cabinet"
+
+[node name="DialogContent" parent="Vent/Take" unique_id=79835575 instance=ExtResource("7_ilbpm")]
+lines = Array[String](["Got it."])
+portraits = Array[Texture2D]([ExtResource("8_3iqq4")])
+voice_profiles = Array[ExtResource("9_1oomo")]([ExtResource("10_s7h0h")])
+
+[node name="DialogFlag" parent="Vent/Take" unique_id=1592070675 instance=ExtResource("11_wkdr3")]
+flag_name = "fuse_3_obtained"
+delete_after_interaction = 1
+
+[node name="ToastContent" parent="Vent/Take" unique_id=1871688376 instance=ExtResource("12_qb66g")]
+icon = ExtResource("13_72wo6")
+item_name = "Fuse"
+
 [node name="FileCabinet" parent="." unique_id=1141734438 instance=ExtResource("3_rt4vf")]
 position = Vector2(159, 154)
 
@@ -154,3 +192,31 @@ label = "Examine"
 lines = Array[String](["Some files, neatly ordered."])
 portraits = Array[Texture2D]([ExtResource("8_3iqq4")])
 voice_profiles = Array[ExtResource("9_1oomo")]([ExtResource("10_s7h0h")])
+
+[node name="Move" parent="FileCabinet" unique_id=340674021 instance=ExtResource("5_84l1t")]
+label = "Move"
+requires_flag = true
+flag_name = "vent_fuse_seen"
+
+[node name="DialogFlag" parent="FileCabinet/Move" unique_id=360719991 instance=ExtResource("11_wkdr3")]
+flag_name = "file_cabinet_moved"
+delete_after_interaction = 1
+
+[node name="ClimbUp" parent="FileCabinet" unique_id=247710872 instance=ExtResource("5_84l1t")]
+label = "Climb Up"
+requires_flag = true
+flag_name = "file_cabinet_moved"
+
+[node name="DialogFlag" parent="FileCabinet/ClimbUp" unique_id=1435355523 instance=ExtResource("11_wkdr3")]
+flag_name = "on_top_cabinet"
+delete_after_interaction = 1
+
+[node name="ClimbDown" parent="FileCabinet" unique_id=1804932794 instance=ExtResource("5_84l1t")]
+label = "Climb Down"
+requires_flag = true
+flag_name = "on_top_cabinet"
+
+[node name="DialogFlag" parent="FileCabinet/ClimbDown" unique_id=1138036193 instance=ExtResource("11_wkdr3")]
+flag_name = "on_top_cabinet"
+flag_value = false
+delete_after_interaction = 0

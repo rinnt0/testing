@@ -61,9 +61,8 @@ func _unhandled_input(event: InputEvent):
 		# placed), only the LAST one in the scene tree wins - later = further along.
 		var active_flagged_by_label = {}
 		for c in _live_makers():
-			if c.requires_flag:
-				if PersistentData.get_flag(c.flag_name) == c.flag_value:
-					active_flagged_by_label[c.label] = c
+			if c.requires_flag and c.conditions_met():
+				active_flagged_by_label[c.label] = c
 
 		var choices = []
 		for c in _live_makers():
