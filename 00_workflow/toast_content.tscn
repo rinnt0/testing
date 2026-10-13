@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://Scenes/UI/ChoiceSystem/toast_content.gd" id="1_toast"]
+
+[node name="ToastContent" type="Node"]
+script = ExtResource("1_toast")

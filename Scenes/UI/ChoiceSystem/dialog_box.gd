@@ -1,5 +1,5 @@
 extends CanvasLayer
-@onready var label: Label = $NinePatchRect/Label
+@onready var label: RichTextLabel = $NinePatchRect/Label
 @onready var portrait: TextureRect = $TextureRect
 @onready var diamond: AnimatedSprite2D = $AnimatedSprite2D
 # At the top with your other vars
@@ -52,11 +52,8 @@ func show_wait_thought(text: String, portrait_tex: Texture2D = null, voice_profi
 	fade_in()
 	diamond.visible = false
 	portrait.texture = portrait_tex
-	label.type = text
-	label.text = ""
-	label.current_index = 0
 	var speed = voice_profile.char_speed if voice_profile else label.timer_time
-	label.timer.start(speed)
+	label.play(text, speed)
 	PlayerManager.player.movement_locked = true
 	is_typing = true
 
@@ -65,7 +62,7 @@ func hide_wait_thought() -> void:
 	_is_wait_thought = false
 	await fade_out()
 	PlayerManager.player.movement_locked = false
-	label.text = ""
+	label.clear_text()
 
 func _input(event: InputEvent):
 	if is_closing:
@@ -87,9 +84,7 @@ func _input(event: InputEvent):
 		get_viewport().set_input_as_handled()
 		AudioManager.play_sfx(AudioManager.ui_click_sound)  # ← scroll
 		if is_typing:
-			# Show all text instantly
-			label.timer.stop()
-			label.text = lines[current_line]
+			label.reveal_all()
 			is_typing = false
 			on_typing_finished()
 		elif current_line + 1 < lines.size():
@@ -165,11 +160,8 @@ func display_current_line():
 		move_camera_to(target_pos, target_zoom)
 
 	# 4. START TEXT TYPING
-	label.type = lines[current_line]
-	label.text = ""
-	label.current_index = 0
 	var speed = current_voice_profile.char_speed if current_voice_profile else label.timer_time
-	label.timer.start(speed)
+	label.play(lines[current_line], speed)
 
 	if portraits.size() > current_line and portraits[current_line] != null:
 		portrait.texture = portraits[current_line]

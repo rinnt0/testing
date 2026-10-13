@@ -5,8 +5,8 @@ var _triggered = false
 func _ready() -> void:
 	for maker in get_children().filter(func(c): return c is ChoiceMaker):
 		var flag = maker.get_node_or_null("DialogFlag")
-		if flag and flag.set_flag_on_complete and flag.flag_name != "":
-			if PersistentData.get_flag(flag.flag_name):
+		if flag and flag.set_flag_on_complete and flag.flag_name != "" and flag.delete_after_interaction:
+			if PersistentData.get_flag(flag.flag_name) == flag.flag_value:
 				queue_free()
 				return
 	body_entered.connect(_on_body_entered)
@@ -23,6 +23,19 @@ func _on_body_entered(body: Node) -> void:
 
 	var maker = get_children().filter(func(c): return c is ChoiceMaker).front()
 	var flag = maker.get_node_or_null("DialogFlag") if maker else null
+	var toast: ToastContent = null
+	if maker:
+		var named = maker.get_node_or_null("ToastContent")
+		if named is ToastContent:
+			toast = named
+		else:
+			for child in maker.get_children():
+				if child is ToastContent:
+					toast = child
+					break
+
+	if toast and toast.timing == ToastContent.Timing.START:
+		ToastBox.show_toast(toast)
 
 	# TransitionContent can live on the ChoiceMaker child OR directly on AutoTrigger
 	var transition = null
@@ -60,7 +73,10 @@ func _on_body_entered(body: Node) -> void:
 
 	# Handle flags
 	if flag and flag.set_flag_on_complete and flag.flag_name != "":
-		PersistentData.set_flag(flag.flag_name, true)
+		PersistentData.set_flag(flag.flag_name, flag.flag_value)
+
+	if toast and toast.timing == ToastContent.Timing.END:
+		await ToastBox.show_toast(toast)
 
 	# Handle transitions (last)
 	if transition:

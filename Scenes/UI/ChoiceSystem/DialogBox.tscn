@@ -69,15 +69,19 @@ patch_margin_top = 12
 patch_margin_right = 12
 patch_margin_bottom = 12
 
-[node name="Label" type="Label" parent="NinePatchRect" unique_id=769426482]
+[node name="Label" type="RichTextLabel" parent="NinePatchRect" unique_id=769426482]
 layout_mode = 0
 offset_left = 32.005
 offset_top = 19.095
 offset_right = 1065.765
 offset_bottom = 270.0896
-theme_override_fonts/font = ExtResource("3_314r7")
-theme_override_font_sizes/font_size = 64
+mouse_filter = 2
+theme_override_fonts/normal_font = ExtResource("3_314r7")
+theme_override_font_sizes/normal_font_size = 64
+bbcode_enabled = true
 text = "xczc"
+fit_content = false
+scroll_active = false
 autowrap_mode = 3
 script = ExtResource("3_tmmap")
 timer_time = 0.05

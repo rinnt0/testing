@@ -6,9 +6,23 @@
 [ext_resource type="PackedScene" uid="uid://rbkdjakxwqqe" path="res://00_workflow/interact_prompt.tscn" id="4_gle6c"]
 [ext_resource type="PackedScene" uid="uid://b3dpxkieemvvs" path="res://00_workflow/ChoiceMaker.tscn" id="5_84l1t"]
 [ext_resource type="PackedScene" uid="uid://boql8kevdeie3" path="res://00_workflow/transition_content.tscn" id="6_s14q3"]
+[ext_resource type="PackedScene" uid="uid://goxs6leqkxnh" path="res://00_workflow/dialog_content.tscn" id="7_ilbpm"]
+[ext_resource type="Texture2D" uid="uid://1f4vy0pa4egy" path="res://Assets/Characters/Speaker_Icons/speaker_test.png" id="8_3iqq4"]
+[ext_resource type="Script" uid="uid://buevi6v0ikoyi" path="res://VoiceProfiles/voice_profiles.gd" id="9_1oomo"]
+[ext_resource type="Resource" uid="uid://ddfjyl7doihlw" path="res://VoiceProfiles/main_character_fast.tres" id="10_s7h0h"]
+[ext_resource type="Texture2D" uid="uid://dt6xb8panfct2" path="res://Assets/UI/icon_take.png" id="11_3iqq4"]
+[ext_resource type="PackedScene" uid="uid://hrxgt28o1fkj" path="res://00_workflow/dialog_flag.tscn" id="11_wkdr3"]
+[ext_resource type="PackedScene" path="res://00_workflow/toast_content.tscn" id="12_qb66g"]
+[ext_resource type="Texture2D" uid="uid://b6cok4fdyp6cp" path="res://ZZ_OLD/icon.svg" id="13_72wo6"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_huqre"]
 size = Vector2(40, 12)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_k7vfy"]
+size = Vector2(29, 8)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_3iqq4"]
+size = Vector2(35, 11)
 
 [node name="Factory_Office" type="Node2D" unique_id=103997993]
 script = ExtResource("1_opefv")
@@ -38,3 +52,105 @@ label = "Leave"
 transition_target = "FactoryOfficeDoor"
 next_scene_path = "uid://bx2crt8pwbnki"
 facing_direction = 2
+
+[node name="OfficeDesk" parent="." unique_id=1584134280 instance=ExtResource("3_rt4vf")]
+position = Vector2(53, 150)
+
+[node name="InteractPrompt" parent="OfficeDesk" unique_id=1370716702 instance=ExtResource("4_gle6c")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OfficeDesk/InteractPrompt" unique_id=711652097]
+position = Vector2(2.5, 20)
+shape = SubResource("RectangleShape2D_k7vfy")
+
+[node name="Examine" parent="OfficeDesk" unique_id=1980527828 instance=ExtResource("5_84l1t")]
+label = "Examine"
+
+[node name="DialogContent" parent="OfficeDesk/Examine" unique_id=326983792 instance=ExtResource("7_ilbpm")]
+lines = Array[String](["Theres papers scattered across the desk."])
+portraits = Array[Texture2D]([ExtResource("8_3iqq4")])
+voice_profiles = Array[ExtResource("9_1oomo")]([ExtResource("10_s7h0h")])
+
+[node name="TakeKey" parent="OfficeDesk" unique_id=1374271823 instance=ExtResource("5_84l1t")]
+label = "Take"
+icon = ExtResource("11_3iqq4")
+requires_flag = true
+flag_name = "desk_drawer_open"
+
+[node name="DialogContent" parent="OfficeDesk/TakeKey" unique_id=2004471606 instance=ExtResource("7_ilbpm")]
+lines = Array[String](["A key to the basement."])
+portraits = Array[Texture2D]([ExtResource("8_3iqq4")])
+voice_profiles = Array[ExtResource("9_1oomo")]([ExtResource("10_s7h0h")])
+
+[node name="DialogFlag" parent="OfficeDesk/TakeKey" unique_id=971773713 instance=ExtResource("11_wkdr3")]
+flag_name = "basement_key"
+delete_after_interaction = 1
+
+[node name="ToastContent" parent="OfficeDesk/TakeKey" unique_id=72299790 instance=ExtResource("12_qb66g")]
+icon = ExtResource("13_72wo6")
+item_name = "Basement Key"
+
+[node name="CloseDrawer" parent="OfficeDesk" unique_id=967402476 instance=ExtResource("5_84l1t")]
+label = "Close drawer"
+requires_flag = true
+flag_name = "desk_drawer_open"
+
+[node name="DialogFlag" parent="OfficeDesk/CloseDrawer" unique_id=1697049398 instance=ExtResource("11_wkdr3")]
+flag_name = "desk_drawer_open"
+flag_value = false
+delete_after_interaction = 0
+
+[node name="ToastContent" parent="OfficeDesk/CloseDrawer" unique_id=526250029 instance=ExtResource("12_qb66g")]
+timing = 0
+header_text = "Closed"
+icon = ExtResource("13_72wo6")
+item_name = "Drawer"
+
+[node name="OpenDrawer" parent="OfficeDesk" unique_id=1953024162 instance=ExtResource("5_84l1t")]
+label = "Open drawer"
+requires_flag = true
+flag_name = "desk_drawer_open"
+flag_value = false
+
+[node name="DialogFlag" parent="OfficeDesk/OpenDrawer" unique_id=995973720 instance=ExtResource("11_wkdr3")]
+flag_name = "desk_drawer_open"
+delete_after_interaction = 0
+
+[node name="ToastContent" parent="OfficeDesk/OpenDrawer" unique_id=108069672 instance=ExtResource("12_qb66g")]
+timing = 0
+header_text = "Opened"
+icon = ExtResource("13_72wo6")
+item_name = "Drawer"
+
+[node name="Vent" parent="." unique_id=930646837 instance=ExtResource("3_rt4vf")]
+position = Vector2(108, 126)
+
+[node name="InteractPrompt" parent="Vent" unique_id=722345998 instance=ExtResource("4_gle6c")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Vent/InteractPrompt" unique_id=797199563]
+position = Vector2(4, 42)
+shape = SubResource("RectangleShape2D_3iqq4")
+
+[node name="Examine" parent="Vent" unique_id=1587370441 instance=ExtResource("5_84l1t")]
+label = "Examine"
+
+[node name="DialogContent" parent="Vent/Examine" unique_id=2106076177 instance=ExtResource("7_ilbpm")]
+lines = Array[String](["Just a vent."])
+portraits = Array[Texture2D]([ExtResource("8_3iqq4")])
+voice_profiles = Array[ExtResource("9_1oomo")]([ExtResource("10_s7h0h")])
+
+[node name="FileCabinet" parent="." unique_id=1141734438 instance=ExtResource("3_rt4vf")]
+position = Vector2(159, 154)
+
+[node name="InteractPrompt" parent="FileCabinet" unique_id=280889152 instance=ExtResource("4_gle6c")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="FileCabinet/InteractPrompt" unique_id=278211866]
+position = Vector2(7, 15)
+shape = SubResource("RectangleShape2D_3iqq4")
+
+[node name="Examine" parent="FileCabinet" unique_id=621411992 instance=ExtResource("5_84l1t")]
+label = "Examine"
+
+[node name="DialogContent" parent="FileCabinet/Examine" unique_id=7480486 instance=ExtResource("7_ilbpm")]
+lines = Array[String](["Some files, neatly ordered."])
+portraits = Array[Texture2D]([ExtResource("8_3iqq4")])
+voice_profiles = Array[ExtResource("9_1oomo")]([ExtResource("10_s7h0h")])

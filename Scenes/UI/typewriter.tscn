@@ -2,13 +2,18 @@
 
 [ext_resource type="Script" uid="uid://bb8b5pwfuirew" path="res://Scenes/UI/typewriter.gd" id="1_op7cy"]
 
-[node name="Label" type="Label"]
+[node name="Label" type="RichTextLabel"]
 offset_left = 189.0
 offset_top = 222.0
 offset_right = 1711.0
 offset_bottom = 778.0
 size_flags_horizontal = 4
-theme_override_font_sizes/font_size = 126
+mouse_filter = 2
+theme_override_font_sizes/normal_font_size = 126
+bbcode_enabled = true
+text = "ayaya"
+scroll_active = false
+autowrap_mode = 3
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("1_op7cy")

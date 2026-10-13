@@ -150,7 +150,7 @@ shape = SubResource("RectangleShape2D_bbpso")
 [node name="ChoiceMaker" parent="BusStopWaitMoment" unique_id=1321343351 instance=ExtResource("8_o2t5a")]
 
 [node name="WaitMoment" parent="BusStopWaitMoment/ChoiceMaker" unique_id=1158179160 instance=ExtResource("18_xnw7c")]
-thoughts = Array[String](["...", "Maybe I should have bought some milk", "Will I still be doing this in 10 years?"])
+thoughts = Array[String](["...", "Maybe I should have bought some milk", "[shake rate=20.0 level=5 connected=1]Will I still be doing [color=red]BBCode injection[/color] this in 10 years?[/shake]"])
 thought_delays = Array[float]([0.0, 15.0, 40.0])
 portraits = Array[Texture2D]([ExtResource("13_s106r"), ExtResource("13_s106r"), ExtResource("13_s106r")])
 voice_profiles = Array[ExtResource("14_fkbvg")]([ExtResource("15_ypqb2"), ExtResource("15_ypqb2"), ExtResource("15_ypqb2")])

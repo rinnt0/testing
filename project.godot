@@ -39,6 +39,7 @@ TransitionBox="*uid://dskbaorg3v56p"
 ScreenFx="*uid://c85sf8dy2bk5v"
 interactCircle="*uid://dtgj6uqagrydq"
 WaitBox="*uid://cqus4cwnq7ibl"
+ToastBox="*res://Scenes/UI/toast_box.tscn"
 
 [display]
 
