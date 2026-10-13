@@ -4,11 +4,18 @@ signal wait_finished
 
 var _wait_gen: int = 0
 var _waiting: bool = false
+var _ending: bool = false   # true while the wait is winding down (text fade + camera restore)
 var _skip_player_lock: bool = false
 var _original_zoom: Vector2 = Vector2.ONE
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
+
+# True from do_wait() until the player is actually handed back, including the
+# wind-down. Other systems (interact circle, PlayerManager.is_busy, choice
+# bridges) use this to know a wait is still in charge of the player.
+func is_active() -> bool:
+	return _waiting or _ending
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _waiting and event.is_action_pressed("ui_cancel"):
@@ -34,21 +41,24 @@ func do_wait(content: WaitMoment, skip_player_lock: bool = false) -> void:
 
 	await wait_finished
 
-# Inside WaitBox.gd
-
 func _cancel() -> void:
 	if not _waiting:
 		return
-		
+
 	_waiting = false
+	_ending = true
 	_wait_gen += 1
-	
-	DialogBox.hide_wait_thought()
+
+	# MUST be awaited: unlock_player() refuses to run while DialogBox is still
+	# visible, and the text box needs its fade-out to finish first.
+	await DialogBox.hide_wait_thought()
 	await DialogBox.restore_camera(_original_zoom)
-	
+
+	# Clear _ending BEFORE unlocking, otherwise is_busy() still reports us busy.
+	_ending = false
 	if not _skip_player_lock:
 		PlayerManager.unlock_player()
-	
+
 	wait_finished.emit()
 
 func _show_thought_after(content: WaitMoment, index: int, gen: int) -> void:

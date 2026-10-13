@@ -18,7 +18,7 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	if not player:
 		return
-	if DialogBox.visible or ChoiceMenu.visible:
+	if DialogBox.visible or ChoiceMenu.visible or WaitBox.is_active():
 		circle.visible = false
 		circle.modulate.a = 0.0
 		button.visible = false

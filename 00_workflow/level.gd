@@ -59,43 +59,41 @@ func _ready() -> void:
 		if camera:
 			camera.reset_smoothing()
 	
+	# Connect right away. If another load starts while we are still fading in,
+	# this level must still be able to free itself.
+	LevelManager.level_load_started.connect(_free_level)
+
 	await get_tree().process_frame
-	
-	# Find existing black overlay from previous scene
-	var canvas_layer = null
-	var color_rect = null
-	
-	for child in get_tree().root.get_children():
-		if child is CanvasLayer:
-			for subchild in child.get_children():
-				if subchild is ColorRect and subchild.color == Color.BLACK:
-					canvas_layer = child
-					color_rect = subchild
-					break
-	
-	# If we found it, fade it out. Otherwise create new one
+
+	# When TransitionBox triggered this load it fades itself in (transition_box.gd).
+	# Running a second fade on top of it was what made the end of the fade pop.
+	if not TransitionBox.visible:
+		await _fade_in_from_black()
+
+func _fade_in_from_black() -> void:
+	# LevelTransition leaves a black rect in the "scene_fade" group - reuse it.
+	var color_rect := get_tree().get_first_node_in_group("scene_fade") as ColorRect
+	var canvas_layer: CanvasLayer = null
 	if color_rect:
-		var tween = create_tween()
-		tween.tween_property(color_rect, "color:a", 0.0, 1.0)
-		await tween.finished
+		canvas_layer = color_rect.get_parent() as CanvasLayer
 	else:
-		# No existing overlay, create and fade in
+		# Nothing to continue from (e.g. running the level with F6): start black.
 		canvas_layer = CanvasLayer.new()
 		canvas_layer.layer = 100
 		get_tree().root.add_child(canvas_layer)
-		
 		color_rect = ColorRect.new()
 		color_rect.color = Color.BLACK
-		color_rect.color.a = 1.0
-		color_rect.size = get_viewport_rect().size
+		color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
 		canvas_layer.add_child(color_rect)
-		
-		var tween = create_tween()
-		tween.tween_property(color_rect, "color:a", 0.0, 1.0)
-		await tween.finished
-		canvas_layer.queue_free()
-	
-	LevelManager.level_load_started.connect(_free_level)
+		color_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+
+	# Tween lives on the overlay, not on this Level, so it still finishes (and the
+	# overlay still gets freed) even if this level is freed mid-fade.
+	canvas_layer.process_mode = Node.PROCESS_MODE_ALWAYS
+	var tween := canvas_layer.create_tween()
+	tween.tween_property(color_rect, "color:a", 0.0, 1.0)
+	tween.finished.connect(canvas_layer.queue_free)
+	await tween.finished
 
 func _free_level():
 	PlayerManager.unparent_player(self)

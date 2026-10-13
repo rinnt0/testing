@@ -12,6 +12,7 @@ var current_line = 0
 var is_typing = false
 var _active_dialog_content: DialogContent = null
 var _camera: PlayerCamera = null
+var _move_tween: Tween  # running move_camera_to tween, so restore_camera can cancel it
 var _original_zoom: Vector2 = Vector2.ONE  # ← store zoom before dialog starts
 var _is_walking: bool = false
 var _is_wait_thought: bool = false  # ← true while WaitMoment is displaying; blocks input
@@ -58,7 +59,13 @@ func show_wait_thought(text: String, portrait_tex: Texture2D = null, voice_profi
 func hide_wait_thought() -> void:
 	_wait_thought_gen += 1  # ← Prevent any lingering 5-second timers from firing
 	_is_wait_thought = false
-	await fade_out()
+	if visible and not is_closing:
+		await fade_out()
+	# If a fade-out was already running (e.g. the 5s auto-hide), fade_out()
+	# returns instantly. Wait for it so callers can rely on visible == false
+	# once this function returns.
+	while visible and is_closing:
+		await get_tree().process_frame
 	label.clear_text()
 
 func _input(event: InputEvent):
@@ -201,7 +208,11 @@ func move_camera_to(target_pos: Variant, target_zoom: float = -1.0) -> void:
 	if not _camera:
 		return
 
+	# Cancel an earlier move still in flight so two tweens never fight over the camera
+	if _move_tween and _move_tween.is_valid():
+		_move_tween.kill()
 	var tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).set_parallel(true)
+	_move_tween = tween
 
 	# Only move if a position was given
 	if target_pos != null:
@@ -230,26 +241,38 @@ func restore_camera(preferred_zoom: Variant = null) -> void:
 	if not _camera:
 		return
 
-	# Never hijacked — don't tween or detach, or the follow cam lags then snaps
-	if not _camera.cinematic_mode and not _camera.top_level:
-		_camera = null
-		return
-
-	var final_zoom = _original_zoom
+	var cam := _camera  # local copy: _camera may be cleared by another call while we await
+	var final_zoom: Vector2 = _original_zoom
 	if preferred_zoom is Vector2:
 		final_zoom = preferred_zoom
 
-	var target_return_pos = PlayerManager.player.global_position + Vector2(0, -17)
+	# Position was hijacked (detached from the player)...
+	var detached: bool = cam.cinematic_mode or cam.top_level
+	# ...or ONLY the zoom was changed. Zoom-only thoughts/lines never detach the
+	# camera, so checking `detached` alone skipped them and the zoom stuck.
+	var zoom_changed: bool = not cam.zoom.is_equal_approx(final_zoom)
+
+	if not detached and not zoom_changed:
+		_camera = null
+		return
+
+	if _move_tween and _move_tween.is_valid():
+		_move_tween.kill()
+
 	var tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).set_parallel(true)
-	tween.tween_property(_camera, "global_position", target_return_pos, 0.4)
-	tween.tween_property(_camera, "zoom", final_zoom, 0.4)
+	if detached:
+		var target_return_pos = PlayerManager.player.global_position + Vector2(0, -17)
+		tween.tween_property(cam, "global_position", target_return_pos, 0.4)
+	if zoom_changed:
+		tween.tween_property(cam, "zoom", final_zoom, 0.4)
 	await tween.finished
 
-	_camera.top_level = false
-	_camera.cinematic_mode = false
-	_camera.position = Vector2(0, -17)
-	_camera.reset_smoothing()
-	_camera.position_smoothing_enabled = true
+	if is_instance_valid(cam) and detached:
+		cam.top_level = false
+		cam.cinematic_mode = false
+		cam.position = Vector2(0, -17)
+		cam.reset_smoothing()
+		cam.position_smoothing_enabled = true
 	_camera = null
 
 

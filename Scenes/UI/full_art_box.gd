@@ -89,6 +89,17 @@ func play_fade_in():
 	await animation_player.animation_finished
 	visible = false
 
+# Drops FullArtBox's black cover instantly. Only call this while something else
+# (TransitionBox) is fully opaque on screen, so the swap can't be seen.
+func clear_instant() -> void:
+	animation_player.stop()
+	var cover := animation_player.get_node_or_null("TextureRect")
+	if cover:
+		cover.modulate.a = 0.0
+	sprite.visible = false
+	animated_sprite.visible = false
+	visible = false
+
 func wait_for_interact():
 	while true:
 		if Input.is_action_just_pressed("interact"):

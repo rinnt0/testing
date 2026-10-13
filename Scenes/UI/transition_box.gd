@@ -5,11 +5,24 @@ extends CanvasLayer
 
 signal transition_finished
 
+const FADE_IN_TIME := 0.5
+# How long before the fade ends the player gets control back. Raise for earlier control.
+const CONTROL_EARLY := 0.2
+
+# True once the player has been handed back but the last bit of the fade is still playing.
+var _released := false
+
+# Used by PlayerManager.is_busy(): the box is still on screen during the last
+# CONTROL_EARLY seconds of the fade, but it should no longer hold the player.
+func is_blocking() -> bool:
+	return visible and not _released
+
 func _ready():
 	visible = false
 	process_mode = Node.PROCESS_MODE_ALWAYS
 
 func do_transition(content: TransitionContent, already_black: bool = false):
+	_released = false
 	visible = true
 	transition_label.modulate.a = 0.0
 	transition_label.text = ""
@@ -47,13 +60,13 @@ func do_transition(content: TransitionContent, already_black: bool = false):
 	# 1. Trigger the level load
 	LevelManager.load_new_level(content.next_scene_path, content.transition_target, Vector2.ZERO)
 	
-	# 2. WAIT for the engine to actually swap the scenes
-	await get_tree().process_frame
-	
-	# 3. Play the intro fade-in BEFORE hiding the TransitionBox
-	# This ensures there is no gap where the Title Screen is visible.
-	await FullArtBox.play_fade_in()
+	# 2. Wait until the new scene is really loaded and the tree is unpaused.
+	#    (Starting the fade earlier means the scene-load hitch eats part of it.)
+	await LevelManager.level_loaded
 
+	# 3. Do all the "snap" work while the screen is still fully black, so none of
+	#    it (camera reset, player pop-in, art cover removal) can be seen.
+	FullArtBox.clear_instant()
 	if PlayerManager.player:
 		PlayerManager.player.visible = true
 		var camera = PlayerManager.player.get_node_or_null("Camera2D")
@@ -63,9 +76,24 @@ func do_transition(content: TransitionContent, already_black: bool = false):
 			camera.cinematic_mode = false
 			camera.position = Vector2(0, -17)
 			camera.reset_smoothing()
+
+	# 4. ONE fade, owned by this node. (level.gd skips its own fade while
+	#    TransitionBox is visible, so nothing else touches the screen now.)
+	var fade_in := create_tween()
+	fade_in.tween_property(color_rect, "color:a", 0.0, FADE_IN_TIME)
+	# Hand control back a little before the fade finishes
+	fade_in.parallel().tween_callback(_release_player).set_delay(maxf(FADE_IN_TIME - CONTROL_EARLY, 0.0))
+	await fade_in.finished
+
 	visible = false
-	PlayerManager.unlock_player()
+	_release_player()  # no-op if the early release already happened
 	transition_finished.emit()
+
+func _release_player() -> void:
+	if _released:
+		return
+	_released = true
+	PlayerManager.unlock_player()
 
 func _typewrite(label_node: Label, text: String, profile: VoiceProfile = null):
 	label_node.text = text

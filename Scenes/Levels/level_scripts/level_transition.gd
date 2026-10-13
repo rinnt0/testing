@@ -18,6 +18,8 @@ enum SIDE { TOP, DOWN, LEFT, RIGHT }
 
 @onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
+var _transitioning := false
+
 
 
 
@@ -37,16 +39,22 @@ func _ready() -> void:
 	pass
 
 func player_entered( _p : Node2D ):
+	# Ignore repeat triggers - a second overlay would be left behind at full black
+	if _transitioning:
+		return
+	_transitioning = true
+
 	# Create persistent black overlay before transition
 	var fade_canvas = CanvasLayer.new()
 	fade_canvas.layer = 100
 	get_tree().root.add_child(fade_canvas)
 	
 	var fade_rect = ColorRect.new()
-	fade_rect.color = Color.BLACK
-	fade_rect.color.a = 0
-	fade_rect.size = get_viewport().get_visible_rect().size
+	fade_rect.color = Color(0, 0, 0, 0)
+	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	fade_rect.add_to_group("scene_fade")  # level.gd finds the overlay by this group
 	fade_canvas.add_child(fade_rect)
+	fade_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
 	
 	# Fade to black
 	var tween = create_tween()

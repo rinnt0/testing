@@ -1,0 +1,258 @@
+diff --git a/00_workflow/level.gd b/00_workflow/level.gd
+index 074a2dc..f95905b 100644
+--- a/00_workflow/level.gd
++++ b/00_workflow/level.gd
+@@ -59,43 +59,41 @@ func _ready() -> void:
+ 		if camera:
+ 			camera.reset_smoothing()
+ 	
++	# Connect right away. If another load starts while we are still fading in,
++	# this level must still be able to free itself.
++	LevelManager.level_load_started.connect(_free_level)
++
+ 	await get_tree().process_frame
+-	
+-	# Find existing black overlay from previous scene
+-	var canvas_layer = null
+-	var color_rect = null
+-	
+-	for child in get_tree().root.get_children():
+-		if child is CanvasLayer:
+-			for subchild in child.get_children():
+-				if subchild is ColorRect and subchild.color == Color.BLACK:
+-					canvas_layer = child
+-					color_rect = subchild
+-					break
+-	
+-	# If we found it, fade it out. Otherwise create new one
++
++	# When TransitionBox triggered this load it fades itself in (transition_box.gd).
++	# Running a second fade on top of it was what made the end of the fade pop.
++	if not TransitionBox.visible:
++		await _fade_in_from_black()
++
++func _fade_in_from_black() -> void:
++	# LevelTransition leaves a black rect in the "scene_fade" group - reuse it.
++	var color_rect := get_tree().get_first_node_in_group("scene_fade") as ColorRect
++	var canvas_layer: CanvasLayer = null
+ 	if color_rect:
+-		var tween = create_tween()
+-		tween.tween_property(color_rect, "color:a", 0.0, 1.0)
+-		await tween.finished
++		canvas_layer = color_rect.get_parent() as CanvasLayer
+ 	else:
+-		# No existing overlay, create and fade in
++		# Nothing to continue from (e.g. running the level with F6): start black.
+ 		canvas_layer = CanvasLayer.new()
+ 		canvas_layer.layer = 100
+ 		get_tree().root.add_child(canvas_layer)
+-		
+ 		color_rect = ColorRect.new()
+ 		color_rect.color = Color.BLACK
+-		color_rect.color.a = 1.0
+-		color_rect.size = get_viewport_rect().size
++		color_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+ 		canvas_layer.add_child(color_rect)
+-		
+-		var tween = create_tween()
+-		tween.tween_property(color_rect, "color:a", 0.0, 1.0)
+-		await tween.finished
+-		canvas_layer.queue_free()
+-	
+-	LevelManager.level_load_started.connect(_free_level)
++		color_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
++
++	# Tween lives on the overlay, not on this Level, so it still finishes (and the
++	# overlay still gets freed) even if this level is freed mid-fade.
++	canvas_layer.process_mode = Node.PROCESS_MODE_ALWAYS
++	var tween := canvas_layer.create_tween()
++	tween.tween_property(color_rect, "color:a", 0.0, 1.0)
++	tween.finished.connect(canvas_layer.queue_free)
++	await tween.finished
+ 
+ func _free_level():
+ 	PlayerManager.unparent_player(self)
+diff --git a/Scenes/Levels/level_scripts/level_transition.gd b/Scenes/Levels/level_scripts/level_transition.gd
+index 1124cce..875358c 100644
+--- a/Scenes/Levels/level_scripts/level_transition.gd
++++ b/Scenes/Levels/level_scripts/level_transition.gd
+@@ -18,6 +18,8 @@ enum SIDE { TOP, DOWN, LEFT, RIGHT }
+ 
+ @onready var collision_shape: CollisionShape2D = $CollisionShape2D
+ 
++var _transitioning := false
++
+ 
+ 
+ 
+@@ -37,16 +39,22 @@ func _ready() -> void:
+ 	pass
+ 
+ func player_entered( _p : Node2D ):
++	# Ignore repeat triggers - a second overlay would be left behind at full black
++	if _transitioning:
++		return
++	_transitioning = true
++
+ 	# Create persistent black overlay before transition
+ 	var fade_canvas = CanvasLayer.new()
+ 	fade_canvas.layer = 100
+ 	get_tree().root.add_child(fade_canvas)
+ 	
+ 	var fade_rect = ColorRect.new()
+-	fade_rect.color = Color.BLACK
+-	fade_rect.color.a = 0
+-	fade_rect.size = get_viewport().get_visible_rect().size
++	fade_rect.color = Color(0, 0, 0, 0)
++	fade_rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
++	fade_rect.add_to_group("scene_fade")  # level.gd finds the overlay by this group
+ 	fade_canvas.add_child(fade_rect)
++	fade_rect.set_anchors_preset(Control.PRESET_FULL_RECT)
+ 	
+ 	# Fade to black
+ 	var tween = create_tween()
+diff --git a/Scenes/UI/ChoiceSystem/dialog_box.gd b/Scenes/UI/ChoiceSystem/dialog_box.gd
+index be14580..76ce1ee 100644
+--- a/Scenes/UI/ChoiceSystem/dialog_box.gd
++++ b/Scenes/UI/ChoiceSystem/dialog_box.gd
+@@ -12,6 +12,7 @@ var current_line = 0
+ var is_typing = false
+ var _active_dialog_content: DialogContent = null
+ var _camera: PlayerCamera = null
++var _move_tween: Tween  # running move_camera_to tween, so restore_camera can cancel it
+ var _original_zoom: Vector2 = Vector2.ONE  # ← store zoom before dialog starts
+ var _is_walking: bool = false
+ var _is_wait_thought: bool = false  # ← true while WaitMoment is displaying; blocks input
+@@ -207,7 +208,11 @@ func move_camera_to(target_pos: Variant, target_zoom: float = -1.0) -> void:
+ 	if not _camera:
+ 		return
+ 
++	# Cancel an earlier move still in flight so two tweens never fight over the camera
++	if _move_tween and _move_tween.is_valid():
++		_move_tween.kill()
+ 	var tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).set_parallel(true)
++	_move_tween = tween
+ 
+ 	# Only move if a position was given
+ 	if target_pos != null:
+@@ -236,26 +241,38 @@ func restore_camera(preferred_zoom: Variant = null) -> void:
+ 	if not _camera:
+ 		return
+ 
+-	# Never hijacked — don't tween or detach, or the follow cam lags then snaps
+-	if not _camera.cinematic_mode and not _camera.top_level:
++	var cam := _camera  # local copy: _camera may be cleared by another call while we await
++	var final_zoom: Vector2 = _original_zoom
++	if preferred_zoom is Vector2:
++		final_zoom = preferred_zoom
++
++	# Position was hijacked (detached from the player)...
++	var detached: bool = cam.cinematic_mode or cam.top_level
++	# ...or ONLY the zoom was changed. Zoom-only thoughts/lines never detach the
++	# camera, so checking `detached` alone skipped them and the zoom stuck.
++	var zoom_changed: bool = not cam.zoom.is_equal_approx(final_zoom)
++
++	if not detached and not zoom_changed:
+ 		_camera = null
+ 		return
+ 
+-	var final_zoom = _original_zoom
+-	if preferred_zoom is Vector2:
+-		final_zoom = preferred_zoom
++	if _move_tween and _move_tween.is_valid():
++		_move_tween.kill()
+ 
+-	var target_return_pos = PlayerManager.player.global_position + Vector2(0, -17)
+ 	var tween = create_tween().set_trans(Tween.TRANS_SINE).set_ease(Tween.EASE_IN_OUT).set_parallel(true)
+-	tween.tween_property(_camera, "global_position", target_return_pos, 0.4)
+-	tween.tween_property(_camera, "zoom", final_zoom, 0.4)
++	if detached:
++		var target_return_pos = PlayerManager.player.global_position + Vector2(0, -17)
++		tween.tween_property(cam, "global_position", target_return_pos, 0.4)
++	if zoom_changed:
++		tween.tween_property(cam, "zoom", final_zoom, 0.4)
+ 	await tween.finished
+ 
+-	_camera.top_level = false
+-	_camera.cinematic_mode = false
+-	_camera.position = Vector2(0, -17)
+-	_camera.reset_smoothing()
+-	_camera.position_smoothing_enabled = true
++	if is_instance_valid(cam) and detached:
++		cam.top_level = false
++		cam.cinematic_mode = false
++		cam.position = Vector2(0, -17)
++		cam.reset_smoothing()
++		cam.position_smoothing_enabled = true
+ 	_camera = null
+ 
+ 
+diff --git a/Scenes/UI/full_art_box.gd b/Scenes/UI/full_art_box.gd
+index 9b153b7..b187f03 100644
+--- a/Scenes/UI/full_art_box.gd
++++ b/Scenes/UI/full_art_box.gd
+@@ -89,6 +89,17 @@ func play_fade_in():
+ 	await animation_player.animation_finished
+ 	visible = false
+ 
++# Drops FullArtBox's black cover instantly. Only call this while something else
++# (TransitionBox) is fully opaque on screen, so the swap can't be seen.
++func clear_instant() -> void:
++	animation_player.stop()
++	var cover := animation_player.get_node_or_null("TextureRect")
++	if cover:
++		cover.modulate.a = 0.0
++	sprite.visible = false
++	animated_sprite.visible = false
++	visible = false
++
+ func wait_for_interact():
+ 	while true:
+ 		if Input.is_action_just_pressed("interact"):
+diff --git a/Scenes/UI/transition_box.gd b/Scenes/UI/transition_box.gd
+index 4d10d17..b374606 100644
+--- a/Scenes/UI/transition_box.gd
++++ b/Scenes/UI/transition_box.gd
+@@ -5,6 +5,8 @@ extends CanvasLayer
+ 
+ signal transition_finished
+ 
++const FADE_IN_TIME := 1.0
++
+ func _ready():
+ 	visible = false
+ 	process_mode = Node.PROCESS_MODE_ALWAYS
+@@ -47,13 +49,13 @@ func do_transition(content: TransitionContent, already_black: bool = false):
+ 	# 1. Trigger the level load
+ 	LevelManager.load_new_level(content.next_scene_path, content.transition_target, Vector2.ZERO)
+ 	
+-	# 2. WAIT for the engine to actually swap the scenes
+-	await get_tree().process_frame
+-	
+-	# 3. Play the intro fade-in BEFORE hiding the TransitionBox
+-	# This ensures there is no gap where the Title Screen is visible.
+-	await FullArtBox.play_fade_in()
++	# 2. Wait until the new scene is really loaded and the tree is unpaused.
++	#    (Starting the fade earlier means the scene-load hitch eats part of it.)
++	await LevelManager.level_loaded
+ 
++	# 3. Do all the "snap" work while the screen is still fully black, so none of
++	#    it (camera reset, player pop-in, art cover removal) can be seen.
++	FullArtBox.clear_instant()
+ 	if PlayerManager.player:
+ 		PlayerManager.player.visible = true
+ 		var camera = PlayerManager.player.get_node_or_null("Camera2D")
+@@ -63,6 +65,13 @@ func do_transition(content: TransitionContent, already_black: bool = false):
+ 			camera.cinematic_mode = false
+ 			camera.position = Vector2(0, -17)
+ 			camera.reset_smoothing()
++
++	# 4. ONE fade, owned by this node. (level.gd skips its own fade while
++	#    TransitionBox is visible, so nothing else touches the screen now.)
++	var fade_in := create_tween()
++	fade_in.tween_property(color_rect, "color:a", 0.0, FADE_IN_TIME)
++	await fade_in.finished
++
+ 	visible = false
+ 	PlayerManager.unlock_player()
+ 	transition_finished.emit()

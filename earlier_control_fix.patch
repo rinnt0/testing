@@ -1,0 +1,85 @@
+diff --git a/00_globals/global_player_manager.gd b/00_globals/global_player_manager.gd
+index 3e097a9..1425af0 100644
+--- a/00_globals/global_player_manager.gd
++++ b/00_globals/global_player_manager.gd
+@@ -42,7 +42,7 @@ func is_busy() -> bool:
+ 		return true
+ 	if FullArtBox.visible:
+ 		return true
+-	if TransitionBox.visible:
++	if TransitionBox.is_blocking():
+ 		return true
+ 	if WaitBox.is_active():
+ 		return true
+@@ -65,6 +65,8 @@ func unlock_player() -> void:
+ 		return
+ 	if is_busy():
+ 		return
++	if not player.movement_locked:
++		return  # already unlocked - don't yank a walking player back to idle
+ 	player.movement_locked = false
+ 	player.can_look_up = true
+ 	if player.state_machine:
+diff --git a/Scenes/UI/ChoiceSystem/choice_bridge.gd b/Scenes/UI/ChoiceSystem/choice_bridge.gd
+index 57936b5..62291bc 100644
+--- a/Scenes/UI/ChoiceSystem/choice_bridge.gd
++++ b/Scenes/UI/ChoiceSystem/choice_bridge.gd
+@@ -49,7 +49,7 @@ func _unhandled_input(event: InputEvent):
+ 		is_open = false
+ 		return
+ 
+-	if TransitionBox.visible or DialogBox.visible or FullArtBox.visible or WaitBox.is_active():
++	if TransitionBox.is_blocking() or DialogBox.visible or FullArtBox.visible or WaitBox.is_active():
+ 		return
+ 
+ 	if player_in_range and not is_open and event.is_action_pressed("interact"):
+diff --git a/Scenes/UI/transition_box.gd b/Scenes/UI/transition_box.gd
+index b374606..5c9a4ff 100644
+--- a/Scenes/UI/transition_box.gd
++++ b/Scenes/UI/transition_box.gd
+@@ -6,12 +6,23 @@ extends CanvasLayer
+ signal transition_finished
+ 
+ const FADE_IN_TIME := 1.0
++# How long before the fade ends the player gets control back. Raise for earlier control.
++const CONTROL_EARLY := 0.2
++
++# True once the player has been handed back but the last bit of the fade is still playing.
++var _released := false
++
++# Used by PlayerManager.is_busy(): the box is still on screen during the last
++# CONTROL_EARLY seconds of the fade, but it should no longer hold the player.
++func is_blocking() -> bool:
++	return visible and not _released
+ 
+ func _ready():
+ 	visible = false
+ 	process_mode = Node.PROCESS_MODE_ALWAYS
+ 
+ func do_transition(content: TransitionContent, already_black: bool = false):
++	_released = false
+ 	visible = true
+ 	transition_label.modulate.a = 0.0
+ 	transition_label.text = ""
+@@ -70,12 +81,20 @@ func do_transition(content: TransitionContent, already_black: bool = false):
+ 	#    TransitionBox is visible, so nothing else touches the screen now.)
+ 	var fade_in := create_tween()
+ 	fade_in.tween_property(color_rect, "color:a", 0.0, FADE_IN_TIME)
++	# Hand control back a little before the fade finishes
++	fade_in.parallel().tween_callback(_release_player).set_delay(maxf(FADE_IN_TIME - CONTROL_EARLY, 0.0))
+ 	await fade_in.finished
+ 
+ 	visible = false
+-	PlayerManager.unlock_player()
++	_release_player()  # no-op if the early release already happened
+ 	transition_finished.emit()
+ 
++func _release_player() -> void:
++	if _released:
++		return
++	_released = true
++	PlayerManager.unlock_player()
++
+ func _typewrite(label_node: Label, text: String, profile: VoiceProfile = null):
+ 	label_node.text = text
+ 	label_node.visible_characters = 0

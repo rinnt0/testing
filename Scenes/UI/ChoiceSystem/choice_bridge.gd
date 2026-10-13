@@ -49,7 +49,7 @@ func _unhandled_input(event: InputEvent):
 		is_open = false
 		return
 
-	if TransitionBox.visible or DialogBox.visible or FullArtBox.visible:
+	if TransitionBox.is_blocking() or DialogBox.visible or FullArtBox.visible or WaitBox.is_active():
 		return
 
 	if player_in_range and not is_open and event.is_action_pressed("interact"):

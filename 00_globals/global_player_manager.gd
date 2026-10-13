@@ -42,7 +42,9 @@ func is_busy() -> bool:
 		return true
 	if FullArtBox.visible:
 		return true
-	if TransitionBox.visible:
+	if TransitionBox.is_blocking():
+		return true
+	if WaitBox.is_active():
 		return true
 	return false
 
@@ -63,6 +65,8 @@ func unlock_player() -> void:
 		return
 	if is_busy():
 		return
+	if not player.movement_locked:
+		return  # already unlocked - don't yank a walking player back to idle
 	player.movement_locked = false
 	player.can_look_up = true
 	if player.state_machine:

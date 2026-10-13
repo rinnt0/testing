@@ -1,0 +1,114 @@
+diff --git a/00_globals/global_player_manager.gd b/00_globals/global_player_manager.gd
+index b5fc848..3e097a9 100644
+--- a/00_globals/global_player_manager.gd
++++ b/00_globals/global_player_manager.gd
+@@ -44,6 +44,8 @@ func is_busy() -> bool:
+ 		return true
+ 	if TransitionBox.visible:
+ 		return true
++	if WaitBox.is_active():
++		return true
+ 	return false
+ 
+ func lock_player() -> void:
+diff --git a/00_workflow/interact_circle.gd b/00_workflow/interact_circle.gd
+index 8065cd8..04eb225 100644
+--- a/00_workflow/interact_circle.gd
++++ b/00_workflow/interact_circle.gd
+@@ -18,7 +18,7 @@ func _ready() -> void:
+ func _process(delta: float) -> void:
+ 	if not player:
+ 		return
+-	if DialogBox.visible or ChoiceMenu.visible:
++	if DialogBox.visible or ChoiceMenu.visible or WaitBox.is_active():
+ 		circle.visible = false
+ 		circle.modulate.a = 0.0
+ 		button.visible = false
+diff --git a/Scenes/UI/ChoiceSystem/choice_bridge.gd b/Scenes/UI/ChoiceSystem/choice_bridge.gd
+index fd4e7cc..57936b5 100644
+--- a/Scenes/UI/ChoiceSystem/choice_bridge.gd
++++ b/Scenes/UI/ChoiceSystem/choice_bridge.gd
+@@ -49,7 +49,7 @@ func _unhandled_input(event: InputEvent):
+ 		is_open = false
+ 		return
+ 
+-	if TransitionBox.visible or DialogBox.visible or FullArtBox.visible:
++	if TransitionBox.visible or DialogBox.visible or FullArtBox.visible or WaitBox.is_active():
+ 		return
+ 
+ 	if player_in_range and not is_open and event.is_action_pressed("interact"):
+diff --git a/Scenes/UI/ChoiceSystem/dialog_box.gd b/Scenes/UI/ChoiceSystem/dialog_box.gd
+index 16d33f5..be14580 100644
+--- a/Scenes/UI/ChoiceSystem/dialog_box.gd
++++ b/Scenes/UI/ChoiceSystem/dialog_box.gd
+@@ -58,7 +58,13 @@ func show_wait_thought(text: String, portrait_tex: Texture2D = null, voice_profi
+ func hide_wait_thought() -> void:
+ 	_wait_thought_gen += 1  # ← Prevent any lingering 5-second timers from firing
+ 	_is_wait_thought = false
+-	await fade_out()
++	if visible and not is_closing:
++		await fade_out()
++	# If a fade-out was already running (e.g. the 5s auto-hide), fade_out()
++	# returns instantly. Wait for it so callers can rely on visible == false
++	# once this function returns.
++	while visible and is_closing:
++		await get_tree().process_frame
+ 	label.clear_text()
+ 
+ func _input(event: InputEvent):
+diff --git a/Scenes/UI/wait_box.gd b/Scenes/UI/wait_box.gd
+index 61b9078..fdf5db3 100644
+--- a/Scenes/UI/wait_box.gd
++++ b/Scenes/UI/wait_box.gd
+@@ -4,12 +4,19 @@ signal wait_finished
+ 
+ var _wait_gen: int = 0
+ var _waiting: bool = false
++var _ending: bool = false   # true while the wait is winding down (text fade + camera restore)
+ var _skip_player_lock: bool = false
+ var _original_zoom: Vector2 = Vector2.ONE
+ 
+ func _ready() -> void:
+ 	process_mode = Node.PROCESS_MODE_ALWAYS
+ 
++# True from do_wait() until the player is actually handed back, including the
++# wind-down. Other systems (interact circle, PlayerManager.is_busy, choice
++# bridges) use this to know a wait is still in charge of the player.
++func is_active() -> bool:
++	return _waiting or _ending
++
+ func _unhandled_input(event: InputEvent) -> void:
+ 	if _waiting and event.is_action_pressed("ui_cancel"):
+ 		get_viewport().set_input_as_handled()
+@@ -34,21 +41,24 @@ func do_wait(content: WaitMoment, skip_player_lock: bool = false) -> void:
+ 
+ 	await wait_finished
+ 
+-# Inside WaitBox.gd
+-
+ func _cancel() -> void:
+ 	if not _waiting:
+ 		return
+-		
++
+ 	_waiting = false
++	_ending = true
+ 	_wait_gen += 1
+-	
+-	DialogBox.hide_wait_thought()
++
++	# MUST be awaited: unlock_player() refuses to run while DialogBox is still
++	# visible, and the text box needs its fade-out to finish first.
++	await DialogBox.hide_wait_thought()
+ 	await DialogBox.restore_camera(_original_zoom)
+-	
++
++	# Clear _ending BEFORE unlocking, otherwise is_busy() still reports us busy.
++	_ending = false
+ 	if not _skip_player_lock:
+ 		PlayerManager.unlock_player()
+-	
++
+ 	wait_finished.emit()
+ 
+ func _show_thought_after(content: WaitMoment, index: int, gen: int) -> void:
