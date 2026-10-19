@@ -67,15 +67,17 @@ func do_transition(content: TransitionContent, already_black: bool = false):
 	# 3. Do all the "snap" work while the screen is still fully black, so none of
 	#    it (camera reset, player pop-in, art cover removal) can be seen.
 	FullArtBox.clear_instant()
+	var destination_is_level := get_tree().current_scene and get_tree().current_scene.is_in_group("level")
 	if PlayerManager.player:
-		PlayerManager.player.visible = true
+		PlayerManager.player.visible = destination_is_level
 		var camera = PlayerManager.player.get_node_or_null("Camera2D")
 		if camera:
-			camera.enabled = true
-			camera.top_level = false
-			camera.cinematic_mode = false
-			camera.position = Vector2(0, -17)
-			camera.reset_smoothing()
+			camera.enabled = destination_is_level
+			if destination_is_level:
+				camera.top_level = false
+				camera.cinematic_mode = false
+				camera.position = Vector2(0, -17)
+				camera.reset_smoothing()
 
 	# 4. ONE fade, owned by this node. (level.gd skips its own fade while
 	#    TransitionBox is visible, so nothing else touches the screen now.)
@@ -88,6 +90,24 @@ func do_transition(content: TransitionContent, already_black: bool = false):
 	visible = false
 	_release_player()  # no-op if the early release already happened
 	transition_finished.emit()
+
+
+func do_scene_fade(
+	scene_path: String,
+	transition_target: String = "",
+	restore_saved_position: bool = false,
+	saved_position: Vector2 = Vector2.ZERO
+) -> void:
+	LevelManager.has_restore_position = restore_saved_position
+	if restore_saved_position:
+		LevelManager.restore_position = saved_position
+
+	var content := TransitionContent.new()
+	content.next_scene_path = scene_path
+	content.transition_target = transition_target
+	add_child(content)
+	await do_transition(content)
+	content.queue_free()
 
 func _release_player() -> void:
 	if _released:

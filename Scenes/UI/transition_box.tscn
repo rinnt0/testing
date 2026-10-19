@@ -4,6 +4,7 @@
 [ext_resource type="FontFile" uid="uid://d1fckm78autmc" path="res://Assets/UI/LowresPixel-Regular.otf" id="2_7nucw"]
 
 [node name="TransitionBox" type="CanvasLayer" unique_id=1267278031]
+layer = 150
 script = ExtResource("1_s8jou")
 
 [node name="ColorRect" type="ColorRect" parent="." unique_id=1764990238]

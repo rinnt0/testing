@@ -1,0 +1,80 @@
+[gd_scene format=3 uid="uid://orj6e128nkbq"]
+
+[ext_resource type="Script" uid="uid://rhbvtrd7ujt3" path="res://Scripts/UI/debug_flag_inspector.gd" id="1_debug"]
+[ext_resource type="Texture2D" path="res://Assets/UI/textbox.png" id="2_dialog"]
+[ext_resource type="FontFile" path="res://Assets/UI/LowresPixel-Regular.otf" id="3_pixel_font"]
+
+[sub_resource type="StyleBoxTexture" id="StyleBoxTexture_panel"]
+texture = ExtResource("2_dialog")
+region_rect = Rect2(7, 6, 34, 35)
+texture_margin_left = 12.0
+texture_margin_top = 12.0
+texture_margin_right = 12.0
+texture_margin_bottom = 12.0
+modulate_color = Color(1, 1, 1, 0.82)
+content_margin_left = 18.0
+content_margin_top = 18.0
+content_margin_right = 18.0
+content_margin_bottom = 18.0
+
+[node name="DebugFlagInspector" type="CanvasLayer" unique_id=727232919]
+layer = 140
+script = ExtResource("1_debug")
+
+[node name="PanelContainer" type="PanelContainer" parent="." unique_id=432096281]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -480.0
+offset_top = 24.0
+offset_right = -24.0
+offset_bottom = 720.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxTexture_panel")
+
+[node name="MarginContainer" type="MarginContainer" parent="PanelContainer" unique_id=1298627279]
+layout_mode = 2
+theme_override_constants/margin_left = 18
+theme_override_constants/margin_top = 18
+theme_override_constants/margin_right = 18
+theme_override_constants/margin_bottom = 18
+
+[node name="VBoxContainer" type="VBoxContainer" parent="PanelContainer/MarginContainer" unique_id=1987196938]
+layout_mode = 2
+theme_override_constants/separation = 12
+
+[node name="Title" type="Label" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=250379388]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_pixel_font")
+theme_override_font_sizes/font_size = 22
+theme_override_colors/font_color = Color(0.878431, 0.666667, 0.333333, 1)
+text = "FIELD RECORD  /  DEBUG FLAGS"
+
+[node name="AddFlagRow" type="HBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=1080781423]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="FlagNameInput" type="LineEdit" parent="PanelContainer/MarginContainer/VBoxContainer/AddFlagRow" unique_id=2015415729]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_fonts/font = ExtResource("3_pixel_font")
+placeholder_text = "Add flag name"
+
+[node name="AddFlagButton" type="Button" parent="PanelContainer/MarginContainer/VBoxContainer/AddFlagRow" unique_id=1089296646]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_pixel_font")
+text = "ADD FLAG"
+
+[node name="FlagScroll" type="ScrollContainer" parent="PanelContainer/MarginContainer/VBoxContainer" unique_id=363559069]
+custom_minimum_size = Vector2(400, 520)
+layout_mode = 2
+size_flags_vertical = 3
+horizontal_scroll_mode = 0
+
+[node name="FlagList" type="VBoxContainer" parent="PanelContainer/MarginContainer/VBoxContainer/FlagScroll" unique_id=1100684093]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[connection signal="text_submitted" from="PanelContainer/MarginContainer/VBoxContainer/AddFlagRow/FlagNameInput" to="." method="_on_flag_name_submitted"]
+[connection signal="pressed" from="PanelContainer/MarginContainer/VBoxContainer/AddFlagRow/AddFlagButton" to="." method="_on_add_flag_pressed"]

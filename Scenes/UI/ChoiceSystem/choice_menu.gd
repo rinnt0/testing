@@ -2,6 +2,7 @@ extends CanvasLayer
 
 signal option_confirmed(action: String)
 signal option_index_confirmed(index: int)
+signal menu_hidden
 
 @onready var vbox: VBoxContainer = $Control/VBoxContainer
 @onready var container_mask: Control = $Control # The parent with "Clip Content" on
@@ -33,6 +34,7 @@ func show_options(new_options: Array):
 	is_closing = false
 	$Control.modulate.a = 1.0 # Ensure it's visible for the next use
 	visible = true
+	AudioManager.play_ui_open()
 	
 	setup_slots()
 	update_selection(false)
@@ -113,14 +115,16 @@ func _input(event: InputEvent):
 		
 	elif event.is_action_pressed("interact"):
 		get_viewport().set_input_as_handled()
-		option_confirmed.emit(options[current_index].label)
-		option_index_confirmed.emit(current_index)
+		var selected_label: String = options[current_index].label
+		var selected_index: int = current_index
 		hide_menu()
-		AudioManager.play_sfx(AudioManager.ui_click_sound)
+		option_confirmed.emit(selected_label)
+		option_index_confirmed.emit(selected_index)
 
 func hide_menu():
 	if is_closing: return
 	is_closing = true
+	AudioManager.play_ui_close()
 	
 	var bar = $Control/SelectionBar
 	var decor = $Control/Decorations
@@ -152,6 +156,7 @@ func hide_menu():
 		decor.modulate.a = 1.0
 		
 		PlayerManager.unlock_player()
+		menu_hidden.emit()
 	)
 
 func play_intro_animation():

@@ -30,6 +30,8 @@ var ambient_bus: String = "Ambient"
 var ambient_players: Array[AudioStreamPlayer] = []
 var current_ambient_player: int = 0
 var ui_click_sound: AudioStream = preload("res://Assets/Music/mixkit-modern-technology-select-3124.wav")
+var ui_open_sound: AudioStream = preload("res://Assets/Music/mixkit-modern-technology-select-3124.wav")
+var ui_close_sound: AudioStream = preload("res://Assets/Music/mixkit-modern-technology-select-3124.wav")
 
 
 # Characters that should NOT trigger a blip
@@ -150,7 +152,7 @@ func fade_out_and_stop(player: AudioStreamPlayer) -> void:
 	player.stop()
 
 
-func play_sfx(sound: AudioStream) -> void:
+func play_sfx(sound: AudioStream, pitch_scale: float = -1.0) -> void:
 	if sound == null:
 		return
 	
@@ -158,8 +160,15 @@ func play_sfx(sound: AudioStream) -> void:
 	sfx_pool_index = (sfx_pool_index + 1) % sfx_pool_size
 	
 	player.stream = sound
-	# Optional: Add a tiny bit of random pitch variance so footsteps don't sound repetitive
-	player.pitch_scale = randf_range(0.9, 1.1) 
+	player.pitch_scale = pitch_scale if pitch_scale > 0.0 else randf_range(0.9, 1.1)
 	player.volume_db = 0.0
 	player.stop()
 	player.play()
+
+
+func play_ui_open() -> void:
+	play_sfx(ui_open_sound, 0.82)
+
+
+func play_ui_close() -> void:
+	play_sfx(ui_close_sound, 0.68)

@@ -1,0 +1,97 @@
+PROJECT WORKFLOW
+
+INTERACTIONS
+
+ChoiceBridge
+- ChoiceMaker
+  - DialogContent
+  - DialogFlag
+  - FullArtContent
+  - TransitionContent
+- InteractPrompt
+
+A ChoiceBridge can be placed on an item, NPC, or other interactable. It connects the prompt, available choices, and each choice's result.
+
+ChoiceMaker
+- Set the displayed label and optional icon.
+- Add multiple ChoiceMakers for multiple options.
+- Use flag conditions to show an option only when the required flags match.
+
+DialogContent
+- Add multiple dialogue lines and portraits in one resource.
+- Set voice profiles and camera/player targets as needed.
+
+DialogFlag
+- Set a flag when an interaction completes.
+- Optionally remove the used ChoiceMaker or its whole ChoiceBridge.
+
+FullArtContent
+- Set the image or animation and its accompanying lines.
+
+Scene transitions
+- Add TransitionContent to a ChoiceMaker.
+- Set its destination scene and destination marker.
+- Doorway transitions are handled in Scenes/Levels/level_scripts/level_transition.gd.
+
+WHERE TO CHANGE SYSTEMS
+
+- Flag values, save/load files, and autosaves:
+  00_globals/global_persistent_data.gd
+- Level-entry autosave and saved-position restoration:
+  00_globals/global_level_manager.gd
+- Compatibility facade for older GlobalFlags calls:
+  00_globals/global_flags.gd
+- Flag-driven Sprite2D appearance, position, visibility, tint, and animation:
+  00_workflow/flag_visual.gd
+- Debug flag inspector UI and behavior:
+  Scenes/UI/debug_flag_inspector.tscn
+  Scripts/UI/debug_flag_inspector.gd
+  Set inspector_enabled to false in the scene to hide it.
+- Pause menu layout and behavior:
+  Scenes/UI/pause_menu.tscn
+  Scripts/UI/pause_menu.gd
+- Title menu and title-screen load menu:
+  Scenes/UI/title_screen.tscn
+  Scenes/UI/title_screen.gd
+- Scene fades, timing, and fade layer:
+  Scenes/UI/transition_box.tscn
+  Scenes/UI/transition_box.gd
+- Choice menu behavior and close animation:
+  Scenes/UI/ChoiceSystem/choice_menu.gd
+- Waiting for choice removal before allowing another interaction:
+  Scenes/UI/ChoiceSystem/choice_bridge.gd
+- Music, SFX pool, and UI open/close sounds:
+  00_globals/global_audio_manager.gd
+  Replace ui_open_sound/ui_close_sound there; menu call sites are in choice_menu.gd,
+  pause_menu.gd, and title_screen.gd.
+
+RichTextLabel conversion is done. Add future text styling to the dialogue content and
+the relevant UI/typewriter behavior. UI open/close sounds currently use the existing
+select sound at different pitches as placeholders.
+
+STORY AND BLOCKOUT NOTES
+
+The original opening follows June finishing a late shift, going to her usual rooftop
+smoking spot, then returning home. She must take her pills before she can sleep.
+The theater idea may replace or reframe that opening; this is still undecided.
+
+The theater acts as a hub. The ticket machine greets June, gives her a ticket, and
+sends her to Screen 3. The factory chapter begins beyond that door.
+
+CHAPTER 1: FACTORY
+
+The factory is mostly ordinary and may represent denial. The player works through
+a fuse-and-power sequence:
+1. Place fuse 1 and use the lever to lower the ladder to the catwalk.
+2. Find bolt cutters; the monitors still indicate insufficient power.
+3. Place fuse 2 so the cameras work and reveal fuse 3.
+4. Place fuse 3 to turn the roof-door light green.
+5. Reach the roof and view the surreal landscape.
+
+The roof view may include a distant flower field and gazebo, unusual fences, a large
+anchor, a rift in the sky, floating land above water, and nearer geometric structures.
+Keep the reveal visual; June does not need to explain it.
+
+After the roof full-art moment, the door returns directly to the theater. The theater
+and its NPCs can remain unchanged. The ticket machine can repeat its dialogue but
+give June a crumpled ticket, which leads to the next screen.

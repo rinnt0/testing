@@ -49,6 +49,9 @@ func _unhandled_input(event: InputEvent):
 		is_open = false
 		return
 
+	if ChoiceMenu.visible:
+		return
+
 	if TransitionBox.is_blocking() or DialogBox.visible or FullArtBox.visible or WaitBox.is_active():
 		return
 
@@ -84,6 +87,7 @@ func _unhandled_input(event: InputEvent):
 		ChoiceMenu.show_options(choices)
 		var choice = await ChoiceMenu.option_confirmed
 		_menu_open = false
+		await ChoiceMenu.menu_hidden
 
 		var chosen_maker = choices.filter(func(c): return c.label == choice)
 		if chosen_maker.size() > 0:
@@ -145,8 +149,11 @@ func _unhandled_input(event: InputEvent):
 					DialogFlag.DeleteMode.CHOICE_MAKER:
 						maker.queue_free()
 						_update_prompt_state()
+						await get_tree().process_frame
 					DialogFlag.DeleteMode.CHOICE_BRIDGE:
 						queue_free()
+						PlayerManager.unlock_player()
+						return
 
 		PlayerManager.unlock_player()
 		is_open = false
