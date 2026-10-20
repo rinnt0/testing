@@ -1,12 +1,17 @@
 [gd_scene format=3 uid="uid://dsl48a34hqk1a"]
 
-[ext_resource type="Shader" uid="uid://rkf1bc5h07km" path="res://Assets/Shaders/crt.gdshader" id="1_un1n0"]
+[ext_resource type="Shader" uid="uid://6ufv3qsprloc" path="res://Assets/Shaders/ps1_crt.gdshader" id="1_un1n0"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8wk6j"]
 shader = ExtResource("1_un1n0")
 shader_parameter/scanline_intensity = 0.066000003135
 shader_parameter/scanline_density = 438.226018440735
 shader_parameter/scanline_speed = 0.274000013015
+shader_parameter/ps1_strength = 0.1150000054625
+shader_parameter/ps1_color_levels = 64.0
+shader_parameter/ps1_dither_strength = 0.0
+shader_parameter/ps1_rgb_split = 0.0
+shader_parameter/ps1_resolution = Vector2(320, 180)
 
 [node name="Printlines" type="TextureRect" unique_id=141781502]
 z_index = 31
